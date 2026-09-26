@@ -1,94 +1,188 @@
-let data=JSON.parse(localStorage.getItem("lhg_data")||"null")||DEFAULT_DATA;
-let state=JSON.parse(localStorage.getItem("lhg_state")||"null")||{
- money:200000,level:1,rep:100,served:0,revenue:0,perfect:0,seats:2,kitchen:1,decor:1
+let data = JSON.parse(localStorage.getItem("lhg_data") || "null") || DEFAULT_DATA;
+let state = JSON.parse(localStorage.getItem("lhg_state") || "null") || {
+  money: 6989700,
+  day: 24,
+  rating: 4.8,
+  reviewsCount: 400,
+  stock: {},
+  selected: []
 };
-let activeCat="broth", selected=[], order=null, timeLeft=45, timer=null;
 
-const $=id=>document.getElementById(id);
-const money=n=>n.toLocaleString("vi-VN")+"đ";
-function save(){localStorage.setItem("lhg_data",JSON.stringify(data));localStorage.setItem("lhg_state",JSON.stringify(state));}
-function unlocked(cat){return (data[cat]||[]).filter(x=>x.unlock<=state.level)}
-function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
-function makeOrder(){
-  const type=Math.random()<.55?"hotpot":"grill";
-  if(type==="hotpot"){
-    order={type,broth:pick(unlocked("broth")),tops:[pick(unlocked("topping")),pick(unlocked("topping"))],sauce:pick(unlocked("sauce")),drink:Math.random()<.45?pick(unlocked("drink")):null};
-  }else{
-    order={type,grills:[pick(unlocked("grill")),pick(unlocked("grill"))],sauce:pick(unlocked("sauce")),drink:Math.random()<.5?pick(unlocked("drink")):null};
+let currentOrder = null;
+
+// Khởi tạo tồn kho mặc định nếu món chưa từng có trong kho
+function initStockData() {
+  let allItems = [...data.broth, ...data.topping];
+  allItems.forEach(item => {
+    if (state.stock[item.id] === undefined) {
+      state.stock[item.id] = 5; // Cho sẵn 5 phần làm vốn ban đầu
+    }
+  });
+}
+
+function saveState() {
+  localStorage.setItem("lhg_data", JSON.stringify(data));
+  localStorage.setItem("lhg_state", JSON.stringify(state));
+}
+
+function updateHeader() {
+  document.getElementById("dayTitle").textContent = `Ngày ${state.day}`;
+  document.getElementById("moneyDisplay").textContent = (state.money / 1000).toFixed(1) + "k";
+  document.getElementById("ratingDisplay").textContent = state.rating.toFixed(1);
+}
+
+function renderPrepStock() {
+  const container = document.getElementById("stockBuyList");
+  let allItems = [...data.broth, ...data.topping];
+  
+  container.innerHTML = allItems.map(item => `
+    <div class="stock-card">
+      <img src="${item.img}" class="item-thumb" alt="${item.name}">
+      <div class="item-info">
+        <b>${item.name}</b>
+        <p>Bán: ${(item.price/1000).toFixed(1)}k • Nhập: ${(item.cost/1000).toFixed(1)}k</p>
+        <small class="expiry-text">Trong kho: ${state.stock[item.id] || 0}</small>
+      </div>
+      <div class="qty-ctrl">
+        <button onclick="changeStock('${item.id}', -1)">-</button>
+        <span>${state.stock[item.id] || 0}</span>
+        <button onclick="changeStock('${item.id}', 1)">+</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderQuests() {
+  const container = document.getElementById("questList");
+  let quests = DEFAULT_QUESTS || [];
+  container.innerHTML = quests.map(q => `
+    <div class="quest-item">
+      <div>
+        <div>${q.desc}</div>
+        <small>Thưởng: ${(q.reward/1000).toFixed(0)}k</small>
+      </div>
+      <span class="quest-status">${q.current}/${q.target}</span>
+    </div>
+  `).join("");
+}
+
+function changeStock(id, delta) {
+  let allItems = [...data.broth, ...data.topping];
+  let item = allItems.find(x => x.id === id);
+  if (!item) return;
+
+  if (delta > 0) {
+    if (state.money < item.cost) {
+      alert("Không đủ tiền nhập hàng!");
+      return;
+    }
+    state.money -= item.cost;
+    state.stock[id] = (state.stock[id] || 0) + 1;
+  } else if (delta < 0 && (state.stock[id] || 0) > 0) {
+    state.money += item.cost;
+    state.stock[id] = Math.max(0, (state.stock[id] || 0) - 1);
   }
-  selected=[];timeLeft=45;renderOrder();renderItems();startTimer();
+  
+  saveState();
+  updateHeader();
+  renderPrepStock();
 }
-function renderOrder(){
- const c=$("customer");
- const o=$("orderDetail");
- if(order.type==="hotpot"){
-  c.innerHTML=`<div class="customer"><div class="avatar">👩🏻</div><div><b>“Cho mình một nồi lẩu nha!”</b><div class="order-pill">🍲 LẨU</div></div></div>`;
-  o.innerHTML=`<div class="req"><span>Vị lẩu</span><b>${order.broth.emoji} ${order.broth.name}</b></div>
-  <div class="req"><span>Topping</span><b>${order.tops.map(x=>x.emoji+" "+x.name).join(" + ")}</b></div>
-  <div class="req"><span>Sốt</span><b>${order.sauce.emoji} ${order.sauce.name}</b></div>
-  ${order.drink?`<div class="req"><span>Nước</span><b>${order.drink.emoji} ${order.drink.name}</b></div>`:""}`;
- }else{
-  c.innerHTML=`<div class="customer"><div class="avatar">👨🏻</div><div><b>“Nay làm đồ nướng cho mình nhé!”</b><div class="order-pill">🔥 NƯỚNG</div></div></div>`;
-  o.innerHTML=`<div class="req"><span>Món nướng</span><b>${order.grills.map(x=>x.emoji+" "+x.name).join(" + ")}</b></div>
-  <div class="req"><span>Sốt</span><b>${order.sauce.emoji} ${order.sauce.name}</b></div>
-  ${order.drink?`<div class="req"><span>Nước</span><b>${order.drink.emoji} ${order.drink.name}</b></div>`:""}`;
- }
+
+function startSellingDay() {
+  document.getElementById("prepScreen").classList.remove("active");
+  document.getElementById("sellScreen").classList.add("active");
+  document.getElementById("dayStatus").textContent = "Đang bán hàng";
+  generateCustomerOrder();
+  renderSellGrid();
 }
-function renderItems(){
- document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.cat===activeCat));
- const list=unlocked(activeCat);
- $("items").innerHTML=list.map(x=>`<button class="item ${selected.some(s=>s.id===x.id)?'selected':''}" onclick="toggle('${x.id}')">
- <div class="emoji">${x.emoji}</div><div class="item-name">${x.name}</div><div class="price">${money(x.price)}</div></button>`).join("");
- $("selected").textContent=selected.length?selected.map(x=>x.emoji+" "+x.name).join(" • "):"Chưa chọn gì";
+
+function generateCustomerOrder() {
+  if (!data.broth.length || !data.topping.length) return;
+
+  let b = data.broth[Math.floor(Math.random() * data.broth.length)];
+  let t1 = data.topping[Math.floor(Math.random() * data.topping.length)];
+  let t2 = data.topping[Math.floor(Math.random() * data.topping.length)];
+  
+  currentOrder = { broth: b, toppings: [t1, t2] };
+  document.getElementById("customerDemand").innerHTML = `
+    "Cho anh 1 nồi lẩu <b>${b.name}</b> thêm <b>${t1.name}</b>, <b>${t2.name}</b> nha!"
+  `;
+  state.selected = [];
+  updateSelectedBar();
 }
-function toggle(id){
- const x=data[activeCat].find(a=>a.id===id); if(!x)return;
- const i=selected.findIndex(a=>a.id===id);
- if(i>=0)selected.splice(i,1); else {
-   if(selected.length>=2 && (activeCat==="topping"||activeCat==="grill")) selected.shift();
-   else if(activeCat!=="topping"&&activeCat!=="grill") selected=[];
-   selected.push(x);
- }
- renderItems();
+
+function renderSellGrid() {
+  const grid = document.getElementById("gridItems");
+  let allItems = [...data.broth, ...data.topping];
+  
+  grid.innerHTML = allItems.map(item => `
+    <div class="grid-card ${state.selected.includes(item.id) ? 'selected' : ''}" onclick="toggleSelectItem('${item.id}')">
+      <span class="badge-count">${state.stock[item.id] || 0}</span>
+      <img src="${item.img}" class="grid-img" />
+      <div class="grid-title">${item.name}</div>
+    </div>
+  `).join("");
 }
-function same(a,b){return a&&b&&a.id===b.id}
-function serve(){
- if(!order)return;
- let ok=false;
- if(order.type==="hotpot"){
-   const broth=selected.find(x=>data.broth.some(b=>b.id===x.id));
-   const tops=selected.filter(x=>data.topping.some(t=>t.id===x.id));
-   const sauce=selected.find(x=>data.sauce.some(s=>s.id===x.id));
-   ok=same(broth,order.broth)&&tops.length===2&&tops.every(x=>order.tops.some(t=>same(t,x)))&&same(sauce,order.sauce);
- }else{
-   const gs=selected.filter(x=>data.grill.some(g=>g.id===x.id));
-   const sauce=selected.find(x=>data.sauce.some(s=>s.id===x.id));
-   ok=gs.length===2&&gs.every(x=>order.grills.some(g=>same(g,x)))&&same(sauce,order.sauce);
- }
- if(ok){
-   let reward=70000+state.level*7000+(timeLeft*500);
-   state.money+=reward;state.revenue+=reward;state.served++;state.perfect++;
-   if(state.served%5===0){state.level++;toast("🎉 Lên cấp! Mở thêm món mới.","good")}
-   else toast("🔥 Khách thích quá! +"+money(reward),"good");
- }else{
-   state.rep=Math.max(0,state.rep-5);state.money=Math.max(0,state.money-15000);
-   toast("😵 Sai combo! Khách không hài lòng.","bad");
- }
- save();updateStats();makeOrder();
+
+function toggleSelectItem(id) {
+  if ((state.stock[id] || 0) <= 0) {
+    alert("Món này đã hết trong kho!");
+    return;
+  }
+  let idx = state.selected.indexOf(id);
+  if (idx >= 0) {
+    state.selected.splice(idx, 1);
+  } else {
+    state.selected.push(id);
+  }
+  renderSellGrid();
+  updateSelectedBar();
 }
-function startTimer(){
- clearInterval(timer);timer=setInterval(()=>{timeLeft--; $("patience").textContent="⏱️ "+timeLeft+"s";if(timeLeft<=0){clearInterval(timer);state.rep=Math.max(0,state.rep-8);toast("😤 Khách bỏ đi!");makeOrder()}},1000);
+
+function updateSelectedBar() {
+  let allItems = [...data.broth, ...data.topping];
+  let names = state.selected.map(id => allItems.find(x => x.id === id)?.name).filter(Boolean);
+  document.getElementById("selectedItemsText").textContent = names.length ? names.join(" + ") : "Chưa chọn món nào";
 }
-function upgrade(type){
- const costs={seats:80000*state.seats,kitchen:100000*state.kitchen,decor:70000*state.decor};
- if(state.money<costs[type])return toast("💸 Chưa đủ tiền!");
- state.money-=costs[type];state[type]++;save();updateStats();toast("✨ Nâng cấp thành công!","good");
+
+function serveCustomer() {
+  if (!currentOrder) return;
+
+  let required = [currentOrder.broth.id, ...currentOrder.toppings.map(t => t.id)].sort();
+  let selected = [...state.selected].sort();
+
+  let isCorrect = JSON.stringify(required) === JSON.stringify(selected);
+
+  if (isCorrect) {
+    selected.forEach(id => {
+      if (state.stock[id]) state.stock[id]--;
+    });
+
+    let revenue = currentOrder.broth.price + currentOrder.toppings.reduce((a, b) => a + b.price, 0);
+    state.money += revenue;
+    alert(`🎉 Phục vụ chuẩn xác! Nhận ${(revenue/1000).toFixed(1)}k`);
+  } else {
+    alert("❌ Làm sai món rồi! Khách phàn nàn bỏ đi.");
+  }
+
+  saveState();
+  updateHeader();
+  generateCustomerOrder();
+  renderSellGrid();
 }
-function updateStats(){
- $("money").textContent=money(state.money);$("level").textContent=state.level;$("rep").textContent=state.rep;
- $("served").textContent=state.served;$("revenue").textContent=money(state.revenue);$("perfect").textContent=state.perfect;
- $("seats").textContent=state.seats;$("kitchenLevel").textContent=state.kitchen;$("decor").textContent=state.decor;
+
+function endDay() {
+  state.day++;
+  document.getElementById("sellScreen").classList.remove("active");
+  document.getElementById("prepScreen").classList.add("active");
+  document.getElementById("dayStatus").textContent = "Chuẩn bị";
+  saveState();
+  updateHeader();
+  renderPrepStock();
 }
-function toast(msg,cls=""){let d=document.createElement("div");d.className="toast "+cls;d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
-document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{activeCat=b.dataset.cat;selected=[];renderItems()}));
-updateStats();makeOrder();renderItems();
+
+// Khởi chạy
+initStockData();
+updateHeader();
+renderPrepStock();
+renderQuests();
