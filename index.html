@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lẩu hay nướng - Cozy Restaurant Game</title>
     
-    <!-- Cấu hình PWA / Icon Màn hình chính -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Lẩu Nướng">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://img.icons8.com/emoji/192/steaming-bowl-emoji.png">
 
-    <!-- Font chữ tròn cute -->
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -20,301 +18,168 @@
             --card-bg: #3A303A;
             --primary-pink: #FF8E9E;
             --primary-orange: #FF7B54;
-            --soft-purple: #9EA1D4;
-            --accent-green: #82CD47;
             --text-light: #FFF5E4;
             --menu-green: #1F3F32;
             --border-color: #4A3E4A;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Comfortaa', cursive, sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+        /* 11 BỘ MÀU GIAO DIỆN CHUẨN */
+        body.theme-kem-sua { --bg-main: #FAF1E6; --card-bg: #FFFDF9; --text-light: #4A3E3D; --border-color: #E8D5C4; }
+        body.theme-nau-ca-phe { --bg-main: #3E2723; --card-bg: #4E342E; --text-light: #EFEBE9; --border-color: #5D4037; }
+        body.theme-so-co-la { --bg-main: #21130D; --card-bg: #321C13; --text-light: #F5EBE6; --border-color: #44291D; }
+        body.theme-hong-dau { --bg-main: #4A2E35; --card-bg: #5C3A43; --text-light: #FFF0F3; --border-color: #704752; }
+        body.theme-cam-dao { --bg-main: #3D2B1F; --card-bg: #523A2B; --text-light: #FFF3EB; --border-color: #664A38; }
+        body.theme-tra-thai { --bg-main: #3E2010; --card-bg: #542D18; --text-light: #FFEFE6; --border-color: #6B3B20; }
+        body.theme-vang-chanh { --bg-main: #332D15; --card-bg: #473F1E; --text-light: #FFFDE6; --border-color: #5B5228; }
+        body.theme-xanh-matcha { --bg-main: #1C2E20; --card-bg: #283E2D; --text-light: #EBF5ED; --border-color: #35503B; }
+        body.theme-bac-ha { --bg-main: #172E2B; --card-bg: #223F3B; --text-light: #E6F5F3; --border-color: #2D524D; }
+        body.theme-xanh-bien { --bg-main: #1A2836; --card-bg: #25374A; --text-light: #E6F2FF; --border-color: #314861; }
+        body.theme-tim-khoai-mon { --bg-main: #2B2136; --card-bg: #3A2D49; --text-light: #F5EBFB; --border-color: #4A3A5E; }
+        body.theme-dem-diu { --bg-main: #2D242D; --card-bg: #3A303A; --text-light: #FFF5E4; --border-color: #4A3E4A; }
 
-        body {
-            background-color: #121013;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Comfortaa', cursive, sans-serif; user-select: none; }
+        body { background-color: #121013; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 
-        /* SCREEN LOADING 1% -> 100% */
         #loading-screen {
-            position: absolute;
-            inset: 0;
-            background: #2D242D;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            transition: opacity 0.4s ease;
+            position: absolute; inset: 0; background: #2D242D; z-index: 999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: opacity 0.4s ease;
         }
 
-        .loading-pot {
-            font-size: 60px;
-            animation: bounce 0.8s infinite alternate;
-        }
+        .loading-pot { font-size: 60px; animation: bounce 0.8s infinite alternate; }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
 
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-15px); }
-        }
+        .progress-bar-container { width: 200px; height: 14px; background: #4A3E4A; border-radius: 10px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: var(--primary-pink); transition: width 0.1s linear; }
 
-        .progress-bar-container {
-            width: 200px;
-            height: 14px;
-            background: #4A3E4A;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: var(--primary-pink);
-            transition: width 0.1s linear;
-        }
-
-        /* KHUNG MOBILE CONTAINER */
         .game-container {
-            width: 100%;
-            max-width: 430px;
-            height: 100vh;
-            max-height: 920px;
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 0 25px rgba(0,0,0,0.8);
-            overflow: hidden;
-            border-radius: 20px;
+            width: 100%; max-width: 430px; height: 100vh; max-height: 920px;
+            background-color: var(--bg-main); color: var(--text-light);
+            display: flex; flex-direction: column; position: relative;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8); overflow: hidden; border-radius: 20px;
         }
 
-        /* HEADER THÔNG SỐ (STYLE TỐI HỌC THEO ANH) */
         .header {
-            background-color: #231C23;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--border-color);
+            background-color: rgba(0,0,0,0.2); padding: 10px; display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color);
         }
 
         .stat-badge {
-            background: #3A303A;
-            padding: 5px 8px;
-            border-radius: 12px;
-            color: #FFF;
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            border: 1px solid var(--border-color);
+            background: var(--card-bg); padding: 6px 10px; border-radius: 12px;
+            color: var(--text-light); font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; gap: 4px; border: 1px solid var(--border-color); cursor: pointer;
         }
 
-        .stat-money { color: #A8E6CF; }
-
-        /* NAV CÁC TAB NÂNG CẤP / KHO / BÁN */
         .top-subnav {
-            display: flex;
-            background: #231C23;
-            padding: 6px;
-            gap: 4px;
-            overflow-x: auto;
-            border-bottom: 1px solid var(--border-color);
+            display: flex; background: rgba(0,0,0,0.15); padding: 6px; gap: 4px;
+            overflow-x: auto; border-bottom: 1px solid var(--border-color);
         }
 
         .subtab-btn {
-            flex: 1;
-            min-width: 70px;
-            padding: 6px 4px;
-            background: #3A303A;
-            color: #CCC;
-            font-size: 10px;
-            font-weight: 700;
-            border-radius: 10px;
-            border: none;
-            text-align: center;
-            cursor: pointer;
+            flex: 1; min-width: 70px; padding: 8px 4px; background: var(--card-bg);
+            color: #AAA; font-size: 10px; font-weight: 700; border-radius: 10px;
+            border: none; text-align: center; cursor: pointer;
         }
 
-        .subtab-btn.active {
-            background: var(--primary-pink);
-            color: #FFF;
-        }
+        .subtab-btn.active { background: var(--primary-pink); color: #FFF; }
 
-        /* PAGING CONTENT */
-        .page-content {
-            flex: 1;
-            display: none;
-            flex-direction: column;
-            overflow-y: auto;
-            padding: 12px;
-        }
-
+        .page-content { flex: 1; display: none; flex-direction: column; overflow-y: auto; padding: 12px; }
         .page-content.active { display: flex; }
 
-        /* BẢNG MENU GIÁ BÁN (ẢNH 2 STYLE) */
-        .menu-board {
-            background-color: var(--menu-green);
-            border: 3px solid #142B22;
-            border-radius: 16px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            color: #E8F5E9;
-            flex: 1;
+        .kitchen-box {
+            background: var(--card-bg); border-radius: 16px; padding: 12px;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            border: 1px solid var(--border-color); margin-bottom: 10px;
         }
 
-        .menu-section-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #81C784;
-            border-bottom: 1px dashed #4CAF50;
-            padding-bottom: 4px;
-            margin-top: 6px;
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+        .btn-select {
+            background: rgba(0,0,0,0.2); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 8px 2px; color: var(--text-light);
+            font-size: 10px; text-align: center; cursor: pointer;
         }
 
-        .menu-item-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            padding: 4px 0;
-            border-bottom: 1px dotted rgba(255,255,255,0.1);
+        .category-title {
+            font-size: 11px; font-weight: 700; color: var(--primary-pink);
+            margin: 8px 0 4px 0; border-left: 3px solid var(--primary-pink); padding-left: 6px;
         }
 
-        .menu-item-price { font-weight: 700; color: #FFD54F; }
-
-        /* THẺ NÂNG CẤP / QUẢNG CÁO (ẢNH 1 STYLE) */
         .upgrade-card-v2 {
-            background: #3A303A;
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid #4A3E4A;
+            background: var(--card-bg); border-radius: 14px; padding: 12px;
+            margin-bottom: 10px; display: flex; align-items: center;
+            justify-content: space-between; border: 1px solid var(--border-color);
         }
 
         .card-left { display: flex; align-items: center; gap: 10px; }
-        .card-icon { font-size: 24px; background: #2D242D; padding: 8px; border-radius: 10px; }
-        .card-title { font-size: 12px; font-weight: 700; color: #FFF; }
+        .card-icon { font-size: 24px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 10px; }
+        .card-title { font-size: 12px; font-weight: 700; color: var(--text-light); }
         .card-desc { font-size: 10px; color: #AAA; margin-top: 2px; }
 
-        /* FOOTER BUTTON MỞ CỬA / KẾT NGÀY */
-        .bottom-action-bar {
-            padding: 12px;
-            background: #231C23;
-            border-top: 1px solid var(--border-color);
-        }
-
+        .bottom-action-bar { padding: 12px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border-color); }
         .btn-pink-big {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary-pink);
-            color: #FFF;
-            border: none;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 142, 158, 0.3);
+            width: 100%; padding: 14px; background: var(--primary-pink);
+            color: #FFF; border: none; border-radius: 16px; font-size: 14px;
+            font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 142, 158, 0.3);
         }
 
-        /* BẾP GHÉP MÓN COZY */
-        .kitchen-box {
-            background: #3A303A;
-            border-radius: 16px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #4A3E4A;
-            margin-bottom: 10px;
+        .modal-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
         }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+        .settings-card {
+            width: 90%; max-height: 85%; background: #342A35; border-radius: 20px;
+            padding: 16px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; border: 1px solid #4A3E4A;
         }
 
-        .btn-select {
-            background: #2D242D;
-            border: 1px solid #4A3E4A;
-            border-radius: 10px;
-            padding: 8px 4px;
-            color: #FFF;
-            font-size: 10px;
-            text-align: center;
-            cursor: pointer;
+        .setting-row {
+            background: #281F28; border: 1px solid #423543; border-radius: 14px;
+            padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #FFF; cursor: pointer;
         }
 
-        .pagination-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
+        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+        .theme-item {
+            background: #281F28; border: 2px solid #423543; border-radius: 12px;
+            padding: 10px 4px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;
         }
-
-        .btn-page {
-            background: #2E5A44;
-            color: #FFF;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 10px;
-            cursor: pointer;
-        }
+        .circle-color { width: 22px; height: 22px; border-radius: 50%; }
     </style>
 </head>
-<body>
+<body class="theme-dem-diu">
 
 <div class="game-container">
+    <audio id="bgm" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cozy-lofi-song-114485.mp3"></audio>
+
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
         <div class="loading-pot">🥘</div>
-        <div style="font-weight: 700; color: #FFF; font-size: 13px;">Đang chuẩn bị quán... <span id="load-num">0%</span></div>
+        <div style="font-weight: 700; color: #FFF; font-size: 13px;">Đang chuẩn bị tiệm... <span id="load-num">0%</span></div>
         <div class="progress-bar-container">
             <div class="progress-bar" id="load-bar"></div>
         </div>
     </div>
 
-    <!-- HEADER STATUS -->
+    <!-- HEADER HEADER -->
     <div class="header">
-        <div class="stat-badge">⚙️ Ngày <span id="day-num">1</span></div>
-        <div class="stat-badge stat-money">KÉT: <span id="money">250</span>k</div>
+        <div class="stat-badge" onclick="openSettingsModal()">⚙️ Ngày 1</div>
+        <div class="stat-badge" style="color:#A8E6CF;">KÉT: <span id="money">250</span>k</div>
         <div class="stat-badge">⭐ <span id="stars">0</span> (0 đánh giá)</div>
     </div>
 
-    <!-- SUB-NAVBAR TƯƠNG TỰ CÁC MỤC TRONG ẢNH 1 -->
+    <!-- SUB-NAVBAR -->
     <div class="top-subnav">
         <button class="subtab-btn active" onclick="switchTab('play')">🍳 Bán Hàng</button>
-        <button class="subtab-btn" onclick="switchTab('menu')">📖 Menu Giá</button>
         <button class="subtab-btn" onclick="switchTab('equip')">🛠️ Trang Bị</button>
         <button class="subtab-btn" onclick="switchTab('ads')">📢 Quảng Cáo</button>
         <button class="subtab-btn" onclick="switchTab('staff')">👥 Nhân Viên</button>
     </div>
 
-    <!-- TAB 1: BÁN HÀNG & GHÉP MÓN -->
+    <!-- TAB 1: BÁN HÀNG & MÓN ĂN SIÊU ĐA DẠNG -->
     <div class="page-content active" id="page-play">
         <div class="kitchen-box">
             <div style="font-size: 26px;" id="customer-avatar">👧</div>
             <div style="font-size: 12px; text-align: center; color: #FFD54F;" id="customer-order">
-                "Cho mình 1 suất <b>Tôm Sú</b> sốt <b>Phô Mai</b> đem <b>Nướng Chảo</b>!"
+                "Cho mình 1 suất <b>Ba Chỉ Heo</b> sốt <b>Sốt Chao Đỏ</b> đem <b>Nướng Chảo</b>!"
             </div>
         </div>
 
@@ -322,177 +187,209 @@
             <div style="font-size: 11px; color: #AAA;">MÓN ĐANG CHẾ BIẾN:</div>
             <div style="display:flex; gap:6px; font-size:12px; font-weight:700;">
                 <span id="tag-1" style="color:#FF8E9E;">❓ Đồ Tươi</span> +
-                <span id="tag-2" style="color:#FFD54F;">❓ Sốt/Vị</span>
+                <span id="tag-2" style="color:#FFD54F;">❓ Sốt/Nước Dùng</span>
             </div>
             <div id="tag-3" style="font-size:11px; color:#81C784;">🔥 Cách chế biến: Chưa chọn</div>
         </div>
 
-        <div style="font-size: 11px; margin-bottom: 6px; font-weight:700;">1. Chọn Đồ Tươi:</div>
-        <div class="grid-3" style="margin-bottom: 10px;">
-            <div class="btn-select" onclick="setIng('Tôm Sú', '🦐')">🦐 Tôm Sú</div>
-            <div class="btn-select" onclick="setIng('Bò Mỹ', '🥩')">🥩 Bò Mỹ</div>
-            <div class="btn-select" onclick="setIng('Vú Heo', '🥓')">🥓 Vú Heo</div>
-            <div class="btn-select" onclick="setIng('Hàu', '🦪')">🦪 Hàu</div>
-            <div class="btn-select" onclick="setIng('Bạch Tuộc', '🐙')">🐙 Bạch Tuộc</div>
-            <div class="btn-select" onclick="setIng('Sườn Cây', '🍖')">🍖 Sườn Cây</div>
-        </div>
-
-        <div style="font-size: 11px; margin-bottom: 6px; font-weight:700;">2. Chọn Sốt / Vị Béo:</div>
-        <div class="grid-3" style="margin-bottom: 10px;">
-            <div class="btn-select" onclick="setSauce('Phô Mai', '🧀')">🧀 Phô Mai</div>
-            <div class="btn-select" onclick="setSauce('Trứng Muối', '🥚')">🥚 Trứng Muối</div>
-            <div class="btn-select" onclick="setSauce('Bơ Tỏi', '🧄')">🧄 Bơ Tỏi</div>
-            <div class="btn-select" onclick="setSauce('Sốt Chao', '🥣')">🥣 Sốt Chao</div>
-            <div class="btn-select" onclick="setSauce('Sa Tế Cay', '🌶️')">🌶️ Sa Tế</div>
-            <div class="btn-select" onclick="setSauce('Vị Tomyum', '🍲')">🍲 Tomyum</div>
-        </div>
-
-        <div style="font-size: 11px; margin-bottom: 6px; font-weight:700;">3. Cách Chế Biến:</div>
+        <!-- 1. THỊT HEO (MỚI BỔ SUNG) -->
+        <div class="category-title">🐖 Thịt Heo:</div>
         <div class="grid-3">
+            <div class="btn-select" onclick="setIng('Ba Chỉ Heo', '🥓')">🥓 Ba Chỉ Heo</div>
+            <div class="btn-select" onclick="setIng('Nạc Nọng Heo', '🥩')">🥩 Nạc Nọng</div>
+            <div class="btn-select" onclick="setIng('Vú Heo/Nầm', '🥓')">🥓 Vú Heo/Nầm</div>
+            <div class="btn-select" onclick="setIng('Sườn Heo', '🍖')">🍖 Sườn Heo</div>
+            <div class="btn-select" onclick="setIng('Chăng Dừng', '🥩')">🥩 Chăng Dừng</div>
+            <div class="btn-select" onclick="setIng('Lòng Heo Béo', '🥣')">🥣 Lòng Heo Béo</div>
+        </div>
+
+        <!-- 2. HẢI SẢN (HÀU, TÔM, CÁ, MỰC) -->
+        <div class="category-title">🦐 Hải Sản Tươi Sống:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setIng('Hàu Đại Dương', '🦪')">🦪 Hàu Đại Dương</div>
+            <div class="btn-select" onclick="setIng('Tôm Sú', '🦐')">🦐 Tôm Sú</div>
+            <div class="btn-select" onclick="setIng('Cá Thát Lát', '🐟')">🐟 Cá Thát Lát</div>
+            <div class="btn-select" onclick="setIng('Cá Hú/Cá Diêu Hồng', '🐟')">🐟 Cá Tươi</div>
+            <div class="btn-select" onclick="setIng('Mực Ống', '🦑')">🦑 Mực Ống</div>
+            <div class="btn-select" onclick="setIng('Bạch Tuộc', '🐙')">🐙 Bạch Tuộc</div>
+        </div>
+
+        <!-- 3. BÒ & GÀ -->
+        <div class="category-title">🥩 Thịt Bò & Gà:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setIng('Lõi Vai Bò Mỹ', '🥩')">🥩 Lõi Vai Bò</div>
+            <div class="btn-select" onclick="setIng('Ba Chỉ Bò', '🥓')">🥓 Ba Chỉ Bò</div>
+            <div class="btn-select" onclick="setIng('Gù Bò Tươi', '🍖')">🍖 Gù Bò</div>
+            <div class="btn-select" onclick="setIng('Cánh Gà', '🍗')">🍗 Cánh Gà</div>
+            <div class="btn-select" onclick="setIng('Sụn Gà Giòn', '🍗')">🍗 Sụn Gà Giòn</div>
+            <div class="btn-select" onclick="setIng('Gà Thả Mườn', '🐔')">🐔 Gà Ta Mường</div>
+        </div>
+
+        <!-- 4. TOPPING THẢ LẨU (MỚI BỔ SUNG) -->
+        <div class="category-title">🍡 Topping Thả Lẩu & Món Phụ:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setIng('Cá Viên Chiên', '🍡')">🍡 Cá Viên Chiên</div>
+            <div class="btn-select" onclick="setIng('Xúc Xích', '🌭')">🌭 Xúc Xích</div>
+            <div class="btn-select" onclick="setIng('Thanh Cua', '🦀')">🦀 Thanh Cua</div>
+            <div class="btn-select" onclick="setIng('Đậu Hũ Tươi', '🧈')">🧈 Đậu Hũ</div>
+            <div class="btn-select" onclick="setIng('Bánh Gạo Tok', '🍡')">🍡 Bánh Gạo Tok</div>
+            <div class="btn-select" onclick="setIng('Rau Nấm Tổng Hợp', '🥬')">🥬 Rau Nấm Tươi</div>
+        </div>
+
+        <!-- 5. NƯỚC LẨU & SỐT -->
+        <div class="category-title">🍲 Nước Lẩu & Sốt Ướp:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setSauce('Lẩu Riêu Cua', '🦀')">🦀 Riêu Cua</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Mala Tứ Xuyên</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Gà Lá É', '🍃')">🍃 Gà Lá É</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Nấm', '🍄')">🍄 Nấm Bổ dưỡng</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Tomyum', '🍲')">🍲 Tomyum Thái</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Kim Chi', '🥬')">🥬 Kim Chi</div>
+            <div class="btn-select" onclick="setSauce('Sốt Phô Mai', '🧀')">🧀 Phô Mai</div>
+            <div class="btn-select" onclick="setSauce('Sốt Trứng Muối', '🥚')">🥚 Trứng Muối</div>
+            <div class="btn-select" onclick="setSauce('Sốt Chao Đỏ', '🥣')">🥣 Sốt Chao</div>
+        </div>
+
+        <div class="category-title">🔥 Hình Thức Chế Biến:</div>
+        <div class="grid-3" style="margin-bottom: 15px;">
+            <div class="btn-select" onclick="setMethod('Nấu Nồi Lẩu', '🥘')">🥘 Nấu Nồi Lẩu</div>
             <div class="btn-select" onclick="setMethod('Nướng Chảo', '🍳')">🍳 Nướng Chảo</div>
             <div class="btn-select" onclick="setMethod('Nướng Vỉ Than', '🪵')">🪵 Nướng Than</div>
-            <div class="btn-select" onclick="setMethod('Nấu Lẩu', '🥘')">🥘 Nấu Lẩu</div>
         </div>
     </div>
 
-    <!-- TAB 2: MENU GIÁ BÁN (ẢNH 2 GIỐNG 100%) -->
-    <div class="page-content" id="page-menu">
-        <div class="menu-board" id="menu-page-1">
-            <div style="text-align: center; font-weight: 700; font-size: 14px; color: #FFF;">📖 THỰC ĐƠN QUÁN (TRANG 1)</div>
-            
-            <div class="menu-section-title">🔥 Món Nướng & Đồ Tươi</div>
-            <div class="menu-item-row"><span>Tôm Sú Nướng</span><span class="menu-item-price">89k</span></div>
-            <div class="menu-item-row"><span>Lõi Vai Bò Mỹ</span><span class="menu-item-price">129k</span></div>
-            <div class="menu-item-row"><span>Vú Heo Nướng Chao</span><span class="menu-item-price">99k</span></div>
-            <div class="menu-item-row"><span>Hàu Nướng Phô Mai</span><span class="menu-item-price">115k</span></div>
-            <div class="menu-item-row"><span>Bạch Tuộc Sa Tế</span><span class="menu-item-price">109k</span></div>
-
-            <div class="menu-section-title">🧀 Sốt Béo Gọi Thêm (Topping)</div>
-            <div class="menu-item-row"><span>Sốt Phô Mai Kéo Sợi</span><span class="menu-item-price">+15k</span></div>
-            <div class="menu-item-row"><span>Sốt Trứng Muối Hoàng Kim</span><span class="menu-item-price">+15k</span></div>
-            <div class="menu-item-row"><span>Sốt Bơ Tỏi Chảo Nóng</span><span class="menu-item-price">+10k</span></div>
-        </div>
-
-        <div class="menu-board" id="menu-page-2" style="display: none;">
-            <div style="text-align: center; font-weight: 700; font-size: 14px; color: #FFF;">📖 THỰC ĐƠN QUÁN (TRANG 2)</div>
-
-            <div class="menu-section-title">🍲 Nước Lẩu Đậm Đàm</div>
-            <div class="menu-item-row"><span>Lẩu Tomyum Hải Sản</span><span class="menu-item-price">169k</span></div>
-            <div class="menu-item-row"><span>Lẩu Thái Chua Cay</span><span class="menu-item-price">159k</span></div>
-            <div class="menu-item-row"><span>Lẩu Kim Chi Bò Cuộn</span><span class="menu-item-price">169k</span></div>
-            <div class="menu-item-row"><span>Bò Nhúng Giấm</span><span class="menu-item-price">119k</span></div>
-
-            <div class="menu-section-title">🍿 Món Ăn Nhẹ / Ăn Vặt</div>
-            <div class="menu-item-row"><span>Khoai Tây Lắc Phô Mai</span><span class="menu-item-price">49k</span></div>
-            <div class="menu-item-row"><span>Đậu Hũ Chiên Cốt Dừa</span><span class="menu-item-price">48k</span></div>
-        </div>
-
-        <div class="pagination-bar">
-            <button class="btn-page" onclick="changeMenuPage(1)">◀ Trang 1</button>
-            <span style="font-size: 11px; color: #AAA;">Trang <span id="current-page-num">1</span>/2</span>
-            <button class="btn-page" onclick="changeMenuPage(2)">Trang 2 ▶</button>
-        </div>
-    </div>
-
-    <!-- TAB 3: TRANG BỊ & NÂNG CẤP (ẢNH 1 STYLED) -->
+    <!-- TAB 2: TRANG BỊ -->
     <div class="page-content" id="page-equip">
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">💡</div>
-                <div>
-                    <div class="card-title">Biển hiệu đèn LED</div>
-                    <div class="card-desc">Thêm 20% khách ghé quán</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(150)">150k 💰</button>
+            <div class="card-left"><div class="card-icon">🧃</div><div><div class="card-title">Máy dán nắp tự động</div><div class="card-desc">Pha đúng món tự dán nắp, tip +30%</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(200)">200k 💰</button>
         </div>
-
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">🪑</div>
-                <div>
-                    <div class="card-title">Bàn ghế cho khách ngồi</div>
-                    <div class="card-desc">Khách chịu chờ lâu hơn 25%</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(200)">200k 💰</button>
+            <div class="card-left"><div class="card-icon">💡</div><div><div class="card-title">Biển hiệu đèn LED</div><div class="card-desc">Thêm 20% khách ghé quán</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(150)">150k 💰</button>
         </div>
-
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">📦</div>
-                <div>
-                    <div class="card-title">Mở rộng quầy</div>
-                    <div class="card-desc">Phục vụ cùng lúc nhiều khách hơn</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(300)">300k 💰</button>
+            <div class="card-left"><div class="card-icon">🪑</div><div><div class="card-title">Bàn ghế cho khách ngồi</div><div class="card-desc">Khách chịu chờ lâu hơn 25%</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(200)">200k 💰</button>
         </div>
-
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">❄️</div>
-                <div>
-                    <div class="card-title">Máy lạnh mát rượi</div>
-                    <div class="card-desc">Khách ít chê khi phải chờ</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(250)">250k 💰</button>
+            <div class="card-left"><div class="card-icon">📦</div><div><div class="card-title">Mở rộng quầy</div><div class="card-desc">Phục vụ cùng lúc 4 khách</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(300)">300k 💰</button>
         </div>
     </div>
 
-    <!-- TAB 4: QUẢNG CÁO & THƯƠNG HIỆU (ẢNH 1 STYLED) -->
+    <!-- TAB 3: QUẢNG CÁO -->
     <div class="page-content" id="page-ads">
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">📢</div>
-                <div>
-                    <div class="card-title">Quảng cáo mạng xã hội</div>
-                    <div class="card-desc">Thêm 25% khách ghé quán</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(180)">180k 💰</button>
+            <div class="card-left"><div class="card-icon">📢</div><div><div class="card-title">Quảng cáo mạng xã hội</div><div class="card-desc">Thêm 25% khách ghé quán</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(180)">180k 💰</button>
         </div>
-
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">🎨</div>
-                <div>
-                    <div class="card-title">Bộ nhận diện thương hiệu</div>
-                    <div class="card-desc">Tự thiết kế tem in lên ly, tô, bao bì</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(220)">220k 💰</button>
+            <div class="card-left"><div class="card-icon">🎨</div><div><div class="card-title">Bộ nhận diện thương hiệu</div><div class="card-desc">Tự thiết kế tem in lên ly, bao bì</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(220)">220k 💰</button>
         </div>
     </div>
 
-    <!-- TAB 5: NHÂN VIÊN -->
+    <!-- TAB 4: NHÂN VIÊN -->
     <div class="page-content" id="page-staff">
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">💁‍♀️</div>
-                <div>
-                    <div class="card-title">Bé Ớt • Phục Vụ</div>
-                    <div class="card-desc">Tự động xoa dịu khách chờ lâu</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(300)">300k 💰</button>
+            <div class="card-left"><div class="card-icon">💁‍♀️</div><div><div class="card-title">Bé Ớt • Phục Vụ</div><div class="card-desc">Tự động xoa dịu khách chờ lâu</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(300)">300k 💰</button>
         </div>
         <div class="upgrade-card-v2">
-            <div class="card-left">
-                <div class="card-icon">👨‍🍳</div>
-                <div>
-                    <div class="card-title">Chú Bảy • Bếp Trưởng</div>
-                    <div class="card-desc">Tự động chọn đúng Đồ tươi khi có order</div>
-                </div>
-            </div>
-            <button class="btn-page" onclick="buyItem(400)">400k 💰</button>
+            <div class="card-left"><div class="card-icon">👨‍🍳</div><div><div class="card-title">Chú Bảy • Bếp Trưởng</div><div class="card-desc">Tự động chọn đúng Đồ tươi khi có order</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(400)">400k 💰</button>
+        </div>
+        <div class="upgrade-card-v2">
+            <div class="card-left"><div class="card-icon">💰</div><div><div class="card-title">Chị Béo • Thu Ngân</div><div class="card-desc">Tự cộng +10% doanh thu mỗi đơn</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(350)">350k 💰</button>
+        </div>
+        <div class="upgrade-card-v2">
+            <div class="card-left"><div class="card-icon">🛵</div><div><div class="card-title">Cậu Shipper Tốc Độ</div><div class="card-desc">Mở nhận đơn Lẩu Nướng Online</div></div></div>
+            <button class="subtab-btn" onclick="buyItem(500)">500k 💰</button>
         </div>
     </div>
 
-    <!-- NÚT MỞ CỬA NGÀY TƯƠNG TỰ ẢNH 1 -->
+    <!-- NÚT GIAO MÓN BÀN -->
     <div class="bottom-action-bar">
         <button class="btn-pink-big" onclick="serveOrder()">🔔 Giao Món Bàn (Mở cửa Ngày 1)</button>
+    </div>
+
+    <!-- MODAL 1: BẢNG CÀI ĐẶT -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="settings-card">
+            <div style="text-align: center; font-size: 16px; font-weight: 700; color: #FFF;">⚙️ Cài đặt</div>
+            <div class="setting-row"><div>📖 Hướng dẫn</div></div>
+            <div class="setting-row"><div>🎁 Có gì mới</div><div style="color:#AAA;">v3.11</div></div>
+            <div class="setting-row" onclick="openThemeModal()">
+                <div>✏️ Màu giao diện</div>
+                <div style="color:#AAA;" id="current-theme-title">Đêm dịu ▶</div>
+            </div>
+            <div class="setting-row" onclick="toggleBGM()">
+                <div>🌙 Nhạc nền</div>
+                <div style="color:#AAA;" id="bgm-status-text">Đang tắt • bấm để bật</div>
+            </div>
+            <div class="setting-row" style="background:#FF6B6B;" onclick="closeSettingsModal()">
+                <div style="color:#FFF;">❌ Đóng Cài Đặt</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: MÀU GIAO DIỆN -->
+    <div class="modal-overlay" id="theme-modal">
+        <div class="settings-card">
+            <div style="text-align: center; font-size: 16px; font-weight: 700; color: #FFF;">Màu giao diện</div>
+            <div style="font-size: 11px; text-align: center; color: #AAA;">Chọn màu bạn thích, đổi lúc nào cũng được.</div>
+
+            <div class="theme-grid">
+                <div class="theme-item" onclick="setTheme('theme-kem-sua', 'Kem sữa')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #FF8E9E 50%, #FAF1E6 50%);"></div>
+                    <span style="font-size: 10px;">Kem sữa</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-nau-ca-phe', 'Nâu cà phê')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #3E2723 50%, #D7CCC8 50%);"></div>
+                    <span style="font-size: 10px;">Nâu cà phê</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-so-co-la', 'Sô cô la')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #21130D 50%, #8D6E63 50%);"></div>
+                    <span style="font-size: 10px;">Sô cô la</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-hong-dau', 'Hồng dâu')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #FF4081 50%, #F8BBD0 50%);"></div>
+                    <span style="font-size: 10px;">Hồng dâu</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-cam-dao', 'Cam đào')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #FF6F00 50%, #FFE0B2 50%);"></div>
+                    <span style="font-size: 10px;">Cam đào</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-tra-thai', 'Trà Thái')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #E65100 50%, #FFCC80 50%);"></div>
+                    <span style="font-size: 10px;">Trà Thái</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-vang-chanh', 'Vàng chanh')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #FBC02D 50%, #FFF9C4 50%);"></div>
+                    <span style="font-size: 10px;">Vàng chanh</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-xanh-matcha', 'Xanh matcha')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #388E3C 50%, #C8E6C9 50%);"></div>
+                    <span style="font-size: 10px;">Xanh matcha</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-bac-ha', 'Bạc hà')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #009688 50%, #B2DFDB 50%);"></div>
+                    <span style="font-size: 10px;">Bạc hà</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-xanh-bien', 'Xanh biển')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #1976D2 50%, #BBDEFB 50%);"></div>
+                    <span style="font-size: 10px;">Xanh biển</span>
+                </div>
+                <div class="theme-item" onclick="setTheme('theme-dem-diu', 'Đêm dịu')">
+                    <div class="circle-color" style="background: linear-gradient(135deg, #FF8E9E 50%, #2D242D 50%);"></div>
+                    <span style="font-size: 10px;">Đêm dịu</span>
+                </div>
+            </div>
+
+            <button class="btn-pink-big" style="margin-top: 14px;" onclick="closeThemeModal()">Xong</button>
+        </div>
     </div>
 </div>
 
@@ -500,9 +397,8 @@
     let money = 250;
     let stars = 0;
     let reviewsCount = 0;
-
-    let order = { ing: '', sauce: '', method: '' };
     let player = { ing: null, sauce: null, method: null };
+    let bgmPlaying = false;
 
     // LOADING SCREEN
     let load = 0;
@@ -524,26 +420,9 @@
         event.target.classList.add('active');
     }
 
-    function changeMenuPage(page) {
-        document.getElementById('menu-page-1').style.display = page === 1 ? 'flex' : 'none';
-        document.getElementById('menu-page-2').style.display = page === 2 ? 'flex' : 'none';
-        document.getElementById('current-page-num').innerText = page;
-    }
-
-    function setIng(name, icon) {
-        player.ing = name;
-        document.getElementById('tag-1').innerText = `${icon} ${name}`;
-    }
-
-    function setSauce(name, icon) {
-        player.sauce = name;
-        document.getElementById('tag-2').innerText = `${icon} ${name}`;
-    }
-
-    function setMethod(name, icon) {
-        player.method = name;
-        document.getElementById('tag-3').innerText = `🔥 Cách chế biến: ${icon} ${name}`;
-    }
+    function setIng(name, icon) { player.ing = name; document.getElementById('tag-1').innerText = `${icon} ${name}`; }
+    function setSauce(name, icon) { player.sauce = name; document.getElementById('tag-2').innerText = `${icon} ${name}`; }
+    function setMethod(name, icon) { player.method = name; document.getElementById('tag-3').innerText = `🔥 Cách chế biến: ${icon} ${name}`; }
 
     function serveOrder() {
         if (!player.ing || !player.sauce || !player.method) {
@@ -551,17 +430,17 @@
             return;
         }
 
-        money += 120;
+        money += 130;
         reviewsCount++;
         stars = ((stars * (reviewsCount - 1) + 5) / reviewsCount).toFixed(1);
 
         document.getElementById('money').innerText = money;
         document.getElementById('stars').innerText = stars;
 
-        alert('🎉 Phục vụ xong! Khách hài lòng trả +120k và tặng 5 ⭐!');
+        alert('🎉 Phục vụ xong! Khách hài lòng trả +130k và tặng 5 ⭐!');
         player = { ing: null, sauce: null, method: null };
         document.getElementById('tag-1').innerText = '❓ Đồ Tươi';
-        document.getElementById('tag-2').innerText = '❓ Sốt/Vị';
+        document.getElementById('tag-2').innerText = '❓ Sốt/Nước Dùng';
         document.getElementById('tag-3').innerText = '🔥 Cách chế biến: Chưa chọn';
     }
 
@@ -569,10 +448,34 @@
         if(money >= cost) {
             money -= cost;
             document.getElementById('money').innerText = money;
-            alert('🎉 Mua/Nâng cấp thành công!');
+            alert('🎉 Mua thành công!');
         } else {
             alert('💰 Không đủ tiền trong KÉT!');
         }
+    }
+
+    function toggleBGM() {
+        let audio = document.getElementById('bgm');
+        if (!bgmPlaying) {
+            audio.play();
+            bgmPlaying = true;
+            document.getElementById('bgm-status-text').innerText = 'Đang bật • bấm để tắt';
+        } else {
+            audio.pause();
+            bgmPlaying = false;
+            document.getElementById('bgm-status-text').innerText = 'Đang tắt • bấm để bật';
+        }
+    }
+
+    function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
+    function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
+    function openThemeModal() { document.getElementById('theme-modal').style.display = 'flex'; }
+    function closeThemeModal() { document.getElementById('theme-modal').style.display = 'none'; }
+
+    function setTheme(themeClass, themeName) {
+        document.body.className = themeClass;
+        document.getElementById('current-theme-title').innerText = themeName + ' ▶';
+        closeThemeModal();
     }
 </script>
 
