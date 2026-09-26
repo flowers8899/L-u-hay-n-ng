@@ -11,39 +11,49 @@
     <!-- THANH TRÊN CÙNG -->
     <header class="game-header">
       <div class="day-info">
-        <span id="dayTitle">Ngày 24</span>
+        <span id="dayTitle">Ngày 1</span>
         <small id="dayStatus">Chuẩn bị</small>
       </div>
       <div class="vault-info">
         <div class="label">KẾT</div>
-        <div class="val" id="moneyDisplay">6.989,7k</div>
+        <div class="val" id="moneyDisplay">250.0k</div>
       </div>
       <div class="rating-info">
-        ⭐ <span id="ratingDisplay">4.8</span>
+        ⭐ <span id="ratingDisplay">Chưa có</span>
       </div>
     </header>
 
-    <!-- MÀN HÌNH 1: CHUẨN BỊ (NHẬP KHO & NHIỆM VỤ) -->
+    <!-- MÀN HÌNH 1: CHUẨN BỊ -->
     <div id="prepScreen" class="screen active">
       <div class="store-banner">
         <h2>Tiệm Lẩu & Nướng</h2>
-        <div class="banner-sub">Cấp 10 • Vua Lẩu</div>
+        <div class="banner-sub">Cấp 1 • Quán Mới Mở</div>
       </div>
 
       <nav class="sub-nav">
-        <button class="nav-btn active">📦 Kho hàng</button>
+        <button id="tabBtnStock" class="nav-btn tab-btn active" onclick="switchPrepTab('stock')">📦 Kho hàng</button>
+        <button id="tabBtnReviews" class="nav-btn tab-btn" onclick="switchPrepTab('reviews')">💬 Đánh giá khách</button>
         <button class="nav-btn" onclick="location.href='admin.html'">⚙️ Quản lý</button>
       </nav>
 
-      <div class="quest-box">
-        <h3>Nhiệm vụ hôm nay</h3>
-        <div id="questList"></div>
+      <!-- TAB KHO HÀNG -->
+      <div id="tabStock" class="tab-content">
+        <div class="quest-box">
+          <h3>Nhiệm vụ hôm nay</h3>
+          <div id="questList"></div>
+        </div>
+
+        <div class="section-title">Danh sách nhập kho</div>
+        <div class="stock-list" id="stockBuyList"></div>
       </div>
 
-      <div class="section-title">Danh sách nhập kho</div>
-      <div class="stock-list" id="stockBuyList"></div>
+      <!-- TAB ĐÁNH GIÁ CỦA KHÁCH -->
+      <div id="tabReviews" class="tab-content" style="display: none;">
+        <div class="section-title">Nhận xét từ khách hàng</div>
+        <div id="reviewsList"></div>
+      </div>
 
-      <button class="btn-primary" onclick="startSellingDay()">🚀 Mở cửa bán hàng</button>
+      <button class="btn-primary" onclick="startSellingDay()" style="margin-top: 14px;">🚀 Mở cửa bán hàng</button>
     </div>
 
     <!-- MÀN HÌNH 2: BÁN HÀNG -->
