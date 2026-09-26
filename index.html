@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tiệm Lẩu & Mì Cay</title>
+  <title>Lẩu hay nướng</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="app">
-    <!-- MÀN HÌNH 1: LOADING % -->
+    <!-- MÀN HÌNH 1: LOADING 1% - 100% -->
     <div id="screenLoading" class="screen active full-screen">
       <div class="loading-content">
-        <div class="logo-icon">🍲</div>
-        <h1>Tiệm Lẩu & Mì Cay</h1>
-        <p>Đang tải dữ liệu quán...</p>
+        <div class="logo-icon">🍲🥩</div>
+        <h1>Lẩu hay nướng</h1>
+        <p>Đang chuẩn bị bàn tiệc...</p>
         <div class="progress-bar-container">
           <div id="loadingBar" class="progress-bar"></div>
         </div>
-        <div id="loadingText" class="loading-percent">0%</div>
+        <div id="loadingText" class="loading-percent">1%</div>
       </div>
     </div>
 
@@ -27,12 +27,12 @@
         <div class="store-shopfront">
           <div class="awning"></div>
           <div class="shop-title-card">
-            <h1 id="shopNameTitle">Tiệm Lẩu Nhỏ</h1>
-            <p>Nấu lẩu, đón khách, mở tiệm nhỏ của riêng bạn</p>
+            <h1 id="shopNameTitle">Lẩu hay nướng</h1>
+            <p>Nấu lẩu, nướng thịt, đón khách & phát triển quán ăn</p>
           </div>
         </div>
         <div class="start-status-info">
-          <span id="startShopInfo">Tiệm Lẩu Nhỏ • Ngày 1 • 250,0k</span>
+          <span id="startShopInfo">Lẩu hay nướng • Ngày 1 • 250,0k</span>
         </div>
         <button class="btn-main-action" onclick="goToPrepScreen()">Chơi tiếp</button>
         <button class="btn-sub-action" onclick="toggleSettingsModal(true)">Hướng dẫn & Cài đặt</button>
@@ -63,7 +63,7 @@
     <div id="screenPrep" class="screen">
       <div class="store-level-card">
         <div class="shop-badge">
-          <h2>Tiệm Mì Cay & Lẩu</h2>
+          <h2>Quán Lẩu hay nướng</h2>
           <span class="level-tag">Cấp 1 • Quán Mới Mở</span>
         </div>
       </div>
@@ -80,14 +80,14 @@
       <!-- NOi DUNG TAB KHO -->
       <div id="tabKho" class="prep-tab-content active">
         <div class="event-banner">
-          <b>📅 Hôm nay: Cuối tuần</b>
-          <p>Khách đông hơn 25%, nhiều người mua 2 tô/nồi!</p>
+          <b>📅 Hôm nay: Cuối tuần đông khách</b>
+          <p>Lượng khách gọi combo Lẩu & Nướng tăng 25%!</p>
         </div>
 
         <div class="quest-box">
           <h3>Nhiệm vụ hôm nay</h3>
           <div class="quest-item">
-            <span>Không để khách nào bỏ về</span>
+            <span>Không để khách đợi lâu bỏ về</span>
             <span class="quest-reward">Thưởng 65k</span>
           </div>
           <div class="quest-item">
@@ -111,17 +111,17 @@
         <div class="section-header">Trang bị & Nhân viên</div>
         <div class="upgrade-card">
           <div>
-            <b>Thuê Nhân viên Order</b>
-            <p>Tự động nhận món từ khách (2.000k/ngày)</p>
+            <b>Thuê Bếp Trưởng Lẩu & Nướng</b>
+            <p>Tự động chuẩn bị nước dùng và bếp nướng (2.000k/ngày)</p>
           </div>
           <button class="btn-small" onclick="alert('Đã mở khóa nhân viên!')">Mở khóa</button>
         </div>
         <div class="upgrade-card">
           <div>
-            <b>Máy làm bếp cấp tốc</b>
-            <p>Tăng 30% tốc độ nấu lẩu & mì cay</p>
+            <b>Bếp Nướng Không Khói & Nồi Lẩu 2 Ngăn</b>
+            <p>Tăng 30% tốc độ làm món</p>
           </div>
-          <button class="btn-small" onclick="alert('Đã nâng cấp máy làm bếp!')">Nâng cấp</button>
+          <button class="btn-small" onclick="alert('Đã nâng cấp bếp!')">Nâng cấp</button>
         </div>
       </div>
 
@@ -141,7 +141,7 @@
           
           <h4 style="margin-top: 15px;">Chi phí vận hành</h4>
           <div class="report-row"><span>Mặt bằng:</span><span>40,0k</span></div>
-          <div class="report-row"><span>Điện nước:</span><span>68,0k</span></div>
+          <div class="report-row"><span>Điện nước & Than gas:</span><span>68,0k</span></div>
           <div class="report-row"><span>Lương nhân viên:</span><span>280,0k</span></div>
           <div class="report-row total"><span>Tổng chi phí:</span><span class="red-text">388,0k</span></div>
 
@@ -164,17 +164,17 @@
         <div class="customer-speech">
           <div class="customer-avatar">👩🏻</div>
           <div class="speech-bubble" id="customerSpeech">
-            "Cho anh 1 tô <b>Mì cay Riêu cua</b> thêm <b>Phô mai lát</b>, <b>Bạch tuộc</b> cấp 2 nha!"
+            "Cho bàn anh 1 set <b>Lẩu Mala</b> và 1 dĩa <b>Dẻ sườn bò nướng</b> nhé!"
           </div>
         </div>
 
         <div class="kitchen-pots">
           <div class="pot-slot">
-            <span class="pot-label">Nồi lẩu / Tô 1</span>
+            <span class="pot-label">Nồi Lẩu 1</span>
             <div id="cookingBar1" class="cook-progress"></div>
           </div>
           <div class="pot-slot">
-            <span class="pot-label">Nồi lẩu / Tô 2</span>
+            <span class="pot-label">Bếp Nướng 2</span>
             <div id="cookingBar2" class="cook-progress"></div>
           </div>
         </div>
@@ -189,7 +189,7 @@
       </div>
     </div>
 
-    <!-- MODAL BẢNG HƯỚNG DẪN & CÀI ĐẶT (NHƯ ẢNH) -->
+    <!-- MODAL BẢNG HƯỚNG DẪN & CÀI ĐẶT -->
     <div id="settingsModal" class="modal-overlay hidden">
       <div class="modal-card">
         <div class="modal-header">
