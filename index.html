@@ -149,62 +149,112 @@
         <button class="subtab-btn" onclick="switchTab('sosach')">📊 Sổ sách</button>
     </div>
 
-    <!-- TAB 1: KHO (CHUẨN BỊ KHO ĐẦU NGÀY) -->
+    <!-- TAB 1: KHO (CHI TIẾT TỪNG MỤC) -->
     <div class="page-content active" id="page-kho">
         <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🛒 CHUẨN BỊ KHO & NHẬP HÀNG ĐẦU NGÀY</div>
         
-        <div class="section-title">🍲 Nhóm Nước Lẩu & Vị Lẩu</div>
+        <div class="section-title">🍲 Nhóm Nước Lẩu Đa Dạng</div>
         <div class="item-card"><div class="item-info"><div class="item-name">🌶️ Lẩu Mala Tứ Xuyên</div><div class="item-meta">Hạn: 2 ngày • Vốn: 60k</div></div>
             <div class="item-controls"><button class="btn-qty" onclick="adjustStock('lauMala', -1)">-</button><span class="qty-num" id="qty-lauMala">1</span><button class="btn-qty plus" onclick="adjustStock('lauMala', 1)">+</button></div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">🦀 Lẩu Riêu Cua Đồng</div><div class="item-meta">Hạn: 2 ngày • Vốn: 55k</div></div>
             <div class="item-controls"><button class="btn-qty" onclick="adjustStock('lauCua', -1)">-</button><span class="qty-num" id="qty-lauCua">1</span><button class="btn-qty plus" onclick="adjustStock('lauCua', 1)">+</button></div>
         </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🍄 Lẩu Nấm Thanh Ngọt</div><div class="item-meta">Hạn: 3 ngày • Vốn: 45k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('lauNam', -1)">-</button><span class="qty-num" id="qty-lauNam">1</span><button class="btn-qty plus" onclick="adjustStock('lauNam', 1)">+</button></div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🐟 Lẩu Cá Thanh Ngọt</div><div class="item-meta">Hạn: 2 ngày • Vốn: 50k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('lauCa', -1)">-</button><span class="qty-num" id="qty-lauCa">1</span><button class="btn-qty plus" onclick="adjustStock('lauCa', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🦐 Lẩu Hải Sản Đặc Biệt</div><div class="item-meta">Hạn: 2 ngày • Vốn: 70k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('lauHaiSan', -1)">-</button><span class="qty-num" id="qty-lauHaiSan">1</span><button class="btn-qty plus" onclick="adjustStock('lauHaiSan', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🇰🇷 Lẩu Kim Chi Chua Cay</div><div class="item-meta">Hạn: 2 ngày • Vốn: 45k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('lauKimChi', -1)">-</button><span class="qty-num" id="qty-lauKimChi">1</span><button class="btn-qty plus" onclick="adjustStock('lauKimChi', 1)">+</button></div>
         </div>
 
-        <div class="section-title">🥩 Nhóm Thịt Bò & Heo</div>
+        <div class="section-title">🥩 Nhóm Thịt Bò Riêng Biệt</div>
         <div class="item-card"><div class="item-info"><div class="item-name">🥓 Bò Cuộn Nấm Kim Châm</div><div class="item-meta">Hạn: 3 ngày • Vốn: 45k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('bo', -1)">-</button><span class="qty-num" id="qty-bo">2</span><button class="btn-qty plus" onclick="adjustStock('bo', 1)">+</button></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('boCuonNam', -1)">-</button><span class="qty-num" id="qty-boCuonNam">2</span><button class="btn-qty plus" onclick="adjustStock('boCuonNam', 1)">+</button></div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">🥩 Bò Kobe Thượng Hạng</div><div class="item-meta">Hạn: 2 ngày • Vốn: 90k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('kobe', -1)">-</button><span class="qty-num" id="qty-kobe">1</span><button class="btn-qty plus" onclick="adjustStock('kobe', 1)">+</button></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('boKobe', -1)">-</button><span class="qty-num" id="qty-boKobe">1</span><button class="btn-qty plus" onclick="adjustStock('boKobe', 1)">+</button></div>
         </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🥩 Lõi Vai Bò Mỹ & Ba Chỉ Heo</div><div class="item-meta">Hạn: 3 ngày • Vốn: 50k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('loiVai', -1)">-</button><span class="qty-num" id="qty-loiVai">1</span><button class="btn-qty plus" onclick="adjustStock('loiVai', 1)">+</button></div>
-        </div>
-
-        <div class="section-title">🦐 Nhóm Hải Sản</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🦐 Tôm Sú, Cua, Ghẹ, Mực, Bạch Tuộc, Cá</div><div class="item-meta">Hạn: 2 ngày • Vốn: 75k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('haiSan', -1)">-</button><span class="qty-num" id="qty-haiSan">2</span><button class="btn-qty plus" onclick="adjustStock('haiSan', 1)">+</button></div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥩 Lõi Vai Bò Mỹ</div><div class="item-meta">Hạn: 3 ngày • Vốn: 60k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('loiVaiBo', -1)">-</button><span class="qty-num" id="qty-loiVaiBo">1</span><button class="btn-qty plus" onclick="adjustStock('loiVaiBo', 1)">+</button></div>
         </div>
 
-        <div class="section-title">🍢 Topping Thả Lẩu & Rau Nấm</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🍡 Cá Viên, Rau, Nấm, Kim chi, Đậu hũ, Váng đậu</div><div class="item-meta">Hạn: 4 ngày • Vốn: 30k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('topping', -1)">-</button><span class="qty-num" id="qty-topping">3</span><button class="btn-qty plus" onclick="adjustStock('topping', 1)">+</button></div>
+        <div class="section-title">🥓 Nhóm Thịt Heo Riêng Biệt</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥓 Ba Chỉ Heo Sốt Cay</div><div class="item-meta">Hạn: 3 ngày • Vốn: 35k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('baChiHeo', -1)">-</button><span class="qty-num" id="qty-baChiHeo">2</span><button class="btn-qty plus" onclick="adjustStock('baChiHeo', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥩 Vú Heo Nướng Chao</div><div class="item-meta">Hạn: 3 ngày • Vốn: 40k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('vuHeo', -1)">-</button><span class="qty-num" id="qty-vuHeo">1</span><button class="btn-qty plus" onclick="adjustStock('vuHeo', 1)">+</button></div>
         </div>
 
-        <div class="section-title">🥣 Sốt Ướp & Sốt Chấm Riêng Biệt</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🧀 Sốt Ướp (Phô mai, Trứng muối, Bơ tỏi)</div><div class="item-meta">Hạn: 5 ngày • Vốn: 25k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('sotUop', -1)">-</button><span class="qty-num" id="qty-sotUop">3</span><button class="btn-qty plus" onclick="adjustStock('sotUop', 1)">+</button></div>
+        <div class="section-title">🦐 Nhóm Hải Sản Tách Riêng</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🦐 Tôm Sú Tươi</div><div class="item-meta">Hạn: 2 ngày • Vốn: 50k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('tomSu', -1)">-</button><span class="qty-num" id="qty-tomSu">1</span><button class="btn-qty plus" onclick="adjustStock('tomSu', 1)">+</button></div>
         </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🥣 Sốt Chấm (Phô mai kéo sợi, Mắm tắc, Muối ớt xanh)</div><div class="item-meta">Hạn: 5 ngày • Vốn: 20k</div></div>
-            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('sotCham', -1)">-</button><span class="qty-num" id="qty-sotCham">3</span><button class="btn-qty plus" onclick="adjustStock('sotCham', 1)">+</button></div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🦀 Cua & Ghẹ Biển</div><div class="item-meta">Hạn: 2 ngày • Vốn: 70k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('cuaGhe', -1)">-</button><span class="qty-num" id="qty-cuaGhe">1</span><button class="btn-qty plus" onclick="adjustStock('cuaGhe', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🦑 Mực Ống & Bạch Tuộc</div><div class="item-meta">Hạn: 2 ngày • Vốn: 55k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('mucBachTuoc', -1)">-</button><span class="qty-num" id="qty-mucBachTuoc">1</span><button class="btn-qty plus" onclick="adjustStock('mucBachTuoc', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🐟 Phi Lê Cá Hồi / Cá Tươi</div><div class="item-meta">Hạn: 2 ngày • Vốn: 45k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('caTuoi', -1)">-</button><span class="qty-num" id="qty-caTuoi">1</span><button class="btn-qty plus" onclick="adjustStock('caTuoi', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🦪 Hàu Sữa Tươi Sống</div><div class="item-meta">Hạn: 2 ngày • Vốn: 50k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('hauSua', -1)">-</button><span class="qty-num" id="qty-hauSua">1</span><button class="btn-qty plus" onclick="adjustStock('hauSua', 1)">+</button></div>
+        </div>
+
+        <div class="section-title">🍢 Topping Thả Lẩu & Rau Nấm Tách Riêng</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🍡 Cá Viên / Bò Viên Chiên</div><div class="item-meta">Hạn: 5 ngày • Vốn: 20k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('caVien', -1)">-</button><span class="qty-num" id="qty-caVien">2</span><button class="btn-qty plus" onclick="adjustStock('caVien', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🌭 Xúc Xích Đức & Trứng Gà Thả Lẩu</div><div class="item-meta">Hạn: 4 ngày • Vốn: 25k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('xucXichTrung', -1)">-</button><span class="qty-num" id="qty-xucXichTrung">2</span><button class="btn-qty plus" onclick="adjustStock('xucXichTrung', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥬 Rau Cải Thảo & Nấm Kim Châm</div><div class="item-meta">Hạn: 3 ngày • Vốn: 15k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('rauNam', -1)">-</button><span class="qty-num" id="qty-rauNam">3</span><button class="btn-qty plus" onclick="adjustStock('rauNam', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥢 Đậu Hũ Non & Váng Đậu Giòn</div><div class="item-meta">Hạn: 4 ngày • Vốn: 20k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('dauHuVang', -1)">-</button><span class="qty-num" id="qty-dauHuVang">2</span><button class="btn-qty plus" onclick="adjustStock('dauHuVang', 1)">+</button></div>
+        </div>
+
+        <div class="section-title">🥣 Sốt Ướp Riêng Biệt</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🧀 Sốt Phô Mai Thượng Hạng</div><div class="item-meta">Hạn: 5 ngày • Vốn: 15k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('sotPhoMai', -1)">-</button><span class="qty-num" id="qty-sotPhoMai">2</span><button class="btn-qty plus" onclick="adjustStock('sotPhoMai', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥚 Sốt Trứng Muối Đậm Đà</div><div class="item-meta">Hạn: 5 ngày • Vốn: 20k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('sotTrungMuoi', -1)">-</button><span class="qty-num" id="qty-sotTrungMuoi">2</span><button class="btn-qty plus" onclick="adjustStock('sotTrungMuoi', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🧄 Sốt Bơ Tỏi Thơm Lừng</div><div class="item-meta">Hạn: 5 ngày • Vốn: 15k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('sotBoToi', -1)">-</button><span class="qty-num" id="qty-sotBoToi">2</span><button class="btn-qty plus" onclick="adjustStock('sotBoToi', 1)">+</button></div>
+        </div>
+
+        <div class="section-title">🥣 Sốt Chấm Riêng Biệt</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🧀 Phô Mai Kéo Sợi Chấm</div><div class="item-meta">Hạn: 5 ngày • Vốn: 15k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('chamPhoMai', -1)">-</button><span class="qty-num" id="qty-chamPhoMai">2</span><button class="btn-qty plus" onclick="adjustStock('chamPhoMai', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🟢 Muối Ớt Xanh Chấm Hải Sản</div><div class="item-meta">Hạn: 7 ngày • Vốn: 10k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('chamMuoiOt', -1)">-</button><span class="qty-num" id="qty-chamMuoiOt">3</span><button class="btn-qty plus" onclick="adjustStock('chamMuoiOt', 1)">+</button></div>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🍋 Mắm Tắc Chua Ngọt</div><div class="item-meta">Hạn: 5 ngày • Vốn: 10k</div></div>
+            <div class="item-controls"><button class="btn-qty" onclick="adjustStock('chamMamTac', -1)">-</button><span class="qty-num" id="qty-chamMamTac">3</span><button class="btn-qty plus" onclick="adjustStock('chamMamTac', 1)">+</button></div>
         </div>
     </div>
 
-    <!-- TAB 2: NẤU & BÁN HÀNG -->
+    <!-- TAB 2: NẤU (NHIỀU KHÁCH TẠI QUÁN) -->
     <div class="page-content" id="page-nau">
         <div class="kitchen-box">
             <div style="font-size: 24px;" id="customer-avatar">👧</div>
             <div style="font-size: 11px; text-align: center; color: var(--primary-orange); font-weight:700;" id="customer-order">
                 "Cho mình 1 suất <b>Bò Cuộn Nấm</b> ướp <b>Phô Mai</b> chấm <b>Phô Mai Kéo Sợi</b>!"
             </div>
+            <div style="font-size: 10px; color: #555; margin-top:2px;" id="customer-queue-info">👥 Khách đang chờ tại bàn: 3 nhóm</div>
         </div>
 
         <div class="kitchen-box">
-            <div style="font-size: 10px; color: #777;">BẾP ĐANG CHUẨN BỊ:</div>
+            <div style="font-size: 10px; color: #777;">BẾP ĐANG CHUẨN BỊ MÓN ĂN:</div>
             <div style="display:flex; gap:4px; font-size:10px; font-weight:700; flex-wrap:wrap; justify-content:center;">
                 <span id="tag-1" style="color:var(--primary-orange);">❓ Đồ Tươi</span> +
                 <span id="tag-2" style="color:#D35400;">❓ Sốt Ướp</span> +
@@ -217,21 +267,25 @@
         <div class="grid-3">
             <div class="btn-select" onclick="setIng('Bò Cuộn Nấm', '🥓')">🥓 Bò Cuộn Nấm</div>
             <div class="btn-select" onclick="setIng('Bò Kobe', '🥩')">🥩 Bò Kobe</div>
-            <div class="btn-select" onclick="setIng('Hải Sản (Tôm/Mực)', '🦐')">🦐 Hải Sản</div>
-            <div class="btn-select" onclick="setIng('Cá Viên & Topping', '🍡')">🍡 Topping</div>
+            <div class="btn-select" onclick="setIng('Lõi Vai Bò Mỹ', '🥩')">🥩 Lõi Vai Bò</div>
+            <div class="btn-select" onclick="setIng('Ba Chỉ Heo', '🥓')">🥓 Ba Chỉ Heo</div>
+            <div class="btn-select" onclick="setIng('Hải Sản Tươi', '🦐')">🦐 Hải Sản</div>
+            <div class="btn-select" onclick="setIng('Topping Lẩu', '🍡')">🍡 Topping</div>
         </div>
 
         <div style="font-size: 10px; font-weight: 700;">2. Chọn Sốt Ướp / Nước Lẩu:</div>
         <div class="grid-3">
             <div class="btn-select" onclick="setSauce('Phô Mai', '🧀')">🧀 Phô Mai</div>
-            <div class="btn-select" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Lẩu Mala</div>
-            <div class="btn-select" onclick="setSauce('Riêu Cua', '🦀')">🦀 Riêu Cua</div>
+            <div class="btn-select" onclick="setSauce('Trứng Muối', '🥚')">🥚 Trứng Muối</div>
             <div class="btn-select" onclick="setSauce('Bơ Tỏi', '🧄')">🧄 Bơ Tỏi</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Lẩu Mala</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Riêu Cua', '🦀')">🦀 Lẩu Riêu Cua</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Kim Chi', '🇰🇷')">🇰🇷 Lẩu Kim Chi</div>
         </div>
 
         <div style="font-size: 10px; font-weight: 700;">3. Chọn Sốt Chấm Kèm:</div>
         <div class="grid-3">
-            <div class="btn-select" onclick="setDip('Phô Mai Kéo Sợi', '🧀')">🧀 Phô Mai Kéo Sợi</div>
+            <div class="btn-select" onclick="setDip('Phô Mai Kéo Sợi', '🧀')">🧀 Phô Mai Kéo</div>
             <div class="btn-select" onclick="setDip('Muối Ớt Xanh', '🟢')">🟢 Muối Ớt Xanh</div>
             <div class="btn-select" onclick="setDip('Mắm Tắc', '🍋')">🍋 Mắm Tắc</div>
         </div>
@@ -250,27 +304,44 @@
         <div class="item-card"><div class="item-info"><div class="item-name">📦 Đơn Ship #101 • Lẩu Mala Tứ Xuyên</div><div class="item-meta">Khách đặt: 189k • Phí ship: 15k</div></div>
             <button class="action-btn-status" onclick="completeOnlineOrder(204)">Giao Đơn</button>
         </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">📦 Đơn Ship #102 • Bò Kobe Nướng</div><div class="item-meta">Khách đặt: 210k • Phí ship: 20k</div></div>
-            <button class="action-btn-status" onclick="completeOnlineOrder(230)">Giao Đơn</button>
+        <div class="item-card"><div class="item-info"><div class="item-name">📦 Đơn Ship #102 • Bò Kobe Nướng Sốt Phô Mai</div><div class="item-meta">Khách đặt: 240k • Phí ship: 20k</div></div>
+            <button class="action-btn-status" onclick="completeOnlineOrder(260)">Giao Đơn</button>
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">📦 Đơn Ship #103 • Combo Hải Sản Lẩu Thái</div><div class="item-meta">Khách đặt: 210k • Phí ship: 15k</div></div>
+            <button class="action-btn-status" onclick="completeOnlineOrder(225)">Giao Đơn</button>
         </div>
     </div>
 
-    <!-- TAB 4: GIÁ BÁN -->
+    <!-- TAB 4: GIÁ BÁN CHI TIẾT TỪNG MỤC -->
     <div class="page-content" id="page-giaban">
-        <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🏷️ ĐIỀU CHỈNH GIÁ NIÊM YẾT MÓN ĂN</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🏷️ ĐIỀU CHỈNH GIÁ NIÊM YẾT SẢN PHẨM</div>
         
-        <div class="item-card"><div class="item-info"><div class="item-name">Bò Cuộn Nấm (Gợi ý: 99k)</div><div class="item-meta" id="warn-bo" style="color:#777;">Vốn: 45k • Lãi ổn định</div></div>
-            <input type="number" class="price-input" id="price-bo" value="99" onchange="checkPrice('bo', 99)">
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Bò Kobe Thượng Hạng (Gợi ý: 189k)</div><div class="item-meta" id="warn-kobe" style="color:#777;">Vốn: 90k • Lãi ổn định</div></div>
-            <input type="number" class="price-input" id="price-kobe" value="189" onchange="checkPrice('kobe', 189)">
-        </div>
+        <div class="section-title">🍲 Nhóm Nước Lẩu</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Mala Tứ Xuyên (Gợi ý: 159k)</div><div class="item-meta" id="warn-lauMala" style="color:#777;">Vốn: 60k • Lãi ổn định</div></div>
             <input type="number" class="price-input" id="price-lauMala" value="159" onchange="checkPrice('lauMala', 159)">
         </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Riêu Cua (Gợi ý: 149k)</div><div class="item-meta" id="warn-lauCua" style="color:#777;">Vốn: 55k • Lãi ổn định</div></div>
+            <input type="number" class="price-input" id="price-lauCua" value="149" onchange="checkPrice('lauCua', 149)">
+        </div>
+
+        <div class="section-title">🥩 Nhóm Thịt Bò & Heo</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">Bò Cuộn Nấm (Gợi ý: 99k)</div><div class="item-meta" id="warn-bo" style="color:#777;">Vốn: 45k • Lãi ổn định</div></div>
+            <input type="number" class="price-input" id="price-bo" value="99" onchange="checkPrice('bo', 99)">
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">Bò Kobe (Gợi ý: 189k)</div><div class="item-meta" id="warn-kobe" style="color:#777;">Vốn: 90k • Lãi ổn định</div></div>
+            <input type="number" class="price-input" id="price-kobe" value="189" onchange="checkPrice('kobe', 189)">
+        </div>
+        <div class="item-card"><div class="item-info"><div class="item-name">Ba Chỉ Heo (Gợi ý: 89k)</div><div class="item-meta" id="warn-heo" style="color:#777;">Vốn: 35k • Lãi ổn định</div></div>
+            <input type="number" class="price-input" id="price-heo" value="89" onchange="checkPrice('heo', 89)">
+        </div>
+
+        <div class="section-title">🦐 Nhóm Hải Sản & Topping</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">Tôm Sú / Hải Sản (Gợi ý: 129k)</div><div class="item-meta" id="warn-haisan" style="color:#777;">Vốn: 50k • Lãi ổn định</div></div>
+            <input type="number" class="price-input" id="price-haisan" value="129" onchange="checkPrice('haisan', 129)">
+        </div>
     </div>
 
-    <!-- TAB 5: NÂNG CẤP (NHÂN VIÊN & TRANG BỊ CHO QUÁN) -->
+    <!-- TAB 5: NÂNG CẤP -->
     <div class="page-content" id="page-nangcap">
         <div class="section-title">👥 Quản Lý Nhân Viên (Tính lương cuối ngày)</div>
         <div class="item-card"><div class="item-info"><div class="item-name">💰 Chị Béo • Thu Ngân (50k/ngày)</div><div class="item-meta">Cộng +10% doanh thu mỗi đơn hàng</div></div>
@@ -344,9 +415,8 @@
             <div style="text-align: center; font-size: 14px; font-weight: 700;">📖 HƯỚNG DẪN CHƠI</div>
             <div style="font-size: 11px; line-height: 1.5;">
                 1. <b>Chuẩn bị Kho:</b> Chọn số lượng nhập các món đầu ngày trước khi mở cửa.<br><br>
-                2. <b>Mở cửa & Bán hàng:</b> Quán mở từ 10:00 đến 22:00 (chạy trong 6 phút). Khách gọi món nào, bạn qua tab <b>Nấu</b> chọn đúng Đồ tươi + Sốt ướp + Sốt chấm + Chế biến rồi bấm giao để tiền trực tiếp cộng vào KÉT!<br><br>
-                3. <b>Đơn Online:</b> Sang tab Đơn Online để nhận các đơn giao tận nhà và nhận tiền thưởng ship.<br><br>
-                4. <b>Sổ sách:</b> Cuối ngày tổng kết chi phí mặt bằng, điện nước và lương nhân viên.
+                2. <b>Mở cửa & Bán hàng:</b> Quán mở từ 10:00 đến 22:00 (chạy trong 6 phút). Phục vụ liên tục các nhóm khách tại quán và các đơn online để tăng doanh thu vào KÉT!<br><br>
+                3. <b>Sổ sách:</b> Cuối ngày tổng kết chi phí mặt bằng, điện nước và lương nhân viên.
             </div>
             <button class="btn-big" style="margin-top: 10px;" onclick="closeGuideModal()">Đã Hiểu</button>
         </div>
@@ -374,7 +444,8 @@
     let totalRevenue = 0;
     let totalStaffSalary = 0;
     let hiredStaff = {};
-    let stock = { lauMala: 1, lauCua: 1, lauNam: 1, bo: 2, kobe: 1, loiVai: 1, haiSan: 2, topping: 3, sotUop: 3, sotCham: 3 };
+    let customerQueueCount = 3;
+    let stock = { lauMala: 1, lauCua: 1, lauCa: 1, lauHaiSan: 1, lauKimChi: 1, boCuonNam: 2, boKobe: 1, loiVaiBo: 1, baChiHeo: 2, vuHeo: 1, tomSu: 1, cuaGhe: 1, mucBachTuoc: 1, caTuoi: 1, hauSua: 1, caVien: 2, xucXichTrung: 2, rauNam: 3, dauHuVang: 2, sotPhoMai: 2, sotTrungMuoi: 2, sotBoToi: 2, chamPhoMai: 2, chamMuoiOt: 3, chamMamTac: 3 };
     let player = { ing: null, sauce: null, dip: null, method: null };
     let isRunning = false;
     let bgmPlaying = false;
@@ -412,18 +483,20 @@
         if (player.ing && player.sauce && player.dip && player.method) {
             if (isRunning) {
                 let dishPrice = 160; 
-                if (hiredStaff[1]) dishPrice *= 1.1; // Chị Béo thu ngân cộng 10% doanh thu
+                if (hiredStaff[1]) dishPrice *= 1.1; // Thu ngân cộng 10% doanh thu
                 money += Math.round(dishPrice);
                 totalRevenue += Math.round(dishPrice);
                 reviewsCount++;
                 stars = ((stars * (reviewsCount - 1) + 5) / reviewsCount).toFixed(1);
+                customerQueueCount = Math.max(1, customerQueueCount - 1 + Math.floor(Math.random() * 2));
 
                 document.getElementById('money').innerText = money;
                 document.getElementById('stars').innerText = stars;
                 document.getElementById('rating-title').innerText = `⭐ Tổng quan đánh giá: ${stars} / 5.0 (${reviewsCount} đánh giá)`;
                 document.getElementById('sum-revenue').innerText = `+${totalRevenue}k`;
+                document.getElementById('customer-queue-info').innerText = `👥 Khách đang chờ tại bàn: ${customerQueueCount} nhóm`;
 
-                alert(`🎉 Phục vụ thành công! Khách trả +${Math.round(dishPrice)}k trực tiếp vào KÉT.`);
+                alert(`🎉 Phục vụ thành công một nhóm khách! Thu +${Math.round(dishPrice)}k vào KÉT.`);
                 player = { ing: null, sauce: null, dip: null, method: null };
                 document.getElementById('tag-1').innerText = '❓ Đồ Tươi';
                 document.getElementById('tag-2').innerText = '❓ Sốt Ướp';
