@@ -1,3 +1,8 @@
+Dưới đây là file code **`index.html`** hoàn chỉnh 100%.
+
+Trong phiên bản này, mục **"Có gì mới"** đã được cập nhật thành một nút bấm tương tác: khi người chơi bấm vào sẽ mở ra bảng thông tin giới thiệu chi tiết về game, lối chơi cozy giải trí, tính năng nâng cấp quán, cùng các mẹo hữu ích giúp người chơi phát triển quán thành công!
+
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -245,7 +250,7 @@
             <div class="btn-select" onclick="setSauce('Lẩu Nấm', '🍄')">🍄 Lẩu Nấm</div>
         </div>
 
-        <!-- 5. SỐT CHẤM KÈM (ĐÃ BỔ SUNG CÁC LOẠI MỚI) -->
+        <!-- 5. SỐT CHẤM KÈM -->
         <div class="category-title">🥣 Nước Sốt Chấm Kèm:</div>
         <div class="grid-3">
             <div class="btn-select" onclick="setDip('Phô Mai Kéo Sợi', '🧀')">🧀 Phô Mai Kéo Sợi</div>
@@ -332,7 +337,7 @@
         <div class="settings-card">
             <div style="text-align: center; font-size: 16px; font-weight: 700; color: #FFF;">⚙️ Cài đặt</div>
             <div class="setting-row" onclick="openGuideModal()"><div>📖 Hướng dẫn cách chơi</div><div style="color:#AAA;">▶</div></div>
-            <div class="setting-row"><div>🎁 Có gì mới</div><div style="color:#AAA;">v3.11</div></div>
+            <div class="setting-row" onclick="openAboutModal()"><div>🎁 Giới thiệu & Mẹo chơi</div><div style="color:#AAA;">▶</div></div>
             <div class="setting-row" onclick="openThemeModal()">
                 <div>✏️ Màu giao diện</div>
                 <div style="color:#AAA;" id="current-theme-title">Đêm dịu ▶</div>
@@ -357,6 +362,22 @@
                 3. <b>Giao Món:</b> Bấm nút hồng bên dưới để giao món, nhận tiền KÉT và điểm đánh giá ⭐.
             </div>
             <button class="btn-pink-big" style="margin-top: 10px;" onclick="closeGuideModal()">Đã Hiểu</button>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP GIỚI THIỆU & MẸO CHƠI (CẬP NHẬT MỚI THAY CHO v3.11) -->
+    <div class="modal-overlay" id="about-modal">
+        <div class="settings-card">
+            <div style="text-align: center; font-size: 15px; font-weight: 700; color: #FFF;">🎁 GIỚI THIỆU & MẸO CHƠI</div>
+            <div style="font-size: 11px; line-height: 1.5; color: #DDD;">
+                🍲 <b>Về Trò Chơi:</b> <i>Lẩu hay Nướng</i> là game quản lý quán ăn phong cách 2D Cozy Pastel thư giãn. Bạn bắt đầu từ Ngày 1 với vốn 250k, dần dần mở rộng thực đơn, nâng cấp không gian và chiêu mộ nhân viên!<br><br>
+                💡 <b>Mẹo Phát Triển Nhanh:</b><br>
+                • Đạt 5⭐ giúp kéo thêm nhiều khách VIP chịu chi đậm.<br>
+                • Mua <i>Máy Dán Nắp Tự Động</i> để nhận thêm 30% tiền bo.<br>
+                • Thuê <i>Chú Bảy Bếp Trưởng</i> giúp chọn nhanh món mà không tốn thời gian tìm kiếm.<br>
+                • Thuê <i>Chị Béo Thu Ngân</i> để tự động gia tăng 10% doanh thu cho mỗi đơn hàng!
+            </div>
+            <button class="btn-pink-big" style="margin-top: 10px;" onclick="closeAboutModal()">Đã Hiểu</button>
         </div>
     </div>
 
@@ -478,6 +499,8 @@
     function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
     function openGuideModal() { document.getElementById('guide-modal').style.display = 'flex'; }
     function closeGuideModal() { document.getElementById('guide-modal').style.display = 'none'; }
+    function openAboutModal() { document.getElementById('about-modal').style.display = 'flex'; }
+    function closeAboutModal() { document.getElementById('about-modal').style.display = 'none'; }
     function openThemeModal() { document.getElementById('theme-modal').style.display = 'flex'; }
     function closeThemeModal() { document.getElementById('theme-modal').style.display = 'none'; }
 
@@ -490,3 +513,5 @@
 
 </body>
 </html>
+
+```
