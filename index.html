@@ -21,12 +21,8 @@
             --menu-green: #1F3F32;
         }
 
-        /* 11 BỘ MÀU GIAO DIỆN */
         body.theme-kem-sua { --bg-main: #FAF1E6; --card-bg: #FFFDF9; --text-dark: #4A3E3D; --border-color: #E8D5C4; }
         body.theme-nau-ca-phe { --bg-main: #3E2723; --card-bg: #4E342E; --text-dark: #EFEBE9; --border-color: #5D4037; }
-        body.theme-so-co-la { --bg-main: #21130D; --card-bg: #321C13; --text-dark: #F5EBE6; --border-color: #44291D; }
-        body.theme-hong-dau { --bg-main: #4A2E35; --card-bg: #5C3A43; --text-dark: #FFF0F3; --border-color: #704752; }
-        body.theme-cam-dao { --bg-main: #3D2B1F; --card-bg: #523A2B; --text-dark: #FFF3EB; --border-color: #664A38; }
         body.theme-dem-diu { --bg-main: #2D242D; --card-bg: #3A303A; --text-dark: #FFF5E4; --border-color: #4A3E4A; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Comfortaa', cursive, sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -67,14 +63,26 @@
         }
 
         .subtab-btn {
-            flex: 1; min-width: 65px; padding: 8px 2px; background: var(--card-bg);
+            flex: 1; min-width: 60px; padding: 8px 2px; background: var(--card-bg);
             color: #888; font-size: 10px; font-weight: 700; border-radius: 10px;
             border: 1px solid var(--border-color); text-align: center; cursor: pointer; white-space: nowrap;
         }
         .subtab-btn.active { background: var(--primary-orange); color: #FFF; border-color: var(--primary-orange); }
 
-        .page-content { flex: 1; display: none; flex-direction: column; overflow-y: auto; padding: 12px; gap: 10px; }
+        .page-content { flex: 1; display: none; flex-direction: column; overflow-y: auto; padding: 12px; gap: 8px; }
         .page-content.active { display: flex; }
+
+        .kitchen-box {
+            background: var(--card-bg); border-radius: 16px; padding: 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            border: 1px solid var(--border-color); margin-bottom: 6px;
+        }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .btn-select {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 8px 2px; color: var(--text-dark);
+            font-size: 10px; text-align: center; cursor: pointer; font-weight: 700;
+        }
 
         .item-card {
             background: var(--card-bg); border: 1px solid var(--border-color);
@@ -85,7 +93,7 @@
         .item-meta { font-size: 10px; color: #777; }
 
         .item-controls { display: flex; align-items: center; gap: 8px; }
-        .btn-qty { width: 28px; height: 28px; border-radius: 50%; border: none; background: #EEE; font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+        .btn-qty { width: 26px; height: 26px; border-radius: 50%; border: none; background: #EEE; font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
         .btn-qty.plus { background: var(--primary-orange); color: #FFF; }
         .qty-num { font-size: 12px; font-weight: 700; min-width: 20px; text-align: center; }
         .price-input { width: 65px; padding: 4px; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; font-size: 12px; font-weight: 700; background: #FFF; }
@@ -101,9 +109,6 @@
         .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .settings-card { width: 90%; max-height: 85%; background: var(--card-bg); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; border: 2px solid var(--border-color); }
         .setting-row { background: rgba(0,0,0,0.03); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--text-dark); cursor: pointer; }
-        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
-        .theme-item { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
-        .circle-color { width: 22px; height: 22px; border-radius: 50%; }
     </style>
 </head>
 <body class="theme-kem-sua">
@@ -111,7 +116,6 @@
 <div class="game-container">
     <audio id="bgm" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cozy-lofi-song-114485.mp3"></audio>
 
-    <!-- LOADING SCREEN -->
     <div id="loading-screen">
         <div class="loading-pot">🥘</div>
         <div style="font-weight: 700; color: var(--text-dark); font-size: 13px;">Đang chuẩn bị tiệm... <span id="load-num">0%</span></div>
@@ -124,27 +128,25 @@
     <div class="header">
         <div class="stat-badge" onclick="openSettingsModal()">⚙️ <span id="day-label">Ngày 1</span> • <span id="game-time">10:00</span></div>
         <div class="stat-badge" style="color:#2D5A27; background:#E8F3D6;">KÉT: <span id="money">250</span>k</div>
-        <div class="stat-badge">⭐ <span id="stars">4.8</span></div>
+        <div class="stat-badge">⭐ <span id="stars">0.0</span></div>
     </div>
 
-    <!-- SUB-NAVBAR -->
+    <!-- SUB-NAVBAR TỔNG HỢP -->
     <div class="top-subnav">
         <button class="subtab-btn active" onclick="switchTab('kho')">📦 Kho</button>
-        <button class="subtab-btn" onclick="switchTab('giaban')">🏷️ Giá bán</button>
+        <button class="subtab-btn" onclick="switchTab('nau')">🍳 Nấu</button>
+        <button class="subtab-btn" onclick="switchTab('giaban')">🏷️ Giá</button>
         <button class="subtab-btn" onclick="switchTab('nangcap')">🛠️ Nâng cấp</button>
         <button class="subtab-btn" onclick="switchTab('danhgia')">⭐ Đánh giá</button>
         <button class="subtab-btn" onclick="switchTab('sosach')">📊 Sổ sách</button>
     </div>
 
-    <!-- TAB 1: KHO & CHUẨN BỊ -->
+    <!-- TAB 1: KHO (CHỌN NGUYÊN LIỆU ĐẦU NGÀY) -->
     <div class="page-content active" id="page-kho">
-        <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🛒 QUẢN LÝ TỒN KHO ĐẦU NGÀY</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🛒 CHUẨN BỊ KHO & NHẬP HÀNG ĐẦU NGÀY</div>
         
         <div class="item-card">
-            <div class="item-info">
-                <div class="item-name">🥓 Bò Cuộn Nấm Kim Châm</div>
-                <div class="item-meta">Hạn: 3 ngày • Tồn hôm qua: 0 • Vốn: 45k</div>
-            </div>
+            <div class="item-info"><div class="item-name">🥓 Bò Cuộn Nấm Kim Châm</div><div class="item-meta">Hạn: 3 ngày • Vốn: 45k</div></div>
             <div class="item-controls">
                 <button class="btn-qty" onclick="adjustStock('bo', -1)">-</button>
                 <span class="qty-num" id="qty-bo">2</span>
@@ -153,10 +155,7 @@
         </div>
 
         <div class="item-card">
-            <div class="item-info">
-                <div class="item-name">🧀 Sốt Phô Mai Kéo Sợi</div>
-                <div class="item-meta">Hạn: 5 ngày • Tồn hôm qua: 2 • Vốn: 20k</div>
-            </div>
+            <div class="item-info"><div class="item-name">🧀 Sốt Phô Mai Kéo Sợi</div><div class="item-meta">Hạn: 5 ngày • Vốn: 20k</div></div>
             <div class="item-controls">
                 <button class="btn-qty" onclick="adjustStock('sot', -1)">-</button>
                 <span class="qty-num" id="qty-sot">3</span>
@@ -165,72 +164,115 @@
         </div>
 
         <div class="item-card">
-            <div class="item-info">
-                <div class="item-name">🌶️ Lẩu Mala Tứ Xuyên</div>
-                <div class="item-meta">Hạn: 2 ngày • Tồn hôm qua: 1 • Vốn: 60k</div>
-            </div>
+            <div class="item-info"><div class="item-name">🌶️ Lẩu Mala Tứ Xuyên</div><div class="item-meta">Hạn: 2 ngày • Vốn: 60k</div></div>
             <div class="item-controls">
                 <button class="btn-qty" onclick="adjustStock('lau', -1)">-</button>
                 <span class="qty-num" id="qty-lau">1</span>
                 <button class="btn-qty plus" onclick="adjustStock('lau', 1)">+</button>
             </div>
         </div>
+
+        <div class="item-card">
+            <div class="item-info"><div class="item-name">🦐 Tôm Sú Tươi</div><div class="item-meta">Hạn: 2 ngày • Vốn: 50k</div></div>
+            <div class="item-controls">
+                <button class="btn-qty" onclick="adjustStock('tom', -1)">-</button>
+                <span class="qty-num" id="qty-tom">2</span>
+                <button class="btn-qty plus" onclick="adjustStock('tom', 1)">+</button>
+            </div>
+        </div>
     </div>
 
-    <!-- TAB 2: GIÁ BÁN -->
+    <!-- TAB 2: NẤU & BÁN HÀNG -->
+    <div class="page-content" id="page-nau">
+        <div class="kitchen-box">
+            <div style="font-size: 24px;" id="customer-avatar">👧</div>
+            <div style="font-size: 11px; text-align: center; color: var(--primary-orange); font-weight:700;" id="customer-order">
+                "Cho mình 1 suất <b>Bò Cuộn Nấm</b> ướp <b>Phô Mai</b> đem <b>Nướng Chảo</b>!"
+            </div>
+        </div>
+
+        <div class="kitchen-box">
+            <div style="font-size: 10px; color: #777;">BẾP ĐANG CHUẨN BỊ:</div>
+            <div style="display:flex; gap:4px; font-size:11px; font-weight:700;">
+                <span id="tag-1" style="color:var(--primary-orange);">❓ Đồ Tươi</span> +
+                <span id="tag-2" style="color:#D35400;">❓ Sốt Ướp</span>
+            </div>
+            <div id="tag-3" style="font-size:11px; color:#2980B9;">🔥 Cách chế biến: Chưa chọn</div>
+        </div>
+
+        <div style="font-size: 10px; font-weight: 700;">1. Chọn Đồ Tươi:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setIng('Bò Cuộn Nấm', '🥓')">🥓 Bò Cuộn Nấm</div>
+            <div class="btn-select" onclick="setIng('Tôm Sú', '🦐')">🦐 Tôm Sú</div>
+            <div class="btn-select" onclick="setIng('Hàu Sữa', '🦪')">🦪 Hàu Sữa</div>
+        </div>
+
+        <div style="font-size: 10px; font-weight: 700;">2. Chọn Sốt / Vị Lẩu:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setSauce('Phô Mai', '🧀')">🧀 Phô Mai</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Lẩu Mala</div>
+            <div class="btn-select" onclick="setSauce('Riêu Cua', '🦀')">🦀 Riêu Cua</div>
+        </div>
+
+        <div style="font-size: 10px; font-weight: 700;">3. Cách Chế Biến:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setMethod('Nướng Chảo', '🍳')">🍳 Nướng Chảo</div>
+            <div class="btn-select" onclick="setMethod('Nấu Lẩu', '🥘')">🥘 Nấu Lẩu</div>
+        </div>
+    </div>
+
+    <!-- TAB 3: GIÁ BÁN -->
     <div class="page-content" id="page-giaban">
-        <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🏷️ ĐIỀU CHỈNH GIÁ NIÊM YẾT</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🏷️ ĐIỀU CHỈNH GIÁ NIÊM YẾT MÓN ĂN</div>
         
         <div class="item-card">
-            <div class="item-info">
-                <div class="item-name">Bò Cuộn Nấm (Gợi ý: 99k)</div>
-                <div class="item-meta" id="warn-bo" style="color:#777;">Vốn: 45k • Lãi ổn định</div>
-            </div>
+            <div class="item-info"><div class="item-name">Bò Cuộn Nấm (Gợi ý: 99k)</div><div class="item-meta" id="warn-bo" style="color:#777;">Vốn: 45k • Lãi ổn định</div></div>
             <input type="number" class="price-input" id="price-bo" value="99" onchange="checkPrice('bo', 99)">
         </div>
 
         <div class="item-card">
-            <div class="item-info">
-                <div class="item-name">Sốt Phô Mai (Gợi ý: 35k)</div>
-                <div class="item-meta" id="warn-sot" style="color:#777;">Vốn: 20k • Lãi ổn định</div>
-            </div>
+            <div class="item-info"><div class="item-name">Sốt Phô Mai (Gợi ý: 35k)</div><div class="item-meta" id="warn-sot" style="color:#777;">Vốn: 20k • Lãi ổn định</div></div>
             <input type="number" class="price-input" id="price-sot" value="35" onchange="checkPrice('sot', 35)">
         </div>
 
         <div class="item-card">
-            <div class="item-info">
-                <div class="item-name">Lẩu Mala (Gợi ý: 159k)</div>
-                <div class="item-meta" id="warn-lau" style="color:#777;">Vốn: 60k • Lãi ổn định</div>
-            </div>
+            <div class="item-info"><div class="item-name">Lẩu Mala (Gợi ý: 159k)</div><div class="item-meta" id="warn-lau" style="color:#777;">Vốn: 60k • Lãi ổn định</div></div>
             <input type="number" class="price-input" id="price-lau" value="159" onchange="checkPrice('lau', 159)">
         </div>
     </div>
 
-    <!-- TAB 3: NÂNG CẤP -->
+    <!-- TAB 4: NÂNG CẤP & NHÂN VIÊN -->
     <div class="page-content" id="page-nangcap">
         <div class="item-card">
             <div class="item-info"><div class="item-name">💡 Biển Hiệu Đèn LED</div><div class="item-meta">Tăng 20% lượng khách ghé tiệm</div></div>
-            <button class="subtab-btn active" onclick="alert('Đã nâng cấp thành công!')">150k</button>
+            <button class="subtab-btn active" onclick="buyItem(150)">150k</button>
         </div>
         <div class="item-card">
             <div class="item-info"><div class="item-name">🪑 Bàn Ghế Gỗ Cozy</div><div class="item-meta">Khách chờ lâu hơn 25% không bỏ về</div></div>
-            <button class="subtab-btn active" onclick="alert('Đã nâng cấp thành công!')">200k</button>
+            <button class="subtab-btn active" onclick="buyItem(200)">200k</button>
+        </div>
+        <div class="item-card">
+            <div class="item-info"><div class="item-name">💁‍♀️ Bé Ớt • Phục Vụ</div><div class="item-meta">Xoa dịu khách chờ lâu</div></div>
+            <button class="subtab-btn active" onclick="buyItem(300)">300k</button>
+        </div>
+        <div class="item-card">
+            <div class="item-info"><div class="item-name">👨‍🍳 Chú Bảy • Bếp Trưởng</div><div class="item-meta">Tự động chọn đúng đồ tươi</div></div>
+            <button class="subtab-btn active" onclick="buyItem(400)">400k</button>
         </div>
     </div>
 
-    <!-- TAB 4: ĐÁNH GIÁ -->
+    <!-- TAB 5: ĐÁNH GIÁ -->
     <div class="page-content" id="page-danhgia">
-        <div style="font-size: 12px; font-weight: 700;">⭐ Tổng quan đánh giá: 4.8 / 5.0 (400 đánh giá)</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">✨ Đặng Nhàn</div><div class="item-meta">"Vị vừa miệng, ghiền luôn rồi ❤️"</div></div></div>
+        <div style="font-size: 12px; font-weight: 700;" id="rating-title">⭐ Tổng quan đánh giá: 0.0 / 5.0 (0 đánh giá)</div>
+        <div class="item-card"><div class="item-info"><div class="item-name">💡 Mẹo nhận 5 sao</div><div class="item-meta">Hãy phục vụ đúng món khách gọi để nhận phản hồi tích cực!</div></div></div>
     </div>
 
-    <!-- TAB 5: SỔ SÁCH -->
+    <!-- TAB 6: SỔ SÁCH -->
     <div class="page-content" id="page-sosach">
         <div style="font-size: 12px; font-weight: 700; color: var(--primary-orange);">📊 TỔNG KẾT TÀI CHÍNH CUỐI NGÀY</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Doanh thu bán hàng</div><div class="item-meta" style="color:green;" id="sum-revenue">+0k</div></div></div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Nhập hàng nguyên liệu</div><div class="item-meta" style="color:red;" id="sum-import">-125k</div></div></div>
         <div class="item-card"><div class="item-info"><div class="item-name">Mặt bằng & Điện nước</div><div class="item-meta" style="color:red;">-115k</div></div></div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Lương nhân viên (Bé Ớt, Chú Bảy)</div><div class="item-meta" style="color:red;">-150k</div></div></div>
+        <div class="item-card"><div class="item-info"><div class="item-name">Lương nhân viên</div><div class="item-meta" style="color:red;">-150k</div></div></div>
     </div>
 
     <!-- ACTION BAR -->
@@ -253,10 +295,10 @@
     <div class="modal-overlay" id="theme-modal">
         <div class="settings-card">
             <div style="text-align: center; font-size: 14px; font-weight: 700;">Màu giao diện</div>
-            <div class="theme-grid">
-                <div class="theme-item" onclick="setTheme('theme-kem-sua', 'Kem sữa')"><div class="circle-color" style="background:#FAF1E6;"></div><span style="font-size:10px;">Kem sữa</span></div>
-                <div class="theme-item" onclick="setTheme('theme-nau-ca-phe', 'Nâu cà phê')"><div class="circle-color" style="background:#3E2723;"></div><span style="font-size:10px;">Nâu cà phê</span></div>
-                <div class="theme-item" onclick="setTheme('theme-dem-diu', 'Đêm dịu')"><div class="circle-color" style="background:#2D242D;"></div><span style="font-size:10px;">Đêm dịu</span></div>
+            <div class="theme-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+                <div class="theme-item" onclick="setTheme('theme-kem-sua', 'Kem sữa')" style="padding:10px; text-align:center; background:#FFF; border-radius:8px; cursor:pointer;"><span style="font-size:10px;">Kem sữa</span></div>
+                <div class="theme-item" onclick="setTheme('theme-nau-ca-phe', 'Nâu cà phê')" style="padding:10px; text-align:center; background:#FFF; border-radius:8px; cursor:pointer;"><span style="font-size:10px;">Nâu cà phê</span></div>
+                <div class="theme-item" onclick="setTheme('theme-dem-diu', 'Đêm dịu')" style="padding:10px; text-align:center; background:#FFF; border-radius:8px; cursor:pointer;"><span style="font-size:10px;">Đêm dịu</span></div>
             </div>
             <button class="btn-big" style="margin-top:10px;" onclick="closeThemeModal()">Xong</button>
         </div>
@@ -266,7 +308,10 @@
 <script>
     let day = 1;
     let money = 250;
-    let stock = { bo: 2, sot: 3, lau: 1 };
+    let stars = 0.0;
+    let reviewsCount = 0;
+    let stock = { bo: 2, sot: 3, lau: 1, tom: 2 };
+    let player = { ing: null, sauce: null, method: null };
     let isRunning = false;
     let bgmPlaying = false;
 
@@ -294,6 +339,10 @@
         document.getElementById(`qty-${type}`).innerText = stock[type];
     }
 
+    function setIng(name, icon) { player.ing = name; document.getElementById('tag-1').innerText = `${icon} ${name}`; }
+    function setSauce(name, icon) { player.sauce = name; document.getElementById('tag-2').innerText = `${icon} ${name}`; }
+    function setMethod(name, icon) { player.method = name; document.getElementById('tag-3').innerText = `🔥 Cách chế biến: ${icon} ${name}`; }
+
     function checkPrice(type, basePrice) {
         let val = parseInt(document.getElementById(`price-${type}`).value);
         let warnEl = document.getElementById(`warn-${type}`);
@@ -306,6 +355,16 @@
         }
     }
 
+    function buyItem(cost) {
+        if(money >= cost) {
+            money -= cost;
+            document.getElementById('money').innerText = money;
+            alert('🎉 Mua/Nâng cấp thành công!');
+        } else {
+            alert('💰 Không đủ tiền trong KÉT!');
+        }
+    }
+
     function startDayTimer() {
         if(isRunning) return;
         isRunning = true;
@@ -314,6 +373,7 @@
         let btn = document.getElementById('open-shop-btn');
         btn.style.background = "#E67E22";
         btn.innerText = "⏳ Quán đang mở cửa đón khách...";
+        switchTab('nau');
 
         let timer = setInterval(() => {
             minute += 30;
@@ -324,12 +384,18 @@
                 clearInterval(timer);
                 isRunning = false;
                 let dailyRevenue = 380;
-                let dailyCost = 40 + 75 + 150 + 125; // Mặt bằng + Điện nước + Lương + Nhập hàng
+                let dailyCost = 115 + 150; // Mặt bằng/điện nước + lương nhân viên
                 let netProfit = dailyRevenue - dailyCost;
                 money += netProfit;
 
+                reviewsCount += 5;
+                stars = 4.8;
+
                 document.getElementById('money').innerText = money;
+                document.getElementById('stars').innerText = stars;
+                document.getElementById('rating-title').innerText = `⭐ Tổng quan đánh giá: ${stars} / 5.0 (${reviewsCount} đánh giá)`;
                 document.getElementById('sum-revenue').innerText = `+${dailyRevenue}k`;
+
                 btn.style.background = "var(--primary-orange)";
                 btn.innerText = "🔔 Mở cửa ngày " + (++day) + " (10:00 - 22:00)";
                 document.getElementById('day-label').innerText = "Ngày " + day;
