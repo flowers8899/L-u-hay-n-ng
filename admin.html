@@ -3,63 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý món - Tiệm Lẩu</title>
+  <title>Quản Lý Menu - Tiệm Lẩu & Nướng</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-card { background: white; padding: 14px; border-radius: 12px; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .form-control { padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; }
+    .item-manage-list { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; margin-top: 8px; }
+    .manage-item { display: flex; align-items: center; justify-content: space-between; background: #fff5f6; padding: 8px 12px; border-radius: 8px; }
+    .manage-item img { width: 32px; height: 32px; object-fit: contain; }
+    .btn-del { background: #ff4d4f; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+  </style>
 </head>
 <body>
   <div id="app">
     <div class="store-banner">
-      <h2>⚙️ Quản lý thực đơn</h2>
+      <h2>⚙️ Quản Lý Thực Đơn</h2>
+      <div class="banner-sub">Tiệm Lẩu & Nướng</div>
     </div>
 
-    <div class="quest-box">
-      <h3>Thêm món mới</h3>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <input type="text" id="itemName" placeholder="Tên món" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
-        <input type="text" id="itemImg" placeholder="URL ảnh minh họa (PNG)" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
-        <select id="itemCat" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+    <!-- FORM THÊM MÓN -->
+    <div class="admin-card">
+      <h3>➕ Thêm món mới</h3>
+      <div class="form-group">
+        <input type="text" id="itemName" class="form-control" placeholder="Tên món (vd: Ba chỉ bò Mỹ)">
+        <input type="text" id="itemImg" class="form-control" placeholder="URL ảnh PNG (để trống nếu dùng mặc định)">
+        <select id="itemCat" class="form-control">
           <option value="broth">Nước lẩu</option>
           <option value="topping">Topping / Đồ nướng</option>
         </select>
-        <input type="number" id="itemPrice" placeholder="Giá bán (đ)" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
-        <input type="number" id="itemCost" placeholder="Giá vốn (đ)" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+        <input type="number" id="itemPrice" class="form-control" placeholder="Giá bán (VNĐ)">
+        <input type="number" id="itemCost" class="form-control" placeholder="Giá vốn nhập kho (VNĐ)">
         <button class="btn-primary" onclick="addNewItem()">Thêm vào Menu</button>
       </div>
     </div>
 
-    <button class="btn-secondary" onclick="location.href='index.html'" style="width: 100%;">⬅️ Quay lại Game</button>
-    <button class="btn-primary" onclick="resetDefaultData()" style="width: 100%; margin-top: 8px; background: #d9534f;">🔄 Khôi phục dữ liệu gốc</button>
+    <!-- DANH SÁCH MÓN HIỆN CÓ -->
+    <div class="admin-card">
+      <h3>📋 Danh sách món hiện tại</h3>
+      <div class="item-manage-list" id="manageList"></div>
+    </div>
+
+    <button class="btn-secondary" onclick="location.href='index.html'" style="width: 100%; margin-bottom: 8px;">⬅️ Quay lại Game</button>
+    <button class="btn-primary" onclick="resetDefaultData()" style="width: 100%; background: #d9534f;">🔄 Khôi phục dữ liệu gốc</button>
   </div>
 
   <script src="data.js"></script>
   <script>
+    let localData = JSON.parse(localStorage.getItem("lhg_data") || "null") || DEFAULT_DATA;
+
+    function renderManageList() {
+      const container = document.getElementById("manageList");
+      let allItems = [
+        ...localData.broth.map(x => ({ ...x, cat: "broth", catName: "Lẩu" })),
+        ...localData.topping.map(x => ({ ...x, cat: "topping", catName: "Topping" }))
+      ];
+
+      container.innerHTML = allItems.map(item => `
+        <div class="manage-item">
+          <img src="${item.img}" alt="${item.name}">
+          <div style="flex: 1; margin-left: 10px;">
+            <b>${item.name}</b> <small>(${item.catName})</small>
+            <div style="font-size: 12px; color: #666;">Bán: ${(item.price/1000).toFixed(1)}k | Vốn: ${(item.cost/1000).toFixed(1)}k</div>
+          </div>
+          <button class="btn-del" onclick="deleteItem('${item.cat}', '${item.id}')">Xóa</button>
+        </div>
+      `).join("");
+    }
+
     function addNewItem() {
-      let name = document.getElementById("itemName").value;
-      let img = document.getElementById("itemImg").value || "https://cdn-icons-png.flaticon.com/512/3081/3081829.png";
+      let name = document.getElementById("itemName").value.trim();
+      let img = document.getElementById("itemImg").value.trim();
       let cat = document.getElementById("itemCat").value;
-      let price = parseInt(document.getElementById("itemPrice").value) || 20000;
-      let cost = parseInt(document.getElementById("itemCost").value) || 8000;
+      let price = parseInt(document.getElementById("itemPrice").value) || 25000;
+      let cost = parseInt(document.getElementById("itemCost").value) || 10000;
 
       if (!name) return alert("Vui lòng nhập tên món!");
+      if (!img) {
+        img = cat === "broth" 
+          ? "https://cdn-icons-png.flaticon.com/512/3081/3081829.png" 
+          : "https://cdn-icons-png.flaticon.com/512/3143/3143643.png";
+      }
 
-      let localData = JSON.parse(localStorage.getItem("lhg_data") || "null") || DEFAULT_DATA;
       let newId = cat[0] + Date.now();
-      
       localData[cat].push({ id: newId, name, img, price, cost, unlock: 1 });
-      localStorage.setItem("lhg_data", JSON.stringify(localData));
       
+      localStorage.setItem("lhg_data", JSON.stringify(localData));
       alert("Đã thêm món mới thành công!");
-      location.href = "index.html";
+      
+      document.getElementById("itemName").value = "";
+      document.getElementById("itemImg").value = "";
+      renderManageList();
+    }
+
+    function deleteItem(cat, id) {
+      if (confirm("Bạn có chắc chắn muốn xóa món này khỏi menu?")) {
+        localData[cat] = localData[cat].filter(x => x.id !== id);
+        localStorage.setItem("lhg_data", JSON.stringify(localData));
+        renderManageList();
+      }
     }
 
     function resetDefaultData() {
-      if (confirm("Xác nhận xóa hết dữ liệu và khôi phục mặc định?")) {
+      if (confirm("Xác nhận xóa hết dữ liệu tùy chỉnh và khôi phục về mặc định?")) {
         localStorage.removeItem("lhg_data");
         localStorage.removeItem("lhg_state");
-        alert("Đã khôi phục mặc định!");
+        alert("Đã khôi phục dữ liệu mặc định thành công!");
         location.href = "index.html";
       }
     }
+
+    renderManageList();
   </script>
 </body>
 </html>
