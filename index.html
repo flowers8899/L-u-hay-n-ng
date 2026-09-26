@@ -75,7 +75,7 @@
         }
 
         .subtab-btn {
-            flex: 1; min-width: 70px; padding: 8px 4px; background: var(--card-bg);
+            flex: 1; min-width: 65px; padding: 8px 2px; background: var(--card-bg);
             color: #AAA; font-size: 10px; font-weight: 700; border-radius: 10px;
             border: none; text-align: center; cursor: pointer;
         }
@@ -87,7 +87,7 @@
 
         .kitchen-box {
             background: var(--card-bg); border-radius: 16px; padding: 12px;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
             border: 1px solid var(--border-color); margin-bottom: 10px;
         }
 
@@ -143,6 +143,13 @@
             padding: 10px 4px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;
         }
         .circle-color { width: 22px; height: 22px; border-radius: 50%; }
+
+        .menu-board {
+            background-color: var(--menu-green); border: 3px solid #142B22;
+            border-radius: 16px; padding: 14px; display: flex; flex-direction: column;
+            gap: 10px; color: #E8F5E9; flex: 1;
+        }
+        .menu-row { display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 1px dotted rgba(255,255,255,0.15); }
     </style>
 </head>
 <body class="theme-dem-diu">
@@ -159,7 +166,7 @@
         </div>
     </div>
 
-    <!-- HEADER HEADER -->
+    <!-- HEADER STATUS -->
     <div class="header">
         <div class="stat-badge" onclick="openSettingsModal()">⚙️ Ngày 1</div>
         <div class="stat-badge" style="color:#A8E6CF;">KÉT: <span id="money">250</span>k</div>
@@ -169,96 +176,113 @@
     <!-- SUB-NAVBAR -->
     <div class="top-subnav">
         <button class="subtab-btn active" onclick="switchTab('play')">🍳 Bán Hàng</button>
+        <button class="subtab-btn" onclick="switchTab('menu')">📖 Menu Giá</button>
         <button class="subtab-btn" onclick="switchTab('equip')">🛠️ Trang Bị</button>
         <button class="subtab-btn" onclick="switchTab('ads')">📢 Quảng Cáo</button>
         <button class="subtab-btn" onclick="switchTab('staff')">👥 Nhân Viên</button>
     </div>
 
-    <!-- TAB 1: BÁN HÀNG & MÓN ĂN SIÊU ĐA DẠNG -->
+    <!-- TAB 1: BÁN HÀNG & LẮP RÁP MÓN -->
     <div class="page-content active" id="page-play">
         <div class="kitchen-box">
             <div style="font-size: 26px;" id="customer-avatar">👧</div>
             <div style="font-size: 12px; text-align: center; color: #FFD54F;" id="customer-order">
-                "Cho mình 1 suất <b>Ba Chỉ Heo</b> sốt <b>Sốt Chao Đỏ</b> đem <b>Nướng Chảo</b>!"
+                "Cho mình 1 suất <b>Bò Cuộn Nấm Kim Châm</b> ướp <b>Sốt Phô Mai</b> chấm <b>Phô Mai Kéo Sợi</b> đem <b>Nướng Chảo</b>!"
             </div>
         </div>
 
         <div class="kitchen-box">
-            <div style="font-size: 11px; color: #AAA;">MÓN ĐANG CHẾ BIẾN:</div>
-            <div style="display:flex; gap:6px; font-size:12px; font-weight:700;">
+            <div style="font-size: 10px; color: #AAA;">MÓN ĐANG CÓ TRÊN BẾP:</div>
+            <div style="display:flex; gap:4px; font-size:11px; font-weight:700; flex-wrap:wrap; justify-content:center;">
                 <span id="tag-1" style="color:#FF8E9E;">❓ Đồ Tươi</span> +
-                <span id="tag-2" style="color:#FFD54F;">❓ Sốt/Nước Dùng</span>
+                <span id="tag-2" style="color:#FFD54F;">❓ Sốt Ướp</span> +
+                <span id="tag-4" style="color:#81C784;">❓ Sốt Chấm</span>
             </div>
-            <div id="tag-3" style="font-size:11px; color:#81C784;">🔥 Cách chế biến: Chưa chọn</div>
+            <div id="tag-3" style="font-size:11px; color:#A8E6CF;">🔥 Cách chế biến: Chưa chọn</div>
         </div>
 
-        <!-- 1. THỊT HEO (MỚI BỔ SUNG) -->
-        <div class="category-title">🐖 Thịt Heo:</div>
+        <!-- 1. CÁC LOẠI BÒ PHONG PHÚ -->
+        <div class="category-title">🥩 Thịt Bò Chọn Lọc:</div>
         <div class="grid-3">
-            <div class="btn-select" onclick="setIng('Ba Chỉ Heo', '🥓')">🥓 Ba Chỉ Heo</div>
-            <div class="btn-select" onclick="setIng('Nạc Nọng Heo', '🥩')">🥩 Nạc Nọng</div>
-            <div class="btn-select" onclick="setIng('Vú Heo/Nầm', '🥓')">🥓 Vú Heo/Nầm</div>
-            <div class="btn-select" onclick="setIng('Sườn Heo', '🍖')">🍖 Sườn Heo</div>
-            <div class="btn-select" onclick="setIng('Chăng Dừng', '🥩')">🥩 Chăng Dừng</div>
-            <div class="btn-select" onclick="setIng('Lòng Heo Béo', '🥣')">🥣 Lòng Heo Béo</div>
-        </div>
-
-        <!-- 2. HẢI SẢN (HÀU, TÔM, CÁ, MỰC) -->
-        <div class="category-title">🦐 Hải Sản Tươi Sống:</div>
-        <div class="grid-3">
-            <div class="btn-select" onclick="setIng('Hàu Đại Dương', '🦪')">🦪 Hàu Đại Dương</div>
-            <div class="btn-select" onclick="setIng('Tôm Sú', '🦐')">🦐 Tôm Sú</div>
-            <div class="btn-select" onclick="setIng('Cá Thát Lát', '🐟')">🐟 Cá Thát Lát</div>
-            <div class="btn-select" onclick="setIng('Cá Hú/Cá Diêu Hồng', '🐟')">🐟 Cá Tươi</div>
-            <div class="btn-select" onclick="setIng('Mực Ống', '🦑')">🦑 Mực Ống</div>
-            <div class="btn-select" onclick="setIng('Bạch Tuộc', '🐙')">🐙 Bạch Tuộc</div>
-        </div>
-
-        <!-- 3. BÒ & GÀ -->
-        <div class="category-title">🥩 Thịt Bò & Gà:</div>
-        <div class="grid-3">
-            <div class="btn-select" onclick="setIng('Lõi Vai Bò Mỹ', '🥩')">🥩 Lõi Vai Bò</div>
+            <div class="btn-select" onclick="setIng('Bò Cuộn Nấm', '🥓')">🥓 Bò Cuộn Nấm</div>
+            <div class="btn-select" onclick="setIng('Bò Kobe', '🥩')">🥩 Bò Kobe Thượng Hạng</div>
+            <div class="btn-select" onclick="setIng('Lõi Vai Bò', '🥩')">🥩 Lõi Vai Bò Mỹ</div>
             <div class="btn-select" onclick="setIng('Ba Chỉ Bò', '🥓')">🥓 Ba Chỉ Bò</div>
             <div class="btn-select" onclick="setIng('Gù Bò Tươi', '🍖')">🍖 Gù Bò</div>
-            <div class="btn-select" onclick="setIng('Cánh Gà', '🍗')">🍗 Cánh Gà</div>
-            <div class="btn-select" onclick="setIng('Sụn Gà Giòn', '🍗')">🍗 Sụn Gà Giòn</div>
-            <div class="btn-select" onclick="setIng('Gà Thả Mườn', '🐔')">🐔 Gà Ta Mường</div>
+            <div class="btn-select" onclick="setIng('Sách Bò', '🥣')">🥣 Sách Bò Giòn</div>
         </div>
 
-        <!-- 4. TOPPING THẢ LẨU (MỚI BỔ SUNG) -->
-        <div class="category-title">🍡 Topping Thả Lẩu & Món Phụ:</div>
+        <!-- 2. HEO, HẢI SẢN & GÀ -->
+        <div class="category-title">🦐 Heo, Hải Sản & Gà:</div>
         <div class="grid-3">
-            <div class="btn-select" onclick="setIng('Cá Viên Chiên', '🍡')">🍡 Cá Viên Chiên</div>
+            <div class="btn-select" onclick="setIng('Ba Chỉ Heo', '🥓')">🥓 Ba Chỉ Heo</div>
+            <div class="btn-select" onclick="setIng('Vú Heo/Nầm', '🥓')">🥓 Vú Heo/Nầm</div>
+            <div class="btn-select" onclick="setIng('Hàu Đại Dương', '🦪')">🦪 Hàu Đại Dương</div>
+            <div class="btn-select" onclick="setIng('Tôm Sú Tươi', '🦐')">🦐 Tôm Sú</div>
+            <div class="btn-select" onclick="setIng('Bạch Tuộc', '🐙')">🐙 Bạch Tuộc</div>
+            <div class="btn-select" onclick="setIng('Sụn Gà Giòn', '🍗')">🍗 Sụn Gà Giòn</div>
+        </div>
+
+        <!-- 3. TOPPING THẢ LẨU -->
+        <div class="category-title">🍡 Topping Thả Lẩu & Rau:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setIng('Cá Viên', '🍡')">🍡 Cá Viên</div>
             <div class="btn-select" onclick="setIng('Xúc Xích', '🌭')">🌭 Xúc Xích</div>
             <div class="btn-select" onclick="setIng('Thanh Cua', '🦀')">🦀 Thanh Cua</div>
             <div class="btn-select" onclick="setIng('Đậu Hũ Tươi', '🧈')">🧈 Đậu Hũ</div>
-            <div class="btn-select" onclick="setIng('Bánh Gạo Tok', '🍡')">🍡 Bánh Gạo Tok</div>
-            <div class="btn-select" onclick="setIng('Rau Nấm Tổng Hợp', '🥬')">🥬 Rau Nấm Tươi</div>
+            <div class="btn-select" onclick="setIng('Nấm Kim Châm', '🍄')">🍄 Nấm Kim Châm</div>
+            <div class="btn-select" onclick="setIng('Rau Tươi', '🥬')">🥬 Rau Tươi Tổng Hợp</div>
         </div>
 
-        <!-- 5. NƯỚC LẨU & SỐT -->
-        <div class="category-title">🍲 Nước Lẩu & Sốt Ướp:</div>
+        <!-- 4. SỐT ƯỚP / NƯỚC LẨU -->
+        <div class="category-title">🍲 Sốt Ướp & Nước Lẩu:</div>
         <div class="grid-3">
-            <div class="btn-select" onclick="setSauce('Lẩu Riêu Cua', '🦀')">🦀 Riêu Cua</div>
-            <div class="btn-select" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Mala Tứ Xuyên</div>
-            <div class="btn-select" onclick="setSauce('Lẩu Gà Lá É', '🍃')">🍃 Gà Lá É</div>
-            <div class="btn-select" onclick="setSauce('Lẩu Nấm', '🍄')">🍄 Nấm Bổ dưỡng</div>
-            <div class="btn-select" onclick="setSauce('Lẩu Tomyum', '🍲')">🍲 Tomyum Thái</div>
-            <div class="btn-select" onclick="setSauce('Lẩu Kim Chi', '🥬')">🥬 Kim Chi</div>
             <div class="btn-select" onclick="setSauce('Sốt Phô Mai', '🧀')">🧀 Phô Mai</div>
-            <div class="btn-select" onclick="setSauce('Sốt Trứng Muối', '🥚')">🥚 Trứng Muối</div>
-            <div class="btn-select" onclick="setSauce('Sốt Chao Đỏ', '🥣')">🥣 Sốt Chao</div>
+            <div class="btn-select" onclick="setSauce('Trứng Muối', '🥚')">🥚 Trứng Muối</div>
+            <div class="btn-select" onclick="setSauce('Sốt Bơ Tỏi', '🧄')">🧄 Bơ Tỏi</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Riêu Cua', '🦀')">🦀 Lẩu Riêu Cua</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Lẩu Mala</div>
+            <div class="btn-select" onclick="setSauce('Lẩu Nấm', '🍄')">🍄 Lẩu Nấm</div>
+        </div>
+
+        <!-- 5. SỐT CHẤM KÈM (ĐÃ BỔ SUNG CÁC LOẠI MỚI) -->
+        <div class="category-title">🥣 Nước Sốt Chấm Kèm:</div>
+        <div class="grid-3">
+            <div class="btn-select" onclick="setDip('Phô Mai Kéo Sợi', '🧀')">🧀 Phô Mai Kéo Sợi</div>
+            <div class="btn-select" onclick="setDip('Trứng Muối Hoàng Kim', '🥚')">🥚 Trứng Muối</div>
+            <div class="btn-select" onclick="setDip('Bơ Tỏi Nóng', '🧄')">🧄 Bơ Tỏi Nóng</div>
+            <div class="btn-select" onclick="setDip('Muối Ớt Xanh', '🟢')">🟢 Muối Ớt Xanh</div>
+            <div class="btn-select" onclick="setDip('Sốt Chao Đỏ', '🥣')">🥣 Sốt Chao Đỏ</div>
+            <div class="btn-select" onclick="setDip('Sốt Mắm Tắc', '🍋')">🍋 Sốt Mắm Tắc</div>
+            <div class="btn-select" onclick="setDip('Sốt Me Cốt Dừa', '🥥')">🥥 Sốt Me Cốt Dừa</div>
+            <div class="btn-select" onclick="setDip('Sốt Tiêu Đen', '🫑')">🫑 Sốt Tiêu Đen</div>
+            <div class="btn-select" onclick="setDip('Kim Chi Hàn Quốc', '🥬')">🥬 Kim Chi</div>
         </div>
 
         <div class="category-title">🔥 Hình Thức Chế Biến:</div>
         <div class="grid-3" style="margin-bottom: 15px;">
-            <div class="btn-select" onclick="setMethod('Nấu Nồi Lẩu', '🥘')">🥘 Nấu Nồi Lẩu</div>
             <div class="btn-select" onclick="setMethod('Nướng Chảo', '🍳')">🍳 Nướng Chảo</div>
-            <div class="btn-select" onclick="setMethod('Nướng Vỉ Than', '🪵')">🪵 Nướng Than</div>
+            <div class="btn-select" onclick="setMethod('Nướng Than', '🪵')">🪵 Nướng Than</div>
+            <div class="btn-select" onclick="setMethod('Nấu Nồi Lẩu', '🥘')">🥘 Nấu Nồi Lẩu</div>
         </div>
     </div>
 
-    <!-- TAB 2: TRANG BỊ -->
+    <!-- TAB 2: MENU GIÁ BÁN -->
+    <div class="page-content" id="page-menu">
+        <div class="menu-board">
+            <div style="text-align: center; font-weight: 700; font-size: 13px; color: #FFF; margin-bottom: 6px;">📖 THỰC ĐƠN NIÊM YẾT</div>
+            <div class="menu-row"><span>Bò Cuộn Nấm Kim Châm</span><span style="color:#FFD54F;">99k</span></div>
+            <div class="menu-row"><span>Bò Kobe Thượng Hạng</span><span style="color:#FFD54F;">189k</span></div>
+            <div class="menu-row"><span>Lõi Vai Bò Mỹ</span><span style="color:#FFD54F;">129k</span></div>
+            <div class="menu-row"><span>Hàu Nướng Phô Mai</span><span style="color:#FFD54F;">115k</span></div>
+            <div class="menu-row"><span>Lẩu Riêu Cua Đồng</span><span style="color:#FFD54F;">169k</span></div>
+            <div class="menu-row"><span>Lẩu Mala Tứ Xuyên</span><span style="color:#FFD54F;">159k</span></div>
+            <div class="menu-row"><span>Sốt Chấm Phô Mai / Trứng Muối</span><span style="color:#FFD54F;">20k</span></div>
+            <div class="menu-row"><span>Topping Cá Viên / Thanh Cua</span><span style="color:#FFD54F;">25k</span></div>
+        </div>
+    </div>
+
+    <!-- TAB 3: TRANG BỊ -->
     <div class="page-content" id="page-equip">
         <div class="upgrade-card-v2">
             <div class="card-left"><div class="card-icon">🧃</div><div><div class="card-title">Máy dán nắp tự động</div><div class="card-desc">Pha đúng món tự dán nắp, tip +30%</div></div></div>
@@ -272,25 +296,21 @@
             <div class="card-left"><div class="card-icon">🪑</div><div><div class="card-title">Bàn ghế cho khách ngồi</div><div class="card-desc">Khách chịu chờ lâu hơn 25%</div></div></div>
             <button class="subtab-btn" onclick="buyItem(200)">200k 💰</button>
         </div>
-        <div class="upgrade-card-v2">
-            <div class="card-left"><div class="card-icon">📦</div><div><div class="card-title">Mở rộng quầy</div><div class="card-desc">Phục vụ cùng lúc 4 khách</div></div></div>
-            <button class="subtab-btn" onclick="buyItem(300)">300k 💰</button>
-        </div>
     </div>
 
-    <!-- TAB 3: QUẢNG CÁO -->
+    <!-- TAB 4: QUẢNG CÁO -->
     <div class="page-content" id="page-ads">
         <div class="upgrade-card-v2">
             <div class="card-left"><div class="card-icon">📢</div><div><div class="card-title">Quảng cáo mạng xã hội</div><div class="card-desc">Thêm 25% khách ghé quán</div></div></div>
             <button class="subtab-btn" onclick="buyItem(180)">180k 💰</button>
         </div>
         <div class="upgrade-card-v2">
-            <div class="card-left"><div class="card-icon">🎨</div><div><div class="card-title">Bộ nhận diện thương hiệu</div><div class="card-desc">Tự thiết kế tem in lên ly, bao bì</div></div></div>
+            <div class="card-left"><div class="card-icon">🎨</div><div><div class="card-title">Bộ nhận diện thương hiệu</div><div class="card-desc">Tự thiết kế tem in bao bì</div></div></div>
             <button class="subtab-btn" onclick="buyItem(220)">220k 💰</button>
         </div>
     </div>
 
-    <!-- TAB 4: NHÂN VIÊN -->
+    <!-- TAB 5: NHÂN VIÊN -->
     <div class="page-content" id="page-staff">
         <div class="upgrade-card-v2">
             <div class="card-left"><div class="card-icon">💁‍♀️</div><div><div class="card-title">Bé Ớt • Phục Vụ</div><div class="card-desc">Tự động xoa dịu khách chờ lâu</div></div></div>
@@ -300,17 +320,9 @@
             <div class="card-left"><div class="card-icon">👨‍🍳</div><div><div class="card-title">Chú Bảy • Bếp Trưởng</div><div class="card-desc">Tự động chọn đúng Đồ tươi khi có order</div></div></div>
             <button class="subtab-btn" onclick="buyItem(400)">400k 💰</button>
         </div>
-        <div class="upgrade-card-v2">
-            <div class="card-left"><div class="card-icon">💰</div><div><div class="card-title">Chị Béo • Thu Ngân</div><div class="card-desc">Tự cộng +10% doanh thu mỗi đơn</div></div></div>
-            <button class="subtab-btn" onclick="buyItem(350)">350k 💰</button>
-        </div>
-        <div class="upgrade-card-v2">
-            <div class="card-left"><div class="card-icon">🛵</div><div><div class="card-title">Cậu Shipper Tốc Độ</div><div class="card-desc">Mở nhận đơn Lẩu Nướng Online</div></div></div>
-            <button class="subtab-btn" onclick="buyItem(500)">500k 💰</button>
-        </div>
     </div>
 
-    <!-- NÚT GIAO MÓN BÀN -->
+    <!-- ACTION BUTTON -->
     <div class="bottom-action-bar">
         <button class="btn-pink-big" onclick="serveOrder()">🔔 Giao Món Bàn (Mở cửa Ngày 1)</button>
     </div>
@@ -319,7 +331,7 @@
     <div class="modal-overlay" id="settings-modal">
         <div class="settings-card">
             <div style="text-align: center; font-size: 16px; font-weight: 700; color: #FFF;">⚙️ Cài đặt</div>
-            <div class="setting-row"><div>📖 Hướng dẫn</div></div>
+            <div class="setting-row" onclick="openGuideModal()"><div>📖 Hướng dẫn cách chơi</div><div style="color:#AAA;">▶</div></div>
             <div class="setting-row"><div>🎁 Có gì mới</div><div style="color:#AAA;">v3.11</div></div>
             <div class="setting-row" onclick="openThemeModal()">
                 <div>✏️ Màu giao diện</div>
@@ -332,6 +344,19 @@
             <div class="setting-row" style="background:#FF6B6B;" onclick="closeSettingsModal()">
                 <div style="color:#FFF;">❌ Đóng Cài Đặt</div>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP HƯỚNG DẪN CHI TIẾT -->
+    <div class="modal-overlay" id="guide-modal">
+        <div class="settings-card">
+            <div style="text-align: center; font-size: 15px; font-weight: 700; color: #FFF;">📖 HƯỚNG DẪN CHƠI</div>
+            <div style="font-size: 11px; line-height: 1.5; color: #DDD;">
+                1. <b>Nhận Đơn:</b> Khách đến sẽ gọi món ghép gồm: Đồ Tươi + Sốt Ướp + Sốt Chấm + Cách Chế Biến.<br><br>
+                2. <b>Chế Biến:</b> Lần lượt bấm đúng các nguyên liệu theo yêu cầu để xếp lên bếp.<br><br>
+                3. <b>Giao Món:</b> Bấm nút hồng bên dưới để giao món, nhận tiền KÉT và điểm đánh giá ⭐.
+            </div>
+            <button class="btn-pink-big" style="margin-top: 10px;" onclick="closeGuideModal()">Đã Hiểu</button>
         </div>
     </div>
 
@@ -362,26 +387,6 @@
                     <div class="circle-color" style="background: linear-gradient(135deg, #FF6F00 50%, #FFE0B2 50%);"></div>
                     <span style="font-size: 10px;">Cam đào</span>
                 </div>
-                <div class="theme-item" onclick="setTheme('theme-tra-thai', 'Trà Thái')">
-                    <div class="circle-color" style="background: linear-gradient(135deg, #E65100 50%, #FFCC80 50%);"></div>
-                    <span style="font-size: 10px;">Trà Thái</span>
-                </div>
-                <div class="theme-item" onclick="setTheme('theme-vang-chanh', 'Vàng chanh')">
-                    <div class="circle-color" style="background: linear-gradient(135deg, #FBC02D 50%, #FFF9C4 50%);"></div>
-                    <span style="font-size: 10px;">Vàng chanh</span>
-                </div>
-                <div class="theme-item" onclick="setTheme('theme-xanh-matcha', 'Xanh matcha')">
-                    <div class="circle-color" style="background: linear-gradient(135deg, #388E3C 50%, #C8E6C9 50%);"></div>
-                    <span style="font-size: 10px;">Xanh matcha</span>
-                </div>
-                <div class="theme-item" onclick="setTheme('theme-bac-ha', 'Bạc hà')">
-                    <div class="circle-color" style="background: linear-gradient(135deg, #009688 50%, #B2DFDB 50%);"></div>
-                    <span style="font-size: 10px;">Bạc hà</span>
-                </div>
-                <div class="theme-item" onclick="setTheme('theme-xanh-bien', 'Xanh biển')">
-                    <div class="circle-color" style="background: linear-gradient(135deg, #1976D2 50%, #BBDEFB 50%);"></div>
-                    <span style="font-size: 10px;">Xanh biển</span>
-                </div>
                 <div class="theme-item" onclick="setTheme('theme-dem-diu', 'Đêm dịu')">
                     <div class="circle-color" style="background: linear-gradient(135deg, #FF8E9E 50%, #2D242D 50%);"></div>
                     <span style="font-size: 10px;">Đêm dịu</span>
@@ -397,7 +402,7 @@
     let money = 250;
     let stars = 0;
     let reviewsCount = 0;
-    let player = { ing: null, sauce: null, method: null };
+    let player = { ing: null, sauce: null, dip: null, method: null };
     let bgmPlaying = false;
 
     // LOADING SCREEN
@@ -422,25 +427,27 @@
 
     function setIng(name, icon) { player.ing = name; document.getElementById('tag-1').innerText = `${icon} ${name}`; }
     function setSauce(name, icon) { player.sauce = name; document.getElementById('tag-2').innerText = `${icon} ${name}`; }
+    function setDip(name, icon) { player.dip = name; document.getElementById('tag-4').innerText = `${icon} ${name}`; }
     function setMethod(name, icon) { player.method = name; document.getElementById('tag-3').innerText = `🔥 Cách chế biến: ${icon} ${name}`; }
 
     function serveOrder() {
         if (!player.ing || !player.sauce || !player.method) {
-            alert('Hãy chọn đủ 3 bước nguyên liệu!');
+            alert('Hãy chọn đủ các thành phần nguyên liệu!');
             return;
         }
 
-        money += 130;
+        money += 150;
         reviewsCount++;
         stars = ((stars * (reviewsCount - 1) + 5) / reviewsCount).toFixed(1);
 
         document.getElementById('money').innerText = money;
         document.getElementById('stars').innerText = stars;
 
-        alert('🎉 Phục vụ xong! Khách hài lòng trả +130k và tặng 5 ⭐!');
-        player = { ing: null, sauce: null, method: null };
+        alert('🎉 Phục vụ xong! Khách rất thích món này, trả +150k và tặng 5 ⭐!');
+        player = { ing: null, sauce: null, dip: null, method: null };
         document.getElementById('tag-1').innerText = '❓ Đồ Tươi';
-        document.getElementById('tag-2').innerText = '❓ Sốt/Nước Dùng';
+        document.getElementById('tag-2').innerText = '❓ Sốt Ướp';
+        document.getElementById('tag-4').innerText = '❓ Sốt Chấm';
         document.getElementById('tag-3').innerText = '🔥 Cách chế biến: Chưa chọn';
     }
 
@@ -469,6 +476,8 @@
 
     function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
     function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
+    function openGuideModal() { document.getElementById('guide-modal').style.display = 'flex'; }
+    function closeGuideModal() { document.getElementById('guide-modal').style.display = 'none'; }
     function openThemeModal() { document.getElementById('theme-modal').style.display = 'flex'; }
     function closeThemeModal() { document.getElementById('theme-modal').style.display = 'none'; }
 
