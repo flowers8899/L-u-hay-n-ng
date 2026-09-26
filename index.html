@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lẩu Nướng Cozy</title>
+    <title>Lẩu Hay Nướng - Cozy Management Game</title>
     
-    <!-- Cấu hình Icon & Tên hiển thị khi Đưa ra màn hình chính (Fix lỗi ảnh 1) -->
+    <!-- Cấu hình PWA App Icon chuẩn màn hình chính -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Lẩu Nướng">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://img.icons8.com/emoji/192/steaming-bowl-emoji.png">
 
-    <!-- Font chữ tròn cute -->
+    <!-- Font chữ tròn cute Cozy -->
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -20,7 +20,7 @@
             --card-bg: #FFFDF9;
             --primary-orange: #FF7B54;
             --soft-pink: #FD8A8A;
-            --soft-green: #9EA1D4;
+            --soft-purple: #9EA1D4;
             --accent-green: #A8D1D1;
             --text-dark: #4A3E3D;
             --border-color: #E8D5C4;
@@ -43,6 +43,30 @@
             min-height: 100vh;
         }
 
+        /* Loading Screen */
+        #loading-screen {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-main);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-pot {
+            font-size: 60px;
+            animation: bounce 0.8s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
         /* Khung Mobile App Game */
         .game-container {
             width: 100%;
@@ -58,7 +82,7 @@
             border-radius: 20px;
         }
 
-        /* Mái che quán caro (Style Ảnh 3-4) */
+        /* Mái che quán caro Cozy */
         .roof-stripes {
             height: 14px;
             width: 100%;
@@ -72,38 +96,74 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        /* 1. TOP HEADER - Thanh chỉ số */
+        /* HEADER - Thông số & Thời tiết & Đồng hồ */
         .header {
             background-color: #FFF;
-            padding: 10px 14px;
+            padding: 8px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--border-color);
+            gap: 4px;
         }
 
         .stat-badge {
             background: #FFF5E4;
-            padding: 6px 12px;
-            border-radius: 16px;
+            padding: 5px 8px;
+            border-radius: 14px;
             color: var(--text-dark);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             border: 1px solid var(--border-color);
         }
 
-        .stat-money {
-            background: #E8F3D6;
-            color: #2D5A27;
+        .stat-money { background: #E8F3D6; color: #2D5A27; }
+
+        /* THANH ĐIỀU HƯỚNG TẬP TAB (GAMEPLAY / QUÁN / NHÂN VIÊN / BÁN ONLINE) */
+        .main-tabs {
+            display: flex;
+            background: #FFF;
+            border-bottom: 2px solid var(--border-color);
         }
 
-        /* 2. KHU VỰC KHÁCH ORDER */
+        .nav-tab {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #8D7B68;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab.active {
+            color: var(--primary-orange);
+            border-bottom: 3px solid var(--primary-orange);
+            background: #FFF5E4;
+        }
+
+        /* NỘI DUNG CÁC TRANG MÀN HÌNH */
+        .page-content {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page-content.active {
+            display: flex;
+        }
+
+        /* TRANG 1: ĐẦU BẾP & GIAO MÓN */
         .customer-section {
             background: #FFFDF9;
-            padding: 14px 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -111,33 +171,32 @@
         }
 
         .customer-avatar {
-            width: 52px;
-            height: 52px;
+            width: 50px;
+            height: 50px;
             background-color: #FFE5CA;
             border: 3px solid var(--soft-pink);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 26px;
+            font-size: 24px;
             margin-bottom: 6px;
         }
 
         .speech-bubble {
             background-color: #FFF;
             border: 2px solid var(--primary-orange);
-            border-radius: 16px;
-            padding: 10px 14px;
+            border-radius: 14px;
+            padding: 8px 12px;
             max-width: 95%;
             text-align: center;
             color: var(--text-dark);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             line-height: 1.4;
             box-shadow: 0 4px 10px rgba(255, 123, 84, 0.12);
         }
 
-        /* 3. BẾP CHẾ BIẾN & XEM TRƯỚC MÓN */
         .kitchen-area {
             flex: 1;
             padding: 10px;
@@ -151,23 +210,23 @@
         .cooking-pot {
             width: 100%;
             max-width: 340px;
-            min-height: 110px;
+            min-height: 100px;
             background: #FFF;
             border: 3px solid var(--text-dark);
-            border-radius: 20px;
+            border-radius: 18px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 10px;
-            box-shadow: inset 0 -5px 0 rgba(0,0,0,0.05), 0 6px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
         }
 
         .dish-preview {
             display: flex;
             gap: 6px;
             align-items: center;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--text-dark);
             flex-wrap: wrap;
@@ -176,21 +235,20 @@
 
         .dish-tag {
             background: #FFE6C7;
-            padding: 5px 10px;
-            border-radius: 10px;
+            padding: 4px 8px;
+            border-radius: 8px;
             border: 1px solid var(--primary-orange);
         }
 
-        /* 4. KHAY NGUYÊN LIỆU (THAO TÁC BẤM) */
         .menu-control {
             background-color: #FFF;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            padding: 14px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 12px;
             box-shadow: 0 -6px 20px rgba(0,0,0,0.06);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             border-top: 2px solid var(--border-color);
         }
 
@@ -198,17 +256,17 @@
             display: flex;
             background: #F0E5D8;
             padding: 4px;
-            border-radius: 12px;
+            border-radius: 10px;
             gap: 4px;
         }
 
         .tab {
             flex: 1;
             text-align: center;
-            padding: 8px 0;
+            padding: 6px 0;
             font-size: 11px;
             font-weight: 700;
-            border-radius: 8px;
+            border-radius: 6px;
             color: #8D7B68;
             cursor: pointer;
         }
@@ -216,186 +274,346 @@
         .tab.active {
             background: #FFF;
             color: var(--primary-orange);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
 
         .grid-options {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            max-height: 180px;
+            gap: 6px;
+            max-height: 160px;
             overflow-y: auto;
-            padding-right: 2px;
         }
 
         .option-btn {
             background-color: var(--card-bg);
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px 4px;
+            border-radius: 10px;
+            padding: 6px 2px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
             cursor: pointer;
-            transition: all 0.1s ease;
         }
 
-        .option-btn:active {
-            transform: scale(0.95);
-        }
+        .option-btn:active { transform: scale(0.95); }
+        .option-icon { font-size: 18px; }
+        .option-name { font-size: 10px; font-weight: 700; color: var(--text-dark); text-align: center; }
 
-        .option-icon { font-size: 20px; }
-        .option-name { font-size: 11px; font-weight: 700; color: var(--text-dark); text-align: center; }
-
-        /* Mút thao tác */
-        .action-bar {
-            display: flex;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
+        .action-bar { display: flex; gap: 6px; margin-top: 4px; }
         .btn-action {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: none;
-            border-radius: 14px;
-            font-size: 13px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 3px 0 rgba(0,0,0,0.1);
         }
-
         .btn-serve { background-color: #82CD47; color: #FFF; }
         .btn-reset { background-color: #FF6B6B; color: #FFF; flex: 0.35; }
+
+        /* DANH SÁCH THẺ NÂNG CẤP (QUÁN & NHÂN VIÊN & ONLINE) */
+        .upgrade-list {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .upgrade-card {
+            background: #FFF;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.03);
+        }
+
+        .upgrade-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upgrade-icon {
+            font-size: 28px;
+            background: #FAF1E6;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upgrade-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .upgrade-title { font-size: 12px; font-weight: 700; color: var(--text-dark); }
+        .upgrade-desc { font-size: 10px; color: #888; }
+        .upgrade-level { font-size: 10px; color: var(--primary-orange); font-weight: 700; }
+
+        .btn-upgrade {
+            background: #FF7B54;
+            color: #FFF;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-upgrade:disabled {
+            background: #CCC;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
 <div class="game-container">
+    <!-- SCREEN LOADING -->
+    <div id="loading-screen">
+        <div class="loading-pot">🥘</div>
+        <div style="font-weight: 700; color: var(--text-dark);">Đang chuẩn bị quán...</div>
+    </div>
+
     <div class="roof-stripes"></div>
 
-    <!-- HEADER -->
+    <!-- 1. HEADER CHỈ SỐ GAME -->
     <div class="header">
         <div class="stat-badge">⭐ <span id="stars">4.8</span></div>
-        <div class="stat-badge stat-money">💰 <span id="money">2,850</span>k</div>
-        <div class="stat-badge">📅 Ngày <span id="day">15</span></div>
+        <div class="stat-badge stat-money">💰 <span id="money">1000</span>k</div>
+        <div class="stat-badge">🕒 <span id="time">10:00</span></div>
+        <div class="stat-badge">🌤️ <span id="weather">Nắng nhẹ</span></div>
     </div>
 
-    <!-- KHÁCH ORDER -->
-    <div class="customer-section">
-        <div class="customer-avatar" id="customer-emoji">👧</div>
-        <div class="speech-bubble" id="order-text">
-            Đang tải đơn hàng...
+    <!-- 2. ĐIỀU HƯỚNG TAB -->
+    <div class="main-tabs">
+        <div class="nav-tab active" onclick="switchMainPage('kitchen')">🍳 Bếp & Món</div>
+        <div class="nav-tab" onclick="switchMainPage('decor')">🏪 Quán Đẹp</div>
+        <div class="nav-tab" onclick="switchMainPage('staff')">👨‍🍳 Nhân Viên</div>
+        <div class="nav-tab" onclick="switchMainPage('online')">🛵 Ship Online</div>
+    </div>
+
+    <!-- PAGE 1: BẾP & CHẾ BIẾN (GAMEPLAY CHÍNH) -->
+    <div class="page-content active" id="page-kitchen">
+        <div class="customer-section">
+            <div class="customer-avatar" id="customer-emoji">👧</div>
+            <div class="speech-bubble" id="order-text">Đang nhận order từ khách...</div>
+        </div>
+
+        <div class="kitchen-area">
+            <div class="cooking-pot">
+                <div style="font-size: 10px; color: var(--soft-purple); font-weight:700; margin-bottom:4px;">BẾP ĐANG LẮP RÁP MÓN:</div>
+                <div class="dish-preview">
+                    <span class="dish-tag" id="tag-ingredient">❓ Đồ tươi</span>
+                    <span>+</span>
+                    <span class="dish-tag" id="tag-sauce">❓ Sốt/Vị</span>
+                </div>
+                <div style="margin-top: 6px; font-size: 11px; font-weight: 700; color: var(--primary-orange);" id="tag-method">
+                    🔥 Cách chế biến: Chưa chọn
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-control">
+            <div class="step-tabs">
+                <div class="tab active" id="tab-1" onclick="switchStepTab(1)">1. Đồ Tươi</div>
+                <div class="tab" id="tab-2" onclick="switchStepTab(2)">2. Sốt / Vị</div>
+                <div class="tab" id="tab-3" onclick="switchStepTab(3)">3. Chế Biến</div>
+            </div>
+
+            <!-- TAB 1: ĐỒ TƯƠI -->
+            <div id="step-1-content">
+                <div class="grid-options">
+                    <div class="option-btn" onclick="selectIngredient('Tôm Sú', '🦐')"><span class="option-icon">🦐</span><span class="option-name">Tôm Sú</span></div>
+                    <div class="option-btn" onclick="selectIngredient('Bò Mỹ', '🥩')"><span class="option-icon">🥩</span><span class="option-name">Bò Mỹ</span></div>
+                    <div class="option-btn" onclick="selectIngredient('Vú Heo', '🥓')"><span class="option-icon">🥓</span><span class="option-name">Vú Heo</span></div>
+                    <div class="option-btn" onclick="selectIngredient('Hàu', '🦪')"><span class="option-icon">🦪</span><span class="option-name">Hàu Đại Dương</span></div>
+                    <div class="option-btn" onclick="selectIngredient('Bạch Tuộc', '🐙')"><span class="option-icon">🐙</span><span class="option-name">Bạch Tuộc</span></div>
+                    <div class="option-btn" onclick="selectIngredient('Sườn Cây', '🍖')"><span class="option-icon">🍖</span><span class="option-name">Sườn Cây</span></div>
+                </div>
+            </div>
+
+            <!-- TAB 2: SỐT & VỊ -->
+            <div id="step-2-content" style="display: none;">
+                <div class="grid-options">
+                    <div class="option-btn" onclick="selectSauce('Phô Mai', '🧀')"><span class="option-icon">🧀</span><span class="option-name">Phô Mai</span></div>
+                    <div class="option-btn" onclick="selectSauce('Trứng Muối', '🥚')"><span class="option-icon">🥚</span><span class="option-name">Trứng Muối</span></div>
+                    <div class="option-btn" onclick="selectSauce('Bơ Tỏi', '🧄')"><span class="option-icon">🧄</span><span class="option-name">Bơ Tỏi</span></div>
+                    <div class="option-btn" onclick="selectSauce('Sốt Chao', '🥣')"><span class="option-icon">🥣</span><span class="option-name">Sốt Chao Đỏ</span></div>
+                    <div class="option-btn" onclick="selectSauce('Sa Tế Cay', '🌶️')"><span class="option-icon">🌶️</span><span class="option-name">Sa Tế Cay</span></div>
+                    <div class="option-btn" onclick="selectSauce('Vị Tomyum', '🍲')"><span class="option-icon">🍲</span><span class="option-name">Lẩu Tomyum</span></div>
+                </div>
+            </div>
+
+            <!-- TAB 3: HÌNH THỨC CHẾ BIẾN -->
+            <div id="step-3-content" style="display: none;">
+                <div class="grid-options">
+                    <div class="option-btn" onclick="selectMethod('Nướng Chảo', '🍳')"><span class="option-icon">🍳</span><span class="option-name">Nướng Chảo</span></div>
+                    <div class="option-btn" onclick="selectMethod('Nướng Vỉ Than', '🪵')"><span class="option-icon">🪵</span><span class="option-name">Nướng Vỉ Than</span></div>
+                    <div class="option-btn" onclick="selectMethod('Nấu Lẩu', '🥘')"><span class="option-icon">🥘</span><span class="option-name">Nấu Nồi Lẩu</span></div>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn-action btn-reset" onclick="resetDish()">🔄 Bỏ</button>
+                <button class="btn-action btn-serve" onclick="serveOrder()">🔔 Giao Món Bàn</button>
+            </div>
         </div>
     </div>
 
-    <!-- CHẾ BIẾN BẾP -->
-    <div class="kitchen-area">
-        <div class="cooking-pot">
-            <div style="font-size: 10px; color: #A084E8; font-weight:700; margin-bottom:4px;">BẾP ĐANG LẮP RÁP MÓN:</div>
-            <div class="dish-preview">
-                <span class="dish-tag" id="tag-ingredient">❓ Đồ tươi</span>
-                <span>+</span>
-                <span class="dish-tag" id="tag-sauce">❓ Sốt/Vị</span>
+    <!-- PAGE 2: NÂNG CẤP QUÁN (BÀN GHẾ, BẾP, TRANG TRÍ) -->
+    <div class="page-content" id="page-decor">
+        <div class="upgrade-list">
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">🪑</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Bàn Bố Thắng xịn</div>
+                        <div class="upgrade-desc">Tăng độ kiên nhẫn của khách thêm +15s</div>
+                        <div class="upgrade-level" id="lvl-table">Cấp 1</div>
+                    </div>
+                </div>
+                <button class="btn-upgrade" onclick="buyUpgrade('table', 300)">300k 💰</button>
             </div>
-            <div style="margin-top: 6px; font-size: 11px; font-weight: 700; color: var(--primary-orange);" id="tag-method">
-                🔥 Cách chế biến: Chưa chọn
+
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">🔥</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Bếp Nướng Điện Cấp Tốc</div>
+                        <div class="upgrade-desc">Tăng +20% tiền boa từ món nướng</div>
+                        <div class="upgrade-level" id="lvl-stove">Cấp 1</div>
+                    </div>
+                </div>
+                <button class="btn-upgrade" onclick="buyUpgrade('stove', 500)">500k 💰</button>
+            </div>
+
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">🏮</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Lồng Đèn & Đèn Led Cozy</div>
+                        <div class="upgrade-desc">Tăng danh tiếng quán thêm +0.2 ⭐</div>
+                        <div class="upgrade-level" id="lvl-decor">Cấp 1</div>
+                    </div>
+                </div>
+                <button class="btn-upgrade" onclick="buyUpgrade('decor', 400)">400k 💰</button>
             </div>
         </div>
     </div>
 
-    <!-- KHAY ĐỒ ĂN (3 BƯỚC) -->
-    <div class="menu-control">
-        <div class="step-tabs">
-            <div class="tab active" id="tab-1" onclick="switchTab(1)">1. Đồ Tươi</div>
-            <div class="tab" id="tab-2" onclick="switchTab(2)">2. Sốt / Vị Béo</div>
-            <div class="tab" id="tab-3" onclick="switchTab(3)">3. Chế Biến</div>
-        </div>
+    <!-- PAGE 3: THUÊ & NÂNG CẤP NHÂN VIÊN -->
+    <div class="page-content" id="page-staff">
+        <div class="upgrade-list">
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">💁‍♀️</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Phục Vụ Nhanh Nhẹn</div>
+                        <div class="upgrade-desc">Tự động giúp khách đợi lâu không bị giận</div>
+                        <div class="upgrade-level" id="lvl-waiter">Chưa thuê</div>
+                    </div>
+                </div>
+                <button class="btn-upgrade" onclick="buyUpgrade('waiter', 600)">600k 💰</button>
+            </div>
 
-        <!-- TAB 1: ĐỒ TƯƠI -->
-        <div id="step-1-content">
-            <div class="grid-options">
-                <div class="option-btn" onclick="selectIngredient('Tôm Sú', '🦐')">
-                    <span class="option-icon">🦐</span><span class="option-name">Tôm Sú</span>
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">👨‍🍳</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Phụ Bếp Sơ Chế</div>
+                        <div class="upgrade-desc">Tự động chọn đúng Đồ tươi khi có order</div>
+                        <div class="upgrade-level" id="lvl-chef">Chưa thuê</div>
+                    </div>
                 </div>
-                <div class="option-btn" onclick="selectIngredient('Bò Mỹ', '🥩')">
-                    <span class="option-icon">🥩</span><span class="option-name">Bò Mỹ</span>
+                <button class="btn-upgrade" onclick="buyUpgrade('chef', 800)">800k 💰</button>
+            </div>
+
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">💰</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Thu Ngân Dễ Thương</div>
+                        <div class="upgrade-desc">Tự cộng +5% doanh thu mỗi đơn thành công</div>
+                        <div class="upgrade-level" id="lvl-cashier">Chưa thuê</div>
+                    </div>
                 </div>
-                <div class="option-btn" onclick="selectIngredient('Vú Heo', '🥓')">
-                    <span class="option-icon">🥓</span><span class="option-name">Vú Heo</span>
-                </div>
-                <div class="option-btn" onclick="selectIngredient('Hàu', '🦪')">
-                    <span class="option-icon">🦪</span><span class="option-name">Hàu Đại Dương</span>
-                </div>
-                <div class="option-btn" onclick="selectIngredient('Bạch Tuộc', '🐙')">
-                    <span class="option-icon">🐙</span><span class="option-name">Bạch Tuộc</span>
-                </div>
-                <div class="option-btn" onclick="selectIngredient('Sườn Cây', '🍖')">
-                    <span class="option-icon">🍖</span><span class="option-name">Sườn Cây</span>
-                </div>
+                <button class="btn-upgrade" onclick="buyUpgrade('cashier', 700)">700k 💰</button>
             </div>
         </div>
+    </div>
 
-        <!-- TAB 2: SỐT & VỊ -->
-        <div id="step-2-content" style="display: none;">
-            <div class="grid-options">
-                <div class="option-btn" onclick="selectSauce('Phô Mai', '🧀')">
-                    <span class="option-icon">🧀</span><span class="option-name">Phô Mai</span>
+    <!-- PAGE 4: BÁN HÀNG ONLINE & SHIPPER -->
+    <div class="page-content" id="page-online">
+        <div class="upgrade-list">
+            <div class="upgrade-card">
+                <div class="upgrade-info">
+                    <div class="upgrade-icon">🛵</div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-title">Đội Shipper App Quán</div>
+                        <div class="upgrade-desc">Mở nhận các đơn Lẩu/Nướng mang về</div>
+                        <div class="upgrade-level" id="lvl-online">Chưa kích hoạt</div>
+                    </div>
                 </div>
-                <div class="option-btn" onclick="selectSauce('Trứng Muối', '🥚')">
-                    <span class="option-icon">🥚</span><span class="option-name">Trứng Muối</span>
-                </div>
-                <div class="option-btn" onclick="selectSauce('Bơ Tỏi', '🧄')">
-                    <span class="option-icon">🧄</span><span class="option-name">Bơ Tỏi</span>
-                </div>
-                <div class="option-btn" onclick="selectSauce('Sốt Chao', '🥣')">
-                    <span class="option-icon">🥣</span><span class="option-name">Sốt Chao Đỏ</span>
-                </div>
-                <div class="option-btn" onclick="selectSauce('Sa Tế Cay', '🌶️')">
-                    <span class="option-icon">🌶️</span><span class="option-name">Sa Tế Cay</span>
-                </div>
-                <div class="option-btn" onclick="selectSauce('Vị Tomyum', '🍲')">
-                    <span class="option-icon">🍲</span><span class="option-name">Lẩu Tomyum</span>
-                </div>
+                <button class="btn-upgrade" onclick="buyUpgrade('online', 1000)">1000k 💰</button>
             </div>
-        </div>
-
-        <!-- TAB 3: HÌNH THỨC CHẾ BIẾN -->
-        <div id="step-3-content" style="display: none;">
-            <div class="grid-options">
-                <div class="option-btn" onclick="selectMethod('Nướng Chảo', '🍳')">
-                    <span class="option-icon">🍳</span><span class="option-name">Nướng Chảo</span>
-                </div>
-                <div class="option-btn" onclick="selectMethod('Nướng Vỉ Than', '🪵')">
-                    <span class="option-icon">🪵</span><span class="option-name">Nướng Vỉ Than</span>
-                </div>
-                <div class="option-btn" onclick="selectMethod('Nấu Lẩu', '🥘')">
-                    <span class="option-icon">🥘</span><span class="option-name">Nấu Nồi Lẩu</span>
-                </div>
+            <div style="padding: 10px; font-size: 11px; text-align: center; color: #777;" id="online-status">
+                🛵 Mới nâng cấp Shipper để nhận tự động +200k/phút!
             </div>
-        </div>
-
-        <!-- ACTION BUTTONS -->
-        <div class="action-bar">
-            <button class="btn-action btn-reset" onclick="resetDish()">🔄 Làm lại</button>
-            <button class="btn-action btn-serve" onclick="serveOrder()">🔔 Giao Món Cho Khách</button>
         </div>
     </div>
 </div>
 
 <script>
+    // Dữ liệu Game
+    let money = 1000;
+    let stars = 4.8;
+    let gameHour = 10;
+    let gameMinute = 0;
+
+    let upgrades = {
+        table: 1,
+        stove: 1,
+        decor: 1,
+        waiter: 0,
+        chef: 0,
+        cashier: 0,
+        online: 0
+    };
+
     let currentOrder = { ingredient: '', sauce: '', method: '' };
     let playerDish = { ingredient: null, sauce: null, method: null };
-    let money = 2850;
-
     const avatars = ['👧', '👦', '👨', '👩', '🧑', '🧔', '👵'];
 
-    function switchTab(step) {
+    //Ẩn Loading Screen sau khi load xong
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.opacity = '0';
+            setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 500);
+        }, 800);
+    });
+
+    // Chuyển Tab chính
+    function switchMainPage(pageId) {
+        document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+
+        document.getElementById(`page-${pageId}`).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    // Chuyển bước chọn món
+    function switchStepTab(step) {
         document.getElementById('step-1-content').style.display = step === 1 ? 'block' : 'none';
         document.getElementById('step-2-content').style.display = step === 2 ? 'block' : 'none';
         document.getElementById('step-3-content').style.display = step === 3 ? 'block' : 'none';
@@ -405,16 +623,17 @@
         }
     }
 
+    // Chọn món
     function selectIngredient(name, icon) {
         playerDish.ingredient = name;
         document.getElementById('tag-ingredient').innerText = `${icon} ${name}`;
-        switchTab(2);
+        switchStepTab(2);
     }
 
     function selectSauce(name, icon) {
         playerDish.sauce = name;
         document.getElementById('tag-sauce').innerText = `${icon} ${name}`;
-        switchTab(3);
+        switchStepTab(3);
     }
 
     function selectMethod(name, icon) {
@@ -427,12 +646,12 @@
         document.getElementById('tag-ingredient').innerText = '❓ Đồ tươi';
         document.getElementById('tag-sauce').innerText = '❓ Sốt/Vị';
         document.getElementById('tag-method').innerText = '🔥 Cách chế biến: Chưa chọn';
-        switchTab(1);
+        switchStepTab(1);
     }
 
     function serveOrder() {
         if (!playerDish.ingredient || !playerDish.sauce || !playerDish.method) {
-            alert('Bạn chưa chọn đủ 3 bước: Đồ tươi, Sốt và Cách chế biến!');
+            alert('Bạn chưa lắp ráp đủ 3 bước cho món ăn!');
             return;
         }
 
@@ -440,12 +659,14 @@
             playerDish.sauce === currentOrder.sauce &&
             playerDish.method === currentOrder.method) {
             
-            money += 150;
-            document.getElementById('money').innerText = money;
-            alert('🎉 Tuyệt vời! Khách rất thích món này và trả +150k');
+            let reward = 150;
+            if (upgrades.cashier > 0) reward += 20; // Bonus thu ngân
+            money += reward;
+            updateUI();
+            alert(`🎉 Phục vụ chính xác! Nhận +${reward}k tiền thanh toán!`);
             generateNewOrder();
         } else {
-            alert('❌ Sai món rồi! Khách cằn nhằn và không nhận món.');
+            alert('❌ Sai món rồi! Khách cằn nhằn rời đi.');
             generateNewOrder();
         }
     }
@@ -461,12 +682,66 @@
 
         document.getElementById('customer-emoji').innerText = avatars[Math.floor(Math.random() * avatars.length)];
         document.getElementById('order-text').innerHTML = 
-            `"Cho bàn mình 1 suất <b>${currentOrder.ingredient}</b> phủ <b>${currentOrder.sauce}</b> đem <b>${currentOrder.method}</b> nhé!"`;
+            `"Cho mình 1 phần <b>${currentOrder.ingredient}</b> sốt <b>${currentOrder.sauce}</b> làm kiểu <b>${currentOrder.method}</b>!"`;
 
         resetDish();
+
+        // Nếu có Phụ Bếp -> Tự gắp sẵn đồ tươi
+        if (upgrades.chef > 0) {
+            selectIngredient(currentOrder.ingredient, '🥩');
+        }
     }
 
-    // Khởi tạo game
+    // Nâng cấp Quán / Nhân viên
+    function buyUpgrade(type, cost) {
+        if (money >= cost) {
+            money -= cost;
+            upgrades[type]++;
+            updateUI();
+            
+            if(type === 'decor') {
+                stars = (parseFloat(stars) + 0.2).toFixed(1);
+                document.getElementById('stars').innerText = stars;
+            }
+
+            let lvlText = upgrades[type] > 0 ? `Cấp ${upgrades[type]}` : 'Chưa thuê';
+            if (type === 'waiter' || type === 'chef' || type === 'cashier') lvlText = 'Đã Thuê';
+            if (type === 'online') lvlText = 'Đã Kích Hoạt';
+            
+            document.getElementById(`lvl-${type}`).innerText = lvlText;
+            alert('🎉 Nâng cấp thành công!');
+        } else {
+            alert('💰 Bạn không đủ tiền!');
+        }
+    }
+
+    function updateUI() {
+        document.getElementById('money').innerText = money;
+    }
+
+    // Vòng lặp Đồng hồ Bán hàng (10:00 -> 22:00) & Shipper
+    setInterval(() => {
+        gameMinute += 10;
+        if (gameMinute >= 60) {
+            gameMinute = 0;
+            gameHour++;
+        }
+        if (gameHour >= 22) {
+            gameHour = 10; // Reset ngày mới
+        }
+
+        let hStr = gameHour < 10 ? '0' + gameHour : gameHour;
+        let mStr = gameMinute < 10 ? '0' + gameMinute : gameMinute;
+        document.getElementById('time').innerText = `${hStr}:${mStr}`;
+
+        // Thu nhập tự động từ Ship Online
+        if (upgrades.online > 0 && gameMinute === 0) {
+            money += 50;
+            updateUI();
+        }
+    }, 3000);
+
+    // Khởi chạy game
     generateNewOrder();
 </script>
 
