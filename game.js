@@ -1,12 +1,12 @@
-// Dữ liệu mặc định ban đầu
+// Dữ liệu món ăn chủ đề Lẩu & Nướng
 const INITIAL_ITEMS = [
-  { id: 'lau_mala', name: 'Lẩu Mala Tứ Xuyên', price: 38000, cost: 13000, stock: 5 },
-  { id: 'lau_tieu', name: 'Lẩu Tiêu Xanh', price: 35000, cost: 12000, stock: 5 },
-  { id: 'lau_ga', name: 'Lẩu Gà Lá É', price: 32000, cost: 10000, stock: 5 },
-  { id: 'mi_rieu', name: 'Mì Cay Riêu Cua', price: 42000, cost: 15000, stock: 5 },
-  { id: 'bo_my', name: 'Ba Chỉ Bò Mỹ', price: 15000, cost: 5000, stock: 10 },
-  { id: 'pho_mai', name: 'Phô Mai Lát', price: 8000, cost: 2000, stock: 10 },
-  { id: 'bach_tuoc', name: 'Bạch Tuộc Tươi', price: 12000, cost: 4000, stock: 10 }
+  { id: 'lau_mala', name: 'Lẩu Mala Tứ Xuyên', price: 45000, cost: 15000, stock: 5 },
+  { id: 'lau_thai', name: 'Lẩu Thái Chua Cay', price: 42000, cost: 14000, stock: 5 },
+  { id: 'bo_nuong', name: 'Dẻ Sườn Bò Nướng', price: 38000, cost: 12000, stock: 5 },
+  { id: 'nam_nuong', name: 'Vú Heo Nướng Bơ', price: 35000, cost: 10000, stock: 5 },
+  { id: 'bo_my', name: 'Ba Chỉ Bò Mỹ', price: 18000, cost: 6000, stock: 10 },
+  { id: 'tôm_su', name: 'Tôm Sú Tươi', price: 15000, cost: 5000, stock: 10 },
+  { id: 'rau_nam', name: 'Rau & Nấm Tổng Hợp', price: 8000, cost: 2000, stock: 10 }
 ];
 
 let gameState = JSON.parse(localStorage.getItem('lhg_full_state') || 'null') || {
@@ -23,14 +23,14 @@ function saveGameState() {
   localStorage.setItem('lhg_full_state', JSON.stringify(gameState));
 }
 
-// KHỞI CHẠY MÀN HÌNH LOADING %
+// KHỞI CHẠY MÀN HÌNH LOADING CHẠY TỪ 1% ĐẾN 100%
 window.addEventListener('DOMContentLoaded', () => {
-  let percent = 0;
+  let percent = 1;
   const bar = document.getElementById('loadingBar');
   const text = document.getElementById('loadingText');
 
   const timer = setInterval(() => {
-    percent += 5;
+    percent += 1; // Tăng từng 1% mượt mà
     if (bar) bar.style.width = percent + '%';
     if (text) text.textContent = percent + '%';
 
@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
         updateStartScreenInfo();
       }, 300);
     }
-  }, 40);
+  }, 25); // Thời gian chuyển đổi 2.5 giây từ 1% đến 100%
 });
 
 function showScreen(screenId) {
@@ -60,7 +60,7 @@ function showScreen(screenId) {
 function updateStartScreenInfo() {
   const info = document.getElementById('startShopInfo');
   if (info) {
-    info.textContent = `Tiệm Lẩu Nhỏ • Ngày ${gameState.day} • ${(gameState.money / 1000).toFixed(1)}k`;
+    info.textContent = `Lẩu hay nướng • Ngày ${gameState.day} • ${(gameState.money / 1000).toFixed(1)}k`;
   }
 }
 
@@ -200,7 +200,7 @@ function toggleIngredient(id) {
 
 function serveOrder() {
   if (gameState.selectedIngredients.length === 0) {
-    return alert('Chưa chọn nguyên liệu để làm món!');
+    return alert('Chưa chọn món để lên bàn!');
   }
 
   // Trừ kho & tăng tiền
@@ -212,7 +212,7 @@ function serveOrder() {
     }
   });
 
-  alert('🎉 Phục vụ khách thành công!');
+  alert('🎉 Đã phục vụ xong món Lẩu & Nướng cho khách!');
   gameState.selectedIngredients = [];
   saveGameState();
   updateHeader();
@@ -226,7 +226,7 @@ function finishSellingDay() {
   gameState.reviews.unshift({
     name: 'Khách hàng #' + Math.floor(Math.random() * 1000),
     stars: 5,
-    comment: 'Lẩu và Mì cay ngon tuyệt vời, giao hàng rất nhanh!'
+    comment: 'Đồ nướng ướp đậm đà, nước lẩu ngon cực kỳ!'
   });
   gameState.reviewsCount++;
 
@@ -248,7 +248,7 @@ function toggleSettingsModal(show) {
 }
 
 function resetGameData() {
-  if (confirm('Bạn có chắc muốn chơi lại từ Ngày 1 không?')) {
+  if (confirm('Bạn có chắc muốn xóa dữ liệu và chơi lại từ Ngày 1 không?')) {
     localStorage.removeItem('lhg_full_state');
     location.reload();
   }
