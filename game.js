@@ -1,21 +1,23 @@
 let data = JSON.parse(localStorage.getItem("lhg_data") || "null") || DEFAULT_DATA;
 let state = JSON.parse(localStorage.getItem("lhg_state") || "null") || {
-  money: 6989700,
-  day: 24,
-  rating: 4.8,
-  reviewsCount: 400,
+  money: 250000,
+  day: 1,
+  rating: 0,
+  reviewsCount: 0,
+  reviews: [], // Danh sách bình luận của khách
   stock: {},
-  selected: []
+  selected: [],
+  dayServed: 0,
+  dayCorrect: 0
 };
 
 let currentOrder = null;
 
-// Khởi tạo tồn kho mặc định nếu món chưa từng có trong kho
 function initStockData() {
   let allItems = [...data.broth, ...data.topping];
   allItems.forEach(item => {
     if (state.stock[item.id] === undefined) {
-      state.stock[item.id] = 5; // Cho sẵn 5 phần làm vốn ban đầu
+      state.stock[item.id] = 3; // Cho sẵn 3 phần làm vốn Ngày 1
     }
   });
 }
@@ -28,7 +30,7 @@ function saveState() {
 function updateHeader() {
   document.getElementById("dayTitle").textContent = `Ngày ${state.day}`;
   document.getElementById("moneyDisplay").textContent = (state.money / 1000).toFixed(1) + "k";
-  document.getElementById("ratingDisplay").textContent = state.rating.toFixed(1);
+  document.getElementById("ratingDisplay").textContent = state.reviewsCount > 0 ? state.rating.toFixed(1) : "Chưa có";
 }
 
 function renderPrepStock() {
@@ -66,6 +68,48 @@ function renderQuests() {
   `).join("");
 }
 
+function renderReviews() {
+  const container = document.getElementById("reviewsList");
+  if (!container) return;
+
+  if (!state.reviews || state.reviews.length === 0) {
+    container.innerHTML = `<div style="color: #888; font-size: 13px; text-align: center; padding: 12px;">Quán chưa có đánh giá nào. Hãy hoàn thành ngày bán hàng đầu tiên nhé!</div>`;
+    return;
+  }
+
+  container.innerHTML = state.reviews.map((rev, index) => `
+    <div class="review-card">
+      <div class="review-header">
+        <b>${rev.name}</b>
+        <span class="review-stars">${'⭐'.repeat(rev.stars)}</span>
+      </div>
+      <div class="review-comment">"${rev.comment}"</div>
+      <small style="color: #888; font-size: 11px;">Ngày ${rev.day}</small>
+      
+      ${rev.reply ? `
+        <div class="owner-reply">
+          <b>Chủ quán phản hồi:</b> ${rev.reply}
+        </div>
+      ` : `
+        <div class="reply-box">
+          <input type="text" id="replyInput_${index}" placeholder="Nhập câu trả lời cho khách..." class="reply-input">
+          <button onclick="sendReply(${index})" class="btn-reply">Gửi</button>
+        </div>
+      `}
+    </div>
+  `).join("");
+}
+
+function sendReply(index) {
+  const input = document.getElementById(`replyInput_${index}`);
+  let replyText = input ? input.value.trim() : "";
+  if (!replyText) return alert("Vui lòng nhập nội dung phản hồi!");
+
+  state.reviews[index].reply = replyText;
+  saveState();
+  renderReviews();
+}
+
 function changeStock(id, delta) {
   let allItems = [...data.broth, ...data.topping];
   let item = allItems.find(x => x.id === id);
@@ -88,10 +132,26 @@ function changeStock(id, delta) {
   renderPrepStock();
 }
 
+function switchPrepTab(tabName) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+
+  if (tabName === 'stock') {
+    document.getElementById("tabBtnStock").classList.add("active");
+    document.getElementById("tabStock").style.display = "block";
+  } else if (tabName === 'reviews') {
+    document.getElementById("tabBtnReviews").classList.add("active");
+    document.getElementById("tabReviews").style.display = "block";
+    renderReviews();
+  }
+}
+
 function startSellingDay() {
   document.getElementById("prepScreen").classList.remove("active");
   document.getElementById("sellScreen").classList.add("active");
   document.getElementById("dayStatus").textContent = "Đang bán hàng";
+  state.dayServed = 0;
+  state.dayCorrect = 0;
   generateCustomerOrder();
   renderSellGrid();
 }
@@ -153,7 +213,10 @@ function serveCustomer() {
 
   let isCorrect = JSON.stringify(required) === JSON.stringify(selected);
 
+  state.dayServed++;
+
   if (isCorrect) {
+    state.dayCorrect++;
     selected.forEach(id => {
       if (state.stock[id]) state.stock[id]--;
     });
@@ -171,7 +234,58 @@ function serveCustomer() {
   renderSellGrid();
 }
 
+function generateDayReview() {
+  const customerNames = ["Minh Anh", "Bảo Nam", "Thùy Trang", "Quốc Bảo", "Thu Hà", "Đức Anh", "Phương Thảo"];
+  const goodComments = [
+    "Đồ ăn ngon tuyệt vời, nước lẩu đậm đà!",
+    "Topping tươi ngon, phục vụ rất nhanh nhẹn.",
+    "Lẩu siêu chất lượng, nhất định sẽ quay lại!",
+    "Quán làm món chuẩn xác, không chê vào đâu được 5 sao!"
+  ];
+  const badComments = [
+    "Làm nhầm món của tôi rồi, phục vụ chưa chuẩn lắm.",
+    "Chờ đợi hơi lâu và mang sai topping.",
+    "Nước lẩu tạm ổn nhưng làm sai yêu cầu của khách."
+  ];
+
+  let randomName = customerNames[Math.floor(Math.random() * customerNames.length)];
+  let stars = 5;
+  let comment = "";
+
+  if (state.dayServed === 0) {
+    stars = 3;
+    comment = "Hôm nay quán không phục vụ tôi được món nào cả!";
+  } else {
+    let ratio = state.dayCorrect / state.dayServed;
+    if (ratio >= 0.8) {
+      stars = 5;
+      comment = goodComments[Math.floor(Math.random() * goodComments.length)];
+    } else if (ratio >= 0.5) {
+      stars = 3;
+      comment = "Chất lượng tạm ổn nhưng vẫn còn làm nhầm món.";
+    } else {
+      stars = 1 + Math.floor(Math.random() * 2);
+      comment = badComments[Math.floor(Math.random() * badComments.length)];
+    }
+  }
+
+  // Cập nhật rating trung bình
+  let oldTotal = state.rating * state.reviewsCount;
+  state.reviewsCount++;
+  state.rating = (oldTotal + stars) / state.reviewsCount;
+
+  if (!state.reviews) state.reviews = [];
+  state.reviews.unshift({
+    name: randomName,
+    stars: stars,
+    comment: comment,
+    day: state.day,
+    reply: null
+  });
+}
+
 function endDay() {
+  generateDayReview();
   state.day++;
   document.getElementById("sellScreen").classList.remove("active");
   document.getElementById("prepScreen").classList.add("active");
@@ -179,6 +293,7 @@ function endDay() {
   saveState();
   updateHeader();
   renderPrepStock();
+  renderReviews();
 }
 
 // Khởi chạy
@@ -186,3 +301,4 @@ initStockData();
 updateHeader();
 renderPrepStock();
 renderQuests();
+renderReviews();
