@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lẩu hay nướng</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div>
+      <div class="logo">🍲 <span>Lẩu hay nướng</span> 🔥</div>
+      <div class="sub">Quán của bạn — khách gọi gì, làm đúng nấy!</div>
+    </div>
+    <div class="stats">
+      <span>💰 <b id="money">0</b></span>
+      <span>⭐ Lv.<b id="level">1</b></span>
+      <span>❤️ <b id="rep">100</b></span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero card">
+      <div>
+        <h1>Hôm nay ăn <span>lẩu</span> hay <span>nướng</span>?</h1>
+        <p>Phục vụ khách, kiếm tiền và mở khóa thật nhiều topping.</p>
+      </div>
+      <button class="secondary" onclick="location.href='admin.html'">⚙️ Quản lý món</button>
+    </section>
+
+    <section class="game-grid">
+      <div class="left">
+        <div class="card customer-card">
+          <div class="section-title"><span>👩‍🍳 Khách tiếp theo</span><span id="patience">⏱️ --</span></div>
+          <div id="customer"></div>
+        </div>
+
+        <div class="card kitchen">
+          <div class="section-title"><span>👨‍🍳 Bếp</span><span id="modeLabel">Chọn món</span></div>
+          <div class="tabs">
+            <button class="tab active" data-cat="broth">🍲 Vị lẩu</button>
+            <button class="tab" data-cat="topping">🥩 Topping</button>
+            <button class="tab" data-cat="sauce">🥣 Sốt</button>
+            <button class="tab" data-cat="grill">🔥 Nướng</button>
+            <button class="tab" data-cat="drink">🥤 Nước</button>
+          </div>
+          <div id="items" class="items"></div>
+          <div class="cart">
+            <div><b>Đang chuẩn bị:</b> <span id="selected">Chưa chọn gì</span></div>
+            <button class="primary" onclick="serve()">🍽️ Phục vụ khách</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="card">
+          <div class="section-title">📋 Đơn hiện tại</div>
+          <div id="orderDetail" class="order-detail"></div>
+        </div>
+        <div class="card">
+          <div class="section-title">🏪 Quán</div>
+          <div class="upgrade">
+            <span>🪑 Bàn ghế</span><b id="seats">2</b>
+            <button onclick="upgrade('seats')">Nâng cấp</button>
+          </div>
+          <div class="upgrade">
+            <span>🍳 Bếp</span><b id="kitchenLevel">1</b>
+            <button onclick="upgrade('kitchen')">Nâng cấp</button>
+          </div>
+          <div class="upgrade">
+            <span>✨ Trang trí</span><b id="decor">1</b>
+            <button onclick="upgrade('decor')">Nâng cấp</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">📈 Hôm nay</div>
+          <p>Khách đã phục vụ: <b id="served">0</b></p>
+          <p>Doanh thu: <b id="revenue">0đ</b></p>
+          <p>Combo đúng: <b id="perfect">0</b></p>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<script src="data.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
