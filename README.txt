@@ -1,14 +1,11 @@
-# Lẩu hay nướng
+# Tiệm Lẩu & Nướng - Web Game
 
-Bản web game độc lập, chạy trực tiếp bằng trình duyệt.
+Bản game mô phỏng quản lý cửa hàng lẩu/nướng dạng thẻ web app.
 
-## Chạy game
-Mở `index.html`.
-
-## Thêm món
-Mở `admin.html` -> nhập tên, emoji, loại món, giá bán, giá vốn, level mở khóa -> Thêm vào game.
-
-Dữ liệu menu và tiến trình được lưu bằng localStorage trên thiết bị/trình duyệt.
-
-## Lưu ý
-Đây là bản single-device/offline. Nếu muốn nhiều người chơi trên nhiều máy, cần thêm backend/tài khoản/database (có thể nâng cấp ở phiên bản sau).
+## Cấu trúc thư mục:
+- index.html : Màn hình giao diện chính (Kho hàng & Bán hàng).
+- admin.html : Trang quản lý cấu hình món ăn.
+- styles.css : Tệp quy định giao diện và màu sắc.
+- data.js   : Dữ liệu mặc định (món ăn, giá bán, nhiệm vụ).
+- game.js   : Logic xử lý tính toán, nhập kho, chọn món.
+- README.txt: Hướng dẫn dự án.
