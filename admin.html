@@ -1,27 +1,65 @@
 <!DOCTYPE html>
-<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quản lý món — Lẩu hay nướng</title><link rel="stylesheet" href="styles.css">
-<style>.admin{max-width:1050px;margin:auto}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.form input,.form select{padding:11px;border:1px solid #e4d8ce;border-radius:11px}.full{grid-column:1/-1}.list{display:grid;gap:8px;margin-top:15px}.row{display:grid;grid-template-columns:50px 1fr 100px 100px auto;gap:8px;align-items:center;padding:10px;background:#fffaf6;border-radius:12px}.danger{background:#fee2e2;color:#991b1b}.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}@media(max-width:650px){.form{grid-template-columns:1fr}.row{grid-template-columns:40px 1fr auto}.row .hide{display:none}}</style>
-</head><body><header class="topbar"><div><div class="logo">⚙️ Quản lý <span>Lẩu hay nướng</span></div><div class="sub">Thêm món mới — game sẽ tự nhận dữ liệu này.</div></div><button class="secondary" onclick="location.href='index.html'">← Vào game</button></header>
-<main class="admin">
-<div class="card"><h2>➕ Thêm món</h2><div class="form">
-<input id="name" placeholder="Tên món, ví dụ: Bò cuộn nấm">
-<input id="emoji" placeholder="Emoji, ví dụ: 🥩" value="🍽️">
-<select id="cat"><option value="broth">🍲 Vị lẩu</option><option value="topping">🥩 Topping</option><option value="sauce">🥣 Sốt</option><option value="grill">🔥 Nướng</option><option value="drink">🥤 Nước</option></select>
-<input id="price" type="number" placeholder="Giá bán" value="30000">
-<input id="cost" type="number" placeholder="Giá vốn" value="10000">
-<input id="unlock" type="number" placeholder="Mở ở level" value="1">
-</div><div class="tools"><button class="primary" onclick="addItem()">➕ Thêm vào game</button><button class="secondary" onclick="exportData()">📤 Xuất dữ liệu</button><label class="secondary">📥 Nhập dữ liệu <input type="file" accept=".json" onchange="importData(event)" hidden></label><button class="danger" onclick="resetData()">↺ Khôi phục món mặc định</button></div></div>
-<div class="card"><h2>📋 Menu hiện tại</h2><div id="list" class="list"></div></div>
-</main>
-<script src="data.js"></script><script>
-let data=JSON.parse(localStorage.getItem("lhg_data")||"null")||DEFAULT_DATA;
-const labels={broth:"🍲 Vị lẩu",topping:"🥩 Topping",sauce:"🥣 Sốt",grill:"🔥 Nướng",drink:"🥤 Nước"};
-function save(){localStorage.setItem("lhg_data",JSON.stringify(data))}
-function render(){let out="";for(const cat of Object.keys(data)){out+=`<h3>${labels[cat]}</h3>`;for(const x of data[cat])out+=`<div class="row"><span>${x.emoji}</span><b>${x.name}</b><span class="hide">${x.price.toLocaleString()}đ</span><span class="hide">Lv.${x.unlock}</span><button class="danger" onclick="del('${cat}','${x.id}')">Xóa</button></div>`}document.getElementById("list").innerHTML=out}
-function addItem(){let name=document.getElementById("name").value.trim();if(!name)return alert("Nhập tên món trước nha!");let cat=document.getElementById("cat").value;data[cat].push({id:cat+"_"+Date.now(),name,emoji:document.getElementById("emoji").value||"🍽️",price:+document.getElementById("price").value||0,cost:+document.getElementById("cost").value||0,unlock:+document.getElementById("unlock").value||1});save();render();document.getElementById("name").value=""}
-function del(cat,id){data[cat]=data[cat].filter(x=>x.id!==id);save();render()}
-function resetData(){if(confirm("Khôi phục toàn bộ món mặc định?")){data=structuredClone(DEFAULT_DATA);save();render()}}
-function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="lau-hay-nuong-menu.json";a.click()}
-function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();render()}catch{alert("File JSON không hợp lệ")}};r.readAsText(f)}
-render();
-</script></body></html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý món - Tiệm Lẩu</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="store-banner">
+      <h2>⚙️ Quản lý thực đơn</h2>
+    </div>
+
+    <div class="quest-box">
+      <h3>Thêm món mới</h3>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <input type="text" id="itemName" placeholder="Tên món" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+        <input type="text" id="itemImg" placeholder="URL ảnh minh họa (PNG)" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+        <select id="itemCat" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+          <option value="broth">Nước lẩu</option>
+          <option value="topping">Topping / Đồ nướng</option>
+        </select>
+        <input type="number" id="itemPrice" placeholder="Giá bán (đ)" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+        <input type="number" id="itemCost" placeholder="Giá vốn (đ)" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+        <button class="btn-primary" onclick="addNewItem()">Thêm vào Menu</button>
+      </div>
+    </div>
+
+    <button class="btn-secondary" onclick="location.href='index.html'" style="width: 100%;">⬅️ Quay lại Game</button>
+    <button class="btn-primary" onclick="resetDefaultData()" style="width: 100%; margin-top: 8px; background: #d9534f;">🔄 Khôi phục dữ liệu gốc</button>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    function addNewItem() {
+      let name = document.getElementById("itemName").value;
+      let img = document.getElementById("itemImg").value || "https://cdn-icons-png.flaticon.com/512/3081/3081829.png";
+      let cat = document.getElementById("itemCat").value;
+      let price = parseInt(document.getElementById("itemPrice").value) || 20000;
+      let cost = parseInt(document.getElementById("itemCost").value) || 8000;
+
+      if (!name) return alert("Vui lòng nhập tên món!");
+
+      let localData = JSON.parse(localStorage.getItem("lhg_data") || "null") || DEFAULT_DATA;
+      let newId = cat[0] + Date.now();
+      
+      localData[cat].push({ id: newId, name, img, price, cost, unlock: 1 });
+      localStorage.setItem("lhg_data", JSON.stringify(localData));
+      
+      alert("Đã thêm món mới thành công!");
+      location.href = "index.html";
+    }
+
+    function resetDefaultData() {
+      if (confirm("Xác nhận xóa hết dữ liệu và khôi phục mặc định?")) {
+        localStorage.removeItem("lhg_data");
+        localStorage.removeItem("lhg_state");
+        alert("Đã khôi phục mặc định!");
+        location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
