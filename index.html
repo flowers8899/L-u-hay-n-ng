@@ -2,82 +2,232 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tiệm Lẩu & Nướng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tiệm Lẩu & Mì Cay</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="app">
-    <!-- THANH TRÊN CÙNG -->
-    <header class="game-header">
-      <div class="day-info">
-        <span id="dayTitle">Ngày 1</span>
-        <small id="dayStatus">Chuẩn bị</small>
+    <!-- MÀN HÌNH 1: LOADING % -->
+    <div id="screenLoading" class="screen active full-screen">
+      <div class="loading-content">
+        <div class="logo-icon">🍲</div>
+        <h1>Tiệm Lẩu & Mì Cay</h1>
+        <p>Đang tải dữ liệu quán...</p>
+        <div class="progress-bar-container">
+          <div id="loadingBar" class="progress-bar"></div>
+        </div>
+        <div id="loadingText" class="loading-percent">0%</div>
       </div>
-      <div class="vault-info">
-        <div class="label">Tiền vốn</div>
-        <div class="val" id="moneyDisplay">250.0k</div>
+    </div>
+
+    <!-- MÀN HÌNH 2: TRANG CHỦ / START GAME -->
+    <div id="screenStart" class="screen full-screen">
+      <div class="start-banner">
+        <div class="store-shopfront">
+          <div class="awning"></div>
+          <div class="shop-title-card">
+            <h1 id="shopNameTitle">Tiệm Lẩu Nhỏ</h1>
+            <p>Nấu lẩu, đón khách, mở tiệm nhỏ của riêng bạn</p>
+          </div>
+        </div>
+        <div class="start-status-info">
+          <span id="startShopInfo">Tiệm Lẩu Nhỏ • Ngày 1 • 250,0k</span>
+        </div>
+        <button class="btn-main-action" onclick="goToPrepScreen()">Chơi tiếp</button>
+        <button class="btn-sub-action" onclick="toggleSettingsModal(true)">Hướng dẫn & Cài đặt</button>
+        <div class="version-tag">v3.11</div>
       </div>
-      <div class="rating-info">
-        ⭐ <span id="ratingDisplay">Chưa có</span>
+    </div>
+
+    <!-- HEADER DÙNG CHUNG TRONG GAME -->
+    <header id="gameHeader" class="game-header hidden">
+      <div class="header-left">
+        <button class="btn-icon" onclick="toggleSettingsModal(true)">⏸️</button>
+        <div>
+          <div id="headerDay" class="day-text">Ngày 1</div>
+          <small id="headerStatus" class="sub-text">Chuẩn bị</small>
+        </div>
+      </div>
+      <div class="header-center">
+        <span class="vault-label">KÉT</span>
+        <div id="headerMoney" class="vault-value">250,0k</div>
+      </div>
+      <div class="header-right">
+        <span class="stars">⭐⭐⭐⭐⭐</span>
+        <div id="headerRating" class="rating-text">4.8 • 0 đánh giá</div>
       </div>
     </header>
 
-    <!-- MÀN HÌNH 1: CHUẨN BỊ -->
-    <div id="prepScreen" class="screen active">
-      <div class="store-banner">
-        <h2>Tiệm Lẩu & Nướng</h2>
-        <div class="banner-sub">Cấp 1 • Quán Mới Mở</div>
+    <!-- MÀN HÌNH 3: CHUẨN BỊ & SỔ SÁCH / KHO / GIÁ BÁN / NÂNG CẤP -->
+    <div id="screenPrep" class="screen">
+      <div class="store-level-card">
+        <div class="shop-badge">
+          <h2>Tiệm Mì Cay & Lẩu</h2>
+          <span class="level-tag">Cấp 1 • Quán Mới Mở</span>
+        </div>
       </div>
 
-      <nav class="sub-nav">
-        <button id="tabBtnStock" class="nav-btn tab-btn active" onclick="switchPrepTab('stock')">📦 Kho hàng</button>
-        <button id="tabBtnReviews" class="nav-btn tab-btn" onclick="switchPrepTab('reviews')">💬 Đánh giá khách</button>
-        <button class="nav-btn" onclick="location.href='admin.html'">⚙️ Quản lý</button>
+      <!-- THANH TAB CHÍNH -->
+      <nav class="nav-tabs">
+        <button class="tab-item active" onclick="switchPrepTab('kho')">📦 Kho</button>
+        <button class="tab-item" onclick="switchPrepTab('giaban')">🏷️ Giá bán</button>
+        <button class="tab-item" onclick="switchPrepTab('nangcap')">🛠️ Nâng cấp</button>
+        <button class="tab-item" onclick="switchPrepTab('danhgia')">⭐ Đánh giá</button>
+        <button class="tab-item" onclick="switchPrepTab('tongket')">📊 Tổng kết</button>
       </nav>
 
-      <!-- TAB KHO HÀNG -->
-      <div id="tabStock" class="tab-content">
+      <!-- NOi DUNG TAB KHO -->
+      <div id="tabKho" class="prep-tab-content active">
+        <div class="event-banner">
+          <b>📅 Hôm nay: Cuối tuần</b>
+          <p>Khách đông hơn 25%, nhiều người mua 2 tô/nồi!</p>
+        </div>
+
         <div class="quest-box">
           <h3>Nhiệm vụ hôm nay</h3>
-          <div id="questList"></div>
+          <div class="quest-item">
+            <span>Không để khách nào bỏ về</span>
+            <span class="quest-reward">Thưởng 65k</span>
+          </div>
+          <div class="quest-item">
+            <span>Phục vụ 5 lượt khách 5 sao</span>
+            <span class="quest-reward">Thưởng 80k</span>
+          </div>
         </div>
 
-        <div class="section-title">Danh sách nhập kho</div>
-        <div class="stock-list" id="stockBuyList"></div>
+        <div class="section-header">Danh sách nhập nguyên liệu</div>
+        <div id="stockListContainer" class="item-list"></div>
       </div>
 
-      <!-- TAB ĐÁNH GIÁ CỦA KHÁCH -->
-      <div id="tabReviews" class="tab-content" style="display: none;">
-        <div class="section-title">Nhận xét từ khách hàng</div>
-        <div id="reviewsList"></div>
+      <!-- NOI DUNG TAB GIÁ BÁN -->
+      <div id="tabGiaBan" class="prep-tab-content">
+        <div class="section-header">Điều chỉnh giá bán món ăn</div>
+        <div id="priceListContainer" class="item-list"></div>
       </div>
 
-      <button class="btn-primary" onclick="startSellingDay()" style="margin-top: 14px;">🚀 Mở cửa bán hàng</button>
+      <!-- NOI DUNG TAB NÂNG CẤP -->
+      <div id="tabNangCap" class="prep-tab-content">
+        <div class="section-header">Trang bị & Nhân viên</div>
+        <div class="upgrade-card">
+          <div>
+            <b>Thuê Nhân viên Order</b>
+            <p>Tự động nhận món từ khách (2.000k/ngày)</p>
+          </div>
+          <button class="btn-small" onclick="alert('Đã mở khóa nhân viên!')">Mở khóa</button>
+        </div>
+        <div class="upgrade-card">
+          <div>
+            <b>Máy làm bếp cấp tốc</b>
+            <p>Tăng 30% tốc độ nấu lẩu & mì cay</p>
+          </div>
+          <button class="btn-small" onclick="alert('Đã nâng cấp máy làm bếp!')">Nâng cấp</button>
+        </div>
+      </div>
+
+      <!-- NOI DUNG TAB ĐÁNH GIÁ -->
+      <div id="tabDanhGia" class="prep-tab-content">
+        <div class="section-header">Bình luận & Phản hồi khách hàng</div>
+        <div id="reviewListContainer" class="review-list"></div>
+      </div>
+
+      <!-- NOI DUNG TAB TỔNG KẾT THU CHI -->
+      <div id="tabTongKet" class="prep-tab-content">
+        <div class="report-box">
+          <h3>Báo cáo doanh thu Ngày vừa qua</h3>
+          <div class="report-row"><span>Món chính đã bán:</span><b>85,0k</b></div>
+          <div class="report-row"><span>Topping kèm theo:</span><b>27,0k</b></div>
+          <div class="report-row total"><span>Tổng doanh thu:</span><b class="green-text">112,0k</b></div>
+          
+          <h4 style="margin-top: 15px;">Chi phí vận hành</h4>
+          <div class="report-row"><span>Mặt bằng:</span><span>40,0k</span></div>
+          <div class="report-row"><span>Điện nước:</span><span>68,0k</span></div>
+          <div class="report-row"><span>Lương nhân viên:</span><span>280,0k</span></div>
+          <div class="report-row total"><span>Tổng chi phí:</span><span class="red-text">388,0k</span></div>
+
+          <div class="net-profit-box">
+            <span>Lợi nhuận sau chi phí:</span>
+            <b id="netProfitValue" class="red-text">-276,0k</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- NÚT MỞ CỬA HÀNG -->
+      <div class="bottom-bar">
+        <button class="btn-main-action" onclick="startSellingGame()">Mở cửa bán hàng</button>
+      </div>
     </div>
 
-    <!-- MÀN HÌNH 2: BÁN HÀNG -->
-    <div id="sellScreen" class="screen">
-      <div class="customer-box">
-        <div class="avatar">👩🏻</div>
-        <div class="customer-bubble" id="customerDemand">
-          "Cho anh 1 nồi lẩu Mala thêm Phô mai nha!"
+    <!-- MÀN HÌNH 4: BÁN HÀNG BẾP -->
+    <div id="screenSell" class="screen">
+      <div class="kitchen-counter">
+        <div class="customer-speech">
+          <div class="customer-avatar">👩🏻</div>
+          <div class="speech-bubble" id="customerSpeech">
+            "Cho anh 1 tô <b>Mì cay Riêu cua</b> thêm <b>Phô mai lát</b>, <b>Bạch tuộc</b> cấp 2 nha!"
+          </div>
         </div>
-      </div>
 
-      <div class="item-grid" id="gridItems"></div>
+        <div class="kitchen-pots">
+          <div class="pot-slot">
+            <span class="pot-label">Nồi lẩu / Tô 1</span>
+            <div id="cookingBar1" class="cook-progress"></div>
+          </div>
+          <div class="pot-slot">
+            <span class="pot-label">Nồi lẩu / Tô 2</span>
+            <div id="cookingBar2" class="cook-progress"></div>
+          </div>
+        </div>
 
-      <div class="cart-bar">
-        <div><b>Đã chọn:</b> <span id="selectedItemsText">Chưa chọn món nào</span></div>
-        <div class="action-btns">
-          <button class="btn-serve" onclick="serveCustomer()">🍽️ Giao món</button>
-          <button class="btn-secondary" onclick="endDay()">🌙 Kết thúc ngày</button>
+        <!-- DANH SÁCH CHỌN NGUYÊN LIỆU BÁN HÀNG -->
+        <div class="ingredient-grid" id="ingredientGrid"></div>
+
+        <div class="sell-controls">
+          <button class="btn-serve" onclick="serveOrder()">🍽️ Giao món</button>
+          <button class="btn-finish-day" onclick="finishSellingDay()">🌙 Kết thúc ngày</button>
         </div>
       </div>
     </div>
+
+    <!-- MODAL BẢNG HƯỚNG DẪN & CÀI ĐẶT (NHƯ ẢNH) -->
+    <div id="settingsModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>📖 Hướng dẫn & Cài đặt</h3>
+          <button class="close-btn" onclick="toggleSettingsModal(false)">✖</button>
+        </div>
+        <div class="settings-list">
+          <div class="setting-item">
+            <span>🎁 Có gì mới</span>
+            <small>v3.11</small>
+          </div>
+          <div class="setting-item">
+            <span>📖 Chỉ dẫn từng bước</span>
+            <small>Đang bật</small>
+          </div>
+          <div class="setting-item">
+            <span>⏰ Thời gian bán mỗi ngày</span>
+            <small>6 phút</small>
+          </div>
+          <div class="setting-item">
+            <span>🎨 Màu giao diện</span>
+            <small>Đêm dịu</small>
+          </div>
+          <div class="setting-item">
+            <span>🌙 Nhạc nền</span>
+            <small>Đang bật</small>
+          </div>
+          <div class="setting-item">
+            <span>📦 Sao lưu tiến trình</span>
+            <small>Đã lưu</small>
+          </div>
+          <button class="btn-danger-full" onclick="resetGameData()">🔄 Chơi lại từ đầu</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <script src="data.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
