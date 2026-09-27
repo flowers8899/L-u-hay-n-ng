@@ -62,8 +62,8 @@
         }
 
         .subtab-btn {
-            flex: 1; min-width: 50px; padding: 8px 2px; background: var(--card-bg);
-            color: #888; font-size: 9px; font-weight: 700; border-radius: 10px;
+            flex: 1; min-width: 45px; padding: 8px 2px; background: var(--card-bg);
+            color: #888; font-size: 8px; font-weight: 700; border-radius: 10px;
             border: 1px solid var(--border-color); text-align: center; cursor: pointer; white-space: nowrap;
         }
         .subtab-btn.active { background: var(--primary-orange); color: #FFF; border-color: var(--primary-orange); }
@@ -150,8 +150,12 @@
         <button class="subtab-btn" onclick="switchTab('sosach')">📊 Sổ sách</button>
     </div>
 
-    <!-- TAB 1: KHO (CHUẨN BỊ NGUYÊN LIỆU ĐẦU NGÀY) -->
+    <!-- TAB 1: KHO (CHUẨN BỊ NGUYÊN LIỆU & THỜI TIẾT HÔM NAY) -->
     <div class="page-content active" id="page-kho">
+        <div class="kitchen-box" style="background: #FFF8DC; border-color: #DAA520;">
+            <div style="font-size: 11px; font-weight: 700; color: #B8860B;" id="weather-banner">🌤️ Thời tiết hôm nay: Ngày đẹp trời (Khách ổn định)</div>
+        </div>
+
         <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🛒 BƯỚC 1: CHUẨN BỊ KHO & NHẬP HÀNG ĐẦU NGÀY</div>
         
         <div class="section-title">🍲 Nhóm Nước Lẩu Đa Dạng</div>
@@ -240,9 +244,14 @@
         </div>
     </div>
 
-    <!-- TAB 2: NẤU (ĐẦY ĐỦ 100% TỪNG MÓN, TOPPING, RAU NẤM) -->
+    <!-- TAB 2: NẤU (CÓ THỰC KHÁCH VIP & KOL GHÉ THĂM) -->
     <div class="page-content" id="page-nau">
-        <!-- ĐƠN ONLINE TÍCH HỢP NGAY TRONG BẾP (NHIỀU ĐƠN LIÊN TỤC) -->
+        <!-- SỰ KIỆN THỰC KHÁCH VIP / KOL -->
+        <div class="kitchen-box" id="vip-event-box" style="background: #FFF0F5; border-color: #FF69B4; display:none;">
+            <div style="font-size: 11px; font-weight: 700; color: #C71585;" id="vip-event-text">🌟 SỰ KIỆN: Food Reviewer nổi tiếng đang ghé thăm bàn! Phục vụ nhanh để quán bùng nổ danh tiếng!</div>
+        </div>
+
+        <!-- ĐƠN ONLINE TÍCH HỢP NGAY TRONG BẾP -->
         <div class="kitchen-box" style="background: #FFF5EE; border-color: #FF7B54;">
             <div style="font-size: 11px; font-weight: 700; color: #D35400;">🛵 Đơn Giao Tận Nhà Đang Chờ Xử Lý:</div>
             <div id="online-order-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -327,7 +336,7 @@
         </div>
     </div>
 
-    <!-- TAB 3: GIÁ BÁN HIỆN ĐỦ TẤT CẢ SẢN PHẨM -->
+    <!-- TAB 3: GIÁ BÁN -->
     <div class="page-content" id="page-giaban">
         <div style="font-size: 11px; font-weight: 700; color: var(--primary-orange);">🏷️ ĐIỀU CHỈNH GIÁ NIÊM YẾT TẤT CẢ SẢN PHẨM</div>
         
@@ -386,108 +395,6 @@
             <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
                 <input type="number" class="price-input" id="price-deSuonBo" value="149" onchange="checkPrice('deSuonBo', 70)">
                 <span id="warn-deSuonBo" style="font-size:8px; color:#777;">Lời: 79k</span>
-            </div>
-        </div>
-
-        <div class="section-title">🥓 Nhóm Thịt Heo Đa Dạng</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Ba Chỉ Heo Sốt Cay</div><div class="item-meta">Vốn: 35k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-baChiHeo" value="89" onchange="checkPrice('baChiHeo', 35)">
-                <span id="warn-baChiHeo" style="font-size:8px; color:#777;">Lời: 54k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Sườn Heo Nướng Mật Ong</div><div class="item-meta">Vốn: 50k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-suonHeo" value="119" onchange="checkPrice('suonHeo', 50)">
-                <span id="warn-suonHeo" style="font-size:8px; color:#777;">Lời: 69k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Nạc Vai & Nạc Dăm Heo</div><div class="item-meta">Vốn: 40k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-nacHeo" value="99" onchange="checkPrice('nacHeo', 40)">
-                <span id="warn-nacHeo" style="font-size:8px; color:#777;">Lời: 59k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Nạc Nọng & Chân Giò Heo</div><div class="item-meta">Vốn: 45k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-nongGioHeo" value="109" onchange="checkPrice('nongGioHeo', 45)">
-                <span id="warn-nongGioHeo" style="font-size:8px; color:#777;">Lời: 64k</span>
-            </div>
-        </div>
-
-        <div class="section-title">🦐 Nhóm Đồ Tươi & Hải Sản</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Tôm Sú Tươi</div><div class="item-meta">Vốn: 50k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-tomSu" value="129" onchange="checkPrice('tomSu', 50)">
-                <span id="warn-tomSu" style="font-size:8px; color:#777;">Lời: 79k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Mực Ống Tươi</div><div class="item-meta">Vốn: 55k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-mucOng" value="139" onchange="checkPrice('mucOng', 55)">
-                <span id="warn-mucOng" style="font-size:8px; color:#777;">Lời: 84k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Bạch Tuộc Tươi Sống</div><div class="item-meta">Vốn: 58k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-bachTuoc" value="149" onchange="checkPrice('bachTuoc', 58)">
-                <span id="warn-bachTuoc" style="font-size:8px; color:#777;">Lời: 91k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Phi Lê Cá Tươi</div><div class="item-meta">Vốn: 45k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-caTuoi" value="119" onchange="checkPrice('caTuoi', 45)">
-                <span id="warn-caTuoi" style="font-size:8px; color:#777;">Lời: 74k</span>
-            </div>
-        </div>
-
-        <div class="section-title">🍢 Nhóm Topping & Rau Nấm</div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Rau Cải Thảo Tươi</div><div class="item-meta">Vốn: 10k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-rauCai" value="35" onchange="checkPrice('rauCai', 10)">
-                <span id="warn-rauCai" style="font-size:8px; color:#777;">Lời: 25k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Nấm Kim Châm</div><div class="item-meta">Vốn: 15k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-namKimCham" value="39" onchange="checkPrice('namKimCham', 15)">
-                <span id="warn-namKimCham" style="font-size:8px; color:#777;">Lời: 24k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Kim Chi Chua Cay</div><div class="item-meta">Vốn: 12k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-kimChi" value="30" onchange="checkPrice('kimChi', 12)">
-                <span id="warn-kimChi" style="font-size:8px; color:#777;">Lời: 18k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Xúc Xích Đức</div><div class="item-meta">Vốn: 15k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-xucXich" value="45" onchange="checkPrice('xucXich', 15)">
-                <span id="warn-xucXich" style="font-size:8px; color:#777;">Lời: 30k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Chả Cá Hàn Quốc</div><div class="item-meta">Vốn: 18k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-chaCa" value="40" onchange="checkPrice('chaCa', 18)">
-                <span id="warn-chaCa" style="font-size:8px; color:#777;">Lời: 22k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Cá Viên Chiên</div><div class="item-meta">Vốn: 15k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-caVien" value="35" onchange="checkPrice('caVien', 15)">
-                <span id="warn-caVien" style="font-size:8px; color:#777;">Lời: 20k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Đậu Hũ Non Thả Lẩu</div><div class="item-meta">Vốn: 12k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-dauHu" value="30" onchange="checkPrice('dauHu', 12)">
-                <span id="warn-dauHu" style="font-size:8px; color:#777;">Lời: 18k</span>
-            </div>
-        </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">Chân Gà Rút Xương</div><div class="item-meta">Vốn: 25k</div></div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                <input type="number" class="price-input" id="price-chanGa" value="69" onchange="checkPrice('chanGa', 25)">
-                <span id="warn-chanGa" style="font-size:8px; color:#777;">Lời: 44k</span>
             </div>
         </div>
     </div>
@@ -550,7 +457,7 @@
         </div>
     </div>
 
-    <!-- TAB 5: ĐÁNH GIÁ (CHƯA BÁN THÌ 0.0 ĐÚNG CHUẨN) -->
+    <!-- TAB 5: ĐÁNH GIÁ -->
     <div class="page-content" id="page-danhgia">
         <div class="kitchen-box" style="align-items: stretch; gap: 8px;">
             <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -625,8 +532,8 @@
         <div class="settings-card">
             <div style="text-align: center; font-size: 14px; font-weight: 700;">📖 HƯỚNG DẪN CÁCH CHƠI</div>
             <div style="font-size: 11px; line-height: 1.5;">
-                1. <b>Chuẩn bị Kho:</b> Đầu mỗi ngày, chọn số lượng nhập các món lẩu, thịt bò, heo, hải sản và topping.<br><br>
-                2. <b>Mở cửa & Phục vụ:</b> Bấm mở cửa để bắt đầu từ 10:00 đến 22:00. Bạn có thể bấm <b>Đóng cửa sớm</b> bất cứ lúc nào.<br><br>
+                1. <b>Chuẩn bị Kho:</b> Xem thời tiết hôm nay và chọn số lượng nhập nguyên liệu.<br><br>
+                2. <b>Mở cửa & Phục vụ:</b> Bấm mở cửa. Chú ý các sự kiện **Food Reviewer / KOL** ghé thăm để phục vụ nhanh nhận quà lớn!<br><br>
                 3. <b>Sổ sách & Nâng cấp:</b> Kiểm tra lời lỗ cuối ngày, tuyển nhân viên và mua trang bị để phát triển tiệm!
             </div>
             <button class="btn-big" style="margin-top: 10px;" onclick="closeGuideModal()">Đã Hiểu</button>
@@ -659,6 +566,8 @@
     let hiredStaff = {};
     let customerQueueCount = 3;
     let timerInterval = null;
+    let currentWeather = "Trời đẹp";
+    let isVipEventActive = false;
     let stock = { lauMala: 1, lauCua: 1, lauGaLaE: 1, lauKimChi: 1, lauHaiSan: 1, boCuonNam: 2, boKobe: 1, loiVaiBo: 1, deSuonBo: 1, baChiHeo: 2, suonHeo: 1, nacHeo: 1, nongGioHeo: 1, tomSu: 1, mucOng: 1, bachTuoc: 1, caTuoi: 1, rauCai: 3, namKimCham: 2, kimChi: 2, xucXich: 2, chaCa: 2, caVien: 2, dauHu: 2, chanGa: 1 };
     let player = { ingredientsCount: {}, sauce: null, dip: null, method: null };
     let isRunning = false;
@@ -672,7 +581,6 @@
     ];
     let currentOnlineIdx = 0;
 
-    // Danh sách nhạc chill lofi nhẹ nhàng hoạt động ổn định
     let bgmTracks = [
         "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cozy-lofi-song-114485.mp3",
         "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=lofi-study-112191.mp3",
@@ -702,8 +610,20 @@
             clearInterval(t);
             document.getElementById('loading-screen').style.opacity = '0';
             setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 300);
+            rollWeather();
         }
     }, 30);
+
+    function rollWeather() {
+        let weathers = [
+            { text: "🌧️ Trời Mưa Lạnh: Khách cực chuộng món lẩu và gọi đồ nhiều hơn!", bonus: 1.2 },
+            { text: "☀️ Trời Nắng Nóng: Khách thích đồ nướng và gọi nước ngọt giải khát!", bonus: 1.1 },
+            { text: "🌸 Ngày Đẹp Trời: Lượng khách ghé tiệm ổn định, thư thả.", bonus: 1.0 }
+        ];
+        let chosen = weathers[Math.floor(Math.random() * weathers.length)];
+        currentWeather = chosen.text;
+        document.getElementById('weather-banner').innerText = `🌤️ Thời tiết hôm nay: ${currentWeather}`;
+    }
 
     function switchTab(id) {
         if (id === 'nau' && !isRunning) {
@@ -766,6 +686,8 @@
             if (isRunning) {
                 let dishPrice = 170 * totalIngs; 
                 if (hiredStaff[1]) dishPrice *= 1.1; 
+                if (isVipEventActive) { dishPrice *= 1.5; isVipEventActive = false; document.getElementById('vip-event-box').style.display = 'none'; }
+                
                 money += Math.round(dishPrice);
                 totalRevenue += Math.round(dishPrice);
                 soldDishesCount += totalIngs;
@@ -779,7 +701,7 @@
 
                 starCounts[5]++;
                 reviewsList.unshift({
-                    name: ["Cua", "Quang Minh", "Bảo Long", "Thảo Vy", "Gia Hân"][Math.floor(Math.random()*5)],
+                    name: ["Cua", "Quang Minh", "Bảo Long", "Thảo Vy", "Gia Hân", "Food Reviewer Sài Gòn"][Math.floor(Math.random()*6)],
                     stars: 5,
                     text: ["Mùi thơm bay ra tận đầu hẻm, không chê vào đâu được 😉", "Giao tới vẫn nóng hổi, ăn cực kỳ vừa miệng! 🔥", "Quán phục vụ chu đáo, đồ tươi ngon tuyệt vời ⭐"][Math.floor(Math.random()*3)],
                     day: day,
@@ -787,7 +709,7 @@
                 });
                 updateReviewsUI();
 
-                let avatars = ["👦", "👧", "🧑", "👨", "👩", "🧓"];
+                let avatars = ["👦", "👧", "🧑", "👨", "👩", "🌟"];
                 document.getElementById('customer-avatar').innerText = avatars[Math.floor(Math.random() * avatars.length)];
                 let randomDishes = ["2x Lõi Vai Bò Mỹ ướp Sat Tế chấm Phô Mai Kéo Sợi nướng than!", "1x Bò Kobe ướp Phô Mai chấm Muối Ớt Xanh nướng chảo!", "3x Tôm Sú ướp Nướng Mọi chấm Mắm Tắc lẩu đặc biệt!"];
                 document.getElementById('customer-order').innerHTML = `"${randomDishes[Math.floor(Math.random() * randomDishes.length)]}"`;
@@ -936,6 +858,12 @@
         document.getElementById('nav-btn-nau').style.display = 'block';
         switchTab('nau');
 
+        // Ngẫu nhiên kích hoạt sự kiện KOL / VIP ghé thăm
+        if (Math.random() < 0.6) {
+            isVipEventActive = true;
+            document.getElementById('vip-event-box').style.display = 'flex';
+        }
+
         timerInterval = setInterval(() => {
             minute += 1;
             if(minute >= 60) { minute = 0; hour++; }
@@ -972,6 +900,7 @@
         document.getElementById('day-label').innerText = "Ngày " + day;
         document.getElementById('nav-btn-nau').style.display = 'none';
         switchTab('kho');
+        rollWeather();
         alert(`🌙 Đã đóng cửa tiệm và tổng kết ngày ${day-1}.\nLợi nhuận ròng: ${netProfit >= 0 ? '+'+netProfit : netProfit}k đã được hạch toán vào KÉT.`);
     }
 
