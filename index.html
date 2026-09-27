@@ -3,76 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Quán Lẩu Siêu Cấp</title>
+    <title>Quản Lý Quán Lẩu "Quay Xe" Full Tính Năng</title>
     <style>
         :root { --primary: #ff5722; --bg: #fffaf0; --card: #ffffff; --text: #333; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-        header { background: var(--primary); color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; }
-        .dashboard { display: flex; justify-content: space-around; background: #ffe0b2; padding: 10px; font-weight: bold; border-bottom: 2px solid #ffcc80; }
-        .nav-tabs { display: flex; background: #fff; border-bottom: 1px solid #ddd; overflow-x: auto; }
-        .nav-tabs button { flex: 1; padding: 12px; border: none; background: none; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        header { background: var(--primary); color: white; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; }
+        .dashboard { display: flex; justify-content: space-around; background: #ffe0b2; padding: 10px; font-weight: bold; border-bottom: 2px solid #ffcc80; font-size: 14px; }
+        .nav-tabs { display: flex; background: #fff; border-bottom: 1px solid #ddd; overflow-x: auto; position: sticky; top: 0; z-index: 100; }
+        .nav-tabs button { flex: 1; padding: 12px 8px; border: none; background: none; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 13px; }
         .nav-tabs button.active { border-bottom: 3px solid var(--primary); color: var(--primary); }
-        .container { padding: 15px; max-width: 600px; margin: auto; padding-bottom: 80px; }
+        .container { padding: 15px; max-width: 600px; margin: auto; padding-bottom: 100px; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .card { background: var(--card); padding: 12px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .section-title { font-size: 15px; font-weight: bold; margin: 15px 0 8px 0; color: #d84315; border-left: 4px solid #ff5722; padding-left: 8px; }
+        .card { background: var(--card); padding: 10px 12px; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; }
+        .btn { background: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 13px; }
         .btn:active { transform: scale(0.95); }
-        .event-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .event-box { background: white; padding: 20px; border-radius: 10px; width: 85%; max-width: 400px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .badge { background: #e91e63; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+        .btn-secondary { background: #757575; }
+        .weather-banner { background: #e3f2fd; border: 1px solid #90caf9; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; color: #0d47a1; }
+        .event-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 15px; box-sizing: border-box; }
+        .event-box { background: white; padding: 20px; border-radius: 10px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .badge { background: #e91e63; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .open-btn { position: fixed; bottom: 15px; left: 15px; right: 15px; max-width: 570px; margin: auto; background: #2e7d32; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 99; }
     </style>
 </head>
 <body>
 
-    <header>🔥 QUÁN LẨU "QUAY XE" ĐỈNH CAO 🔥</header>
+    <header>🔥 QUÁN LẨU "QUAY XE" - FULL OPTIONS 🔥</header>
     
     <div class="dashboard">
-        <div>📅 Ngày: <span id="stat-day">1</span></div>
+        <div>📅 Ngày <span id="stat-day">1</span> • <span id="stat-time">10:00</span></div>
         <div>💰 Két: <span id="stat-money">500,000</span>đ</div>
         <div>⭐ Uy tín: <span id="stat-star">5.0</span></div>
     </div>
 
     <div class="nav-tabs">
-        <button class="active" onclick="switchTab('kho')">Kho & Nhập</button>
-        <button onclick="switchTab('menu')">Giá Bán</button>
-        <button onclick="switchTab('nangcap')">Nâng Cấp</button>
-        <button onclick="switchTab('nhiemvu')">Nhiệm Vụ</button>
+        <button class="active" onclick="switchTab('kho')">📦 Kho & Nhập</button>
+        <button onclick="switchTab('menu')">🏷️ Giá Bán</button>
+        <button onclick="switchTab('nangcap')">🛠️ Nâng Cấp</button>
+        <button onclick="switchTab('nhiemvu')">📜 Nhiệm Vụ</button>
+        <button onclick="switchTab('sosach')">📊 Sổ Sách</button>
     </div>
 
     <div class="container">
         <!-- TAB 1: KHO & NHẬP HÀNG -->
         <div id="tab-kho" class="tab-content active">
-            <h3>📦 Nhập Đồ Uống & Món Ăn Đầu Ngày</h3>
-            <div id="shop-items"></div>
-            <button class="btn" style="width:100%; margin-top:15px; padding: 12px;" onclick="openStore()">🚀 Mở Cửa Quán (10:00 - 22:00)</button>
+            <div class="weather-banner" id="weather-text">
+                🌤️ Thời tiết hôm nay: Trời Mưa Lạnh. Khách cực chuộng món lẩu và gọi đồ nhiều hơn!
+            </div>
+            
+            <div class="section-title">🍲 Nhóm Nước Lẩu Đa Dạng</div>
+            <div id="shop-nuoclau"></div>
+
+            <div class="section-title">🥩 Nhóm Thịt Bò Đa Dạng</div>
+            <div id="shop-thitbo"></div>
+
+            <div class="section-title">🥤 Nhóm Đồ Uống Giải Khát</div>
+            <div id="shop-douong"></div>
         </div>
 
         <!-- TAB 2: GIÁ BÁN -->
         <div id="tab-menu" class="tab-content">
-            <h3>🏷️ Thiết Lập Giá Bán Thực Đơn</h3>
+            <div class="section-title">🏷️ Thiết Lập Giá Bán Thực Đơn</div>
             <div id="price-list"></div>
         </div>
 
         <!-- TAB 3: NÂNG CẤP -->
         <div id="tab-nangcap" class="tab-content">
-            <h3>🛠️ Nâng Cấp Quán & Kỹ Năng</h3>
+            <div class="section-title">🛠️ Hệ Thống Nâng Cấp & Kỹ Năng</div>
             <div id="upgrade-list"></div>
         </div>
 
         <!-- TAB 4: NHIỆM VỤ -->
         <div id="tab-nhiemvu" class="tab-content">
-            <h3>📜 Thử Thách Hằng Ngày</h3>
+            <div class="section-title">🎯 Thử Thách Hằng Ngày</div>
             <div id="quest-list"></div>
         </div>
+
+        <!-- TAB 5: SỔ SÁCH -->
+        <div id="tab-sosach" class="tab-content">
+            <div class="section-title">📊 Thống Kê Tài Chính</div>
+            <div class="card">
+                <div><b>Tổng doanh thu tích lũy</b></div>
+                <div id="stat-total-rev" style="font-weight: bold; color: green;">0đ</div>
+            </div>
+            <div class="card">
+                <div><b>Chi phí mặt bằng & điện nước / ngày</b></div>
+                <div style="font-weight: bold; color: red;">-115,000đ</div>
+            </div>
+        </div>
     </div>
+
+    <button class="open-btn" onclick="openStore()">🔔 Mở Cửa Ngày <span id="btn-day-num">1</span> (10:00 - 22:00)</button>
 
     <!-- MODAL SỰ KIỆN DRAMA -->
     <div id="event-modal" class="event-modal">
         <div class="event-box">
-            <h2 id="event-title">⚠️ Sự Cố Bất Ngờ!</h2>
-            <p id="event-desc">Nội dung sự kiện...</p>
-            <div id="event-actions" style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;"></div>
+            <h2 id="event-title" style="color: #d84315; margin-top: 0;">⚠️ Sự Cố Bất Ngờ!</h2>
+            <p id="event-desc" style="font-size: 14px; line-height: 1.5;"></p>
+            <div id="event-actions" style="margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-direction: column;"></div>
         </div>
     </div>
 
@@ -81,30 +110,44 @@
             day: 1,
             money: 500000,
             star: 5.0,
-            upgrades: { chef: 0, guard: 0, generator: 0 },
+            totalRevenue: 0,
+            upgrades: { chef: 0, guard: 0, generator: 0, vsat: 0 },
             prices: {
+                // Nước lẩu
+                "laumala": 250000, "laurieucua": 220000, "laugala": 200000, "laukimchi": 180000, "lauhaisan": 260000,
+                // Thịt bò
+                "boconuom": 99000, "bokobe": 189000, "loivaibo": 129000, "desuonbo": 149000,
+                // Đồ uống
                 "7up": 15000, "coca": 15000, "pepsi": 15000, 
                 "tiger": 25000, "heineken": 30000, "soju": 60000, 
-                "trasua": 35000, "tradao": 30000, "trathai": 30000, "nuoccam": 25000,
-                "laumala": 250000, "laukimchi": 180000, "bokobe": 350000
+                "trasua": 35000, "tradao": 30000, "trathai": 30000, "nuoccam": 25000
             },
-            inventory: { "7up": 5, "coca": 5, "tiger": 5, "laumala": 2, "laukimchi": 2 }
+            inventory: { "laumala": 2, "boconuom": 3, "coca": 5, "tiger": 5 }
         };
 
         const catalog = [
-            { id: "7up", name: "7 Up", cost: 8000, type: "Đồ uống" },
-            { id: "coca", name: "Coca-Cola", cost: 8000, type: "Đồ uống" },
-            { id: "pepsi", name: "Pepsi", cost: 8000, type: "Đồ uống" },
-            { id: "tiger", name: "Bia Tiger", cost: 15000, type: "Đồ uống" },
-            { id: "heineken", name: "Bia Heineken", cost: 18000, type: "Đồ uống" },
-            { id: "soju", name: "Rượu Soju", cost: 35000, type: "Đồ uống" },
-            { id: "trasua", name: "Trà sữa truyền thống", cost: 18000, type: "Đồ uống" },
-            { id: "tradao", name: "Trà đào", cost: 15000, type: "Đồ uống" },
-            { id: "trathai", name: "Trà sữa Thái", cost: 16000, type: "Đồ uống" },
-            { id: "nuoccam", name: "Nước cam tươi", cost: 12000, type: "Đồ uống" },
-            { id: "laumala", name: "Lẩu Mala Tứ Xuyên", cost: 120000, type: "Món lẩu" },
-            { id: "laukimchi", name: "Lẩu Kim Chi Chua Cay", cost: 90000, type: "Món lẩu" },
-            { id: "bokobe", name: "Bò Kobe Thượng Hạng", cost: 180000, type: "Thịt nhúng" }
+            // Nước lẩu
+            { id: "laumala", name: "Lẩu Mala Tứ Xuyên", cost: 60000, category: "nuoclau" },
+            { id: "laurieucua", name: "Lẩu Riêu Cua Đồng", cost: 55000, category: "nuoclau" },
+            { id: "laugala", name: "Lẩu Gà Lá É", cost: 50000, category: "nuoclau" },
+            { id: "laukimchi", name: "Lẩu Kim Chi Chua Cay", cost: 45000, category: "nuoclau" },
+            { id: "lauhaisan", name: "Lẩu Hải Sản Đặc Biệt", cost: 70000, category: "nuoclau" },
+            // Thịt bò
+            { id: "boconuom", name: "Bò Cuộn Nấm Kim Châm", cost: 45000, category: "thitbo" },
+            { id: "bokobe", name: "Bò Kobe Thượng Hạng", cost: 90000, category: "thitbo" },
+            { id: "loivaibo", name: "Lõi Vai Bò Mỹ", cost: 60000, category: "thitbo" },
+            { id: "desuonbo", name: "Dẻ Sườn Bò", cost: 70000, category: "thitbo" },
+            // Đồ uống
+            { id: "7up", name: "7 Up", cost: 8000, category: "douong" },
+            { id: "coca", name: "Coca-Cola", cost: 8000, category: "douong" },
+            { id: "pepsi", name: "Pepsi", cost: 8000, category: "douong" },
+            { id: "tiger", name: "Bia Tiger", cost: 15000, category: "douong" },
+            { id: "heineken", name: "Bia Heineken", cost: 18000, category: "douong" },
+            { id: "soju", name: "Rượu Soju", cost: 35000, category: "douong" },
+            { id: "trasua", name: "Trà sữa truyền thống", cost: 18000, category: "douong" },
+            { id: "tradao", name: "Trà đào", cost: 15000, category: "douong" },
+            { id: "trathai", name: "Trà sữa Thái", cost: 16000, category: "douong" },
+            { id: "nuoccam", name: "Nước cam tươi", cost: 12000, category: "douong" }
         ];
 
         function switchTab(tabId) {
@@ -117,47 +160,74 @@
 
         function renderUI() {
             document.getElementById('stat-day').innerText = game.day;
+            document.getElementById('btn-day-num').innerText = game.day;
             document.getElementById('stat-money').innerText = game.money.toLocaleString();
             document.getElementById('stat-star').innerText = game.star;
+            document.getElementById('stat-total-rev').innerText = game.totalRevenue.toLocaleString() + 'đ';
 
-            // Render Kho
-            let shopHtml = '';
+            // Render Kho hàng theo nhóm
+            let nlHtml = '', tbHtml = '', duHtml = '';
             catalog.forEach(item => {
                 let qty = game.inventory[item.id] || 0;
-                shopHtml += `<div class="card">
+                let itemHtml = `<div class="card">
                     <div><b>${item.name}</b><br><small>Vốn: ${item.cost.toLocaleString()}đ</small></div>
-                    <div>
-                        <button class="btn" onclick="adjustInv('${item.id}', -1)">-</button>
-                        <span style="margin: 0 10px; font-weight: bold;">${qty}</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button class="btn btn-secondary" onclick="adjustInv('${item.id}', -1)">-</button>
+                        <span style="font-weight: bold; min-width: 20px; text-align: center;">${qty}</span>
                         <button class="btn" onclick="adjustInv('${item.id}', 1)">+</button>
                     </div>
                 </div>`;
+                
+                if (item.category === 'nuoclau') nlHtml += itemHtml;
+                else if (item.category === 'thitbo') tbHtml += itemHtml;
+                else if (item.category === 'douong') duHtml += itemHtml;
             });
-            document.getElementById('shop-items').innerHTML = shopHtml;
+            document.getElementById('shop-nuoclau').innerHTML = nlHtml;
+            document.getElementById('shop-thitbo').innerHTML = tbHtml;
+            document.getElementById('shop-douong').innerHTML = duHtml;
 
-            // Render Giá
+            // Render Giá bán
             let priceHtml = '';
             catalog.forEach(item => {
                 let p = game.prices[item.id] || 0;
                 priceHtml += `<div class="card">
-                    <div><b>${item.name}</b></div>
-                    <div><input type="number" value="${p}" onchange="updatePrice('${item.id}', this.value)" style="width: 90px; padding: 5px;"> đ</div>
+                    <div><b>${item.name}</b><br><small>Vốn gốc: ${item.cost}đ</small></div>
+                    <div><input type="number" value="${p}" onchange="updatePrice('${item.id}', this.value)" style="width: 90px; padding: 5px; text-align: right; font-weight: bold;"> đ</div>
                 </div>`;
             });
             document.getElementById('price-list').innerHTML = priceHtml;
 
             // Render Nâng cấp
             let upHtml = `
-                <div class="card"><div><b>Kỹ năng Đầu bếp (Cấp ${game.upgrades.chef})</b><br><small>Tăng tốc độ phục vụ, dễ được 5 sao</small></div><button class="btn" onclick="buyUpgrade('chef', 100000)">Nâng (100k)</button></div>
-                <div class="card"><div><b>Bảo vệ quán (Cấp ${game.upgrades.guard})</b><br><small>Chống khách quỵt tiền, gây rối</small></div><button class="btn" onclick="buyUpgrade('guard', 150000)">Nâng (150k)</button></div>
-                <div class="card"><div><b>Máy phát điện dự phòng (Cấp ${game.upgrades.generator})</b><br><small>Tránh sập quán khi mất điện</small></div><button class="btn" onclick="buyUpgrade('generator', 200000)">Mua (200k)</button></div>
+                <div class="card">
+                    <div><b>Kỹ năng Đầu bếp (Cấp ${game.upgrades.chef})</b><br><small>Tăng tốc độ làm món, dễ đạt 5 sao</small></div>
+                    <button class="btn" onclick="buyUpgrade('chef', 100000)">100.000đ</button>
+                </div>
+                <div class="card">
+                    <div><b>Bảo vệ quán (Cấp ${game.upgrades.guard})</b><br><small>Chống khách quỵt tiền, gây rối</small></div>
+                    <button class="btn" onclick="buyUpgrade('guard', 150000)">150.000đ</button>
+                </div>
+                <div class="card">
+                    <div><b>Máy phát điện dự phòng (Cấp ${game.upgrades.generator})</b><br><small>Phòng hờ sập nguồn giờ cao điểm</small></div>
+                    <button class="btn" onclick="buyUpgrade('generator', 200000)">200.000đ</button>
+                </div>
+                <div class="card">
+                    <div><b>Chứng nhận VSATTP (Cấp ${game.upgrades.vsat})</b><br><small>Giảm nhẹ khi đoàn kiểm tra ghé thăm</small></div>
+                    <button class="btn" onclick="buyUpgrade('vsat', 250000)">250.000đ</button>
+                </div>
             `;
             document.getElementById('upgrade-list').innerHTML = upHtml;
 
             // Render Nhiệm vụ
             let questHtml = `
-                <div class="card"><div><b>🎯 Đạt doanh thu ngày ${game.day}</b><br><small>Kiếm trên 400.000đ hôm nay</small></div><span class="badge">Phần thưởng: 50k</span></div>
-                <div class="card"><div><b>🥤 Sâu rượu giải nhiệt</b><br><small>Bán ít nhất 5 chai bia/soju trong ngày</small></div><span class="badge">Phần thưởng: Thêm uy tín</span></div>
+                <div class="card">
+                    <div><b>🎯 Chỉ tiêu doanh thu ngày ${game.day}</b><br><small>Đạt trên 400.000đ doanh thu bán hàng</small></div>
+                    <span class="badge">Thưởng: 50k</span>
+                </div>
+                <div class="card">
+                    <div><b>🥤 Thánh giải khát</b><br><small>Bán tổng cộng ít nhất 5 món đồ uống/bia rượu trong ngày</small></div>
+                    <span class="badge">Thưởng: Tăng uy tín</span>
+                </div>
             `;
             document.getElementById('quest-list').innerHTML = questHtml;
         }
@@ -185,18 +255,23 @@
         }
 
         function openStore() {
-            // Trừ tiền mặt bằng, điện nước
+            // Trừ chi phí cố định hằng ngày
             let fixedCost = 115000; // mặt bằng 40k + điện nước 75k
             game.money -= fixedCost;
 
-            // Tính doanh thu giả lập dựa trên kho hàng
-            let revenue = 0;
+            // Tính doanh thu dựa trên kho hàng đã chuẩn bị
+            let dailyRev = 0;
             for (let key in game.inventory) {
-                revenue += (game.inventory[key] || 0) * (game.prices[key] || 0) * 0.8; // Giả sử bán được 80% hàng trong kho
+                let sold = game.inventory[key] || 0;
+                dailyRev += sold * (game.prices[key] || 0);
             }
-            game.money += Math.floor(revenue);
+            game.money += dailyRev;
+            game.totalRevenue += dailyRev;
 
-            // Kích hoạt sự kiện Drama ngẫu nhiên cuối ngày
+            // Xóa kho sau khi bán xong
+            game.inventory = {};
+
+            // Kích hoạt chuỗi Sự kiện Drama ngẫu nhiên
             triggerRandomEvent();
         }
 
@@ -204,39 +279,78 @@
             const events = [
                 {
                     title: "💸 Khách đòi trả giá & Kì kèo!",
-                    desc: "Một nhóm khách nhậu uống hết sạch bia Tiger và Soju nhưng chê đắt, đòi giảm 30% tổng hóa đơn mới chịu trả tiền.",
-                    btn1: "Đồng ý bớt (Mất 50k tiền lời)", act1: () => { game.money -= 50000; nextDayFin("Bạn đã nhượng bộ để giữ khách quen."); },
+                    desc: "Một nhóm khách nhậu uống sạch bia và Soju nhưng chê đắt, đòi giảm 30% tổng hóa đơn mới chịu thanh toán.",
+                    btn1: "Đồng ý bớt tiền để giữ khách", act1: () => { 
+                        game.money -= 40000; 
+                        nextDaySummary("Bạn đã nhượng bộ. Khách vui vẻ ra về."); 
+                    },
                     btn2: "Cứng rắn đòi đủ tiền", act2: () => { 
-                        if(Math.random() > 0.5) { game.star = +(game.star - 0.2).toFixed(1); nextDayFin("Khách bực mình đánh giá 1 sao lên mạng!"); }
-                        else { nextDayFin("Khách ấm ức ném tiền trả đủ."); }
+                        if(Math.random() > 0.4) { 
+                            game.star = +(game.star - 0.2).toFixed(1); 
+                            nextDaySummary("Khách bực mình lên mạng phốt, uy tín giảm!"); 
+                        } else { 
+                            nextDaySummary("Khách ấm ức ném tiền trả đủ."); 
+                        }
                     }
                 },
                 {
                     title: "🏃 Khách ăn bùng quỵt tiền!",
-                    desc: "Lợi dụng lúc đông khách, bàn góc quán đã chén sạch Lẩu Mala và nước ngọt rồi chuồn mất tăm!",
-                    btn1: "Gọi bảo vệ đuổi theo", act1: () => {
-                        if(game.upgrades.guard > 0) { game.money += 200000; nextDayFin("Bảo vệ tóm gọn bắt trả tiền đầy đủ!"); }
-                        else { game.money -= 150000; nextDayFin("Không có bảo vệ, đành ngậm ngùi mất tiền!"); }
+                    desc: "Lợi dụng lúc quán đông đúc, bàn góc phòng đã chén sạch Lẩu Mala cùng đồ nhúng rồi chuồn mất tăm!",
+                    btn1: "Hô hoán bảo vệ đuổi theo", act1: () => {
+                        if(game.upgrades.guard > 0) { 
+                            nextDaySummary("Bảo vệ kịp thời tóm gọn bắt trả tiền đầy đủ nhờ có nâng cấp Cấp bảo vệ!"); 
+                        } else { 
+                            game.money -= 120000; 
+                            nextDaySummary("Không có bảo vệ canh cửa, đành ngậm ngùi mất tiền bữa ăn!"); 
+                        }
                     }
                 },
                 {
-                    title: "👮 Công an kiểm tra vỉa hè!",
+                    title: "👮 Công an & Trật tự đô thị kiểm tra vỉa hè!",
                     desc: "Quán kê bàn ghế lấn chiếm lòng lề đường bị đoàn kiểm tra trật tự đô thị ghé thăm bất ngờ.",
-                    btn1: "Nộp phạt hành chính", act1: () => { game.money -= 200000; nextDayFin("Bị phạt 200k vì lấn chiếm vỉa hè."); },
-                    btn2: "Linh động 'bôi trơn'", act2: () => { game.money -= 100000; nextDayFin("Tốn 100k 'nhẹ nhàng' qua chuyện."); }
+                    btn1: "Nộp phạt hành chính chuẩn chỉ", act1: () => { 
+                        game.money -= 200000; 
+                        nextDaySummary("Bị phạt 200k vì lỗi lấn chiếm vỉa hè."); 
+                    },
+                    btn2: "Linh động 'bôi trơn' qua chuyện", act2: () => { 
+                        game.money -= 90000; 
+                        nextDaySummary("Tốn 90k 'nhẹ nhàng' cho các anh qua chuyện."); 
+                    }
+                },
+                {
+                    title: "🔍 Đoàn VSATTP kiểm tra đột xuất!",
+                    desc: "Kiểm tra nguồn gốc thịt bò (Kobe, lõi vai) và hạn sử dụng trong kho thực phẩm.",
+                    btn1: "Hợp tác xuất trình giấy tờ", act1: () => {
+                        if(game.upgrades.vsat > 0) {
+                            nextDaySummary("Có giấy chứng nhận VSATTP nên đoàn kiểm tra khen ngợi ra về!");
+                        } else {
+                            game.money -= 150000;
+                            game.star = +(game.star - 0.1).toFixed(1);
+                            nextDaySummary("Bị phạt 150k do thiếu vài thủ tục giấy tờ kiểm định!");
+                        }
+                    }
                 },
                 {
                     title: "⚡ Mất điện chớp nhoáng giờ cao điểm!",
-                    desc: "Khu vực sập nguồn đúng lúc khách đang ăn lẩu đông nghẹt.",
-                    btn1: "Dùng máy phát điện", act1: () => {
-                        if(game.upgrades.generator > 0) { nextDayFin("Máy phát điện bật lên, khách khen quán xịn!"); }
-                        else { game.money -= 100000; game.star = +(game.star - 0.3).toFixed(1); nextDayFin("Khách la ó bỏ về giữa chừng vì tối thui!"); }
+                    desc: "Khu vực sập nguồn đúng lúc khách đang ăn lẩu đông nghẹt tối tối.",
+                    btn1: "Khởi động ngay máy phát điện", act1: () => {
+                        if(game.upgrades.generator > 0) { 
+                            nextDaySummary("Máy phát điện tự động bật, khách vỗ tay khen quán chuẩn chuyên nghiệp!"); 
+                        } else { 
+                            game.money -= 80000; 
+                            game.star = +(game.star - 0.3).toFixed(1); 
+                            nextDaySummary("Khách la ó bỏ về giữa chừng vì tối thui không bật được bếp từ!"); 
+                        }
                     }
                 },
                 {
-                    title: "🎉 Ngày kinh doanh thuận lợi!",
+                    title: "🎉 Ngày kinh doanh cực kỳ thuận lợi!",
                     desc: "Hôm nay thời tiết mưa lạnh, khách vào quán ùn ùn gọi lẩu và đồ uống không ngớt!",
-                    btn1: "Tuyệt vời, nhận tiền", act1: () => { game.money += 150000; game.star = +(Math.min(5.0, game.star + 0.1)).toFixed(1); nextDayFin("Thu lời khủng và tăng điểm uy tín!"); }
+                    btn1: "Tuyệt vời, nhận lộc kinh doanh", act1: () => { 
+                        game.money += 150000; 
+                        game.star = +(Math.min(5.0, game.star + 0.1)).toFixed(1); 
+                        nextDaySummary("Thu lời khủng và tăng điểm uy tín quán ăn!"); 
+                    }
                 }
             ];
 
@@ -246,14 +360,14 @@
             
             let actionsHtml = `<button class="btn" onclick="(${randomEvt.act1.toString()})(); closeEvent();">${randomEvt.btn1}</button>`;
             if(randomEvt.btn2) {
-                actionsHtml += `<button class="btn" style="background:#757575;" onclick="(${randomEvt.act2.toString()})(); closeEvent();">${randomEvt.btn2}</button>`;
+                actionsHtml += `<button class="btn btn-secondary" onclick="(${randomEvt.act2.toString()})(); closeEvent();">${randomEvt.btn2}</button>`;
             }
             document.getElementById('event-actions').innerHTML = actionsHtml;
             document.getElementById('event-modal').style.display = 'flex';
         }
 
-        function nextDayFin(msg) {
-            alert(msg + "\n--- Kết thúc ngày " + game.day + " ---");
+        function nextDaySummary(msg) {
+            alert(msg + "\n\n--- KẾT THÚC NGÀY " + game.day + " ---");
             game.day++;
             renderUI();
         }
@@ -263,7 +377,7 @@
             renderUI();
         }
 
-        // Khởi chạy lần đầu
+        // Chạy khởi tạo giao diện lần đầu
         renderUI();
     </script>
 </body>
