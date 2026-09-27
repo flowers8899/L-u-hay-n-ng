@@ -101,7 +101,7 @@
         .btn-qty { width: 26px; height: 26px; border-radius: 50%; border: none; background: #EEE; font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
         .btn-qty.plus { background: var(--primary-orange); color: #FFF; }
         .qty-num { font-size: 12px; font-weight: 700; min-width: 20px; text-align: center; }
-        .price-input { width: 65px; padding: 4px; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; font-size: 12px; font-weight: 700; background: #FFF; }
+        .price-input { width: 75px; padding: 4px; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; font-size: 12px; font-weight: 700; background: #FFF; }
 
         .action-btn-status { background: #27AE60; color: #FFF; border: none; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; }
         .action-btn-status.hired { background: #E74C3C; }
@@ -136,7 +136,7 @@
     <!-- HEADER -->
     <div class="header">
         <div class="stat-badge" onclick="openSettingsModal()">⚙️ <span id="day-label">Ngày 1</span> • <span id="game-time">10:00</span></div>
-        <div class="stat-badge" style="color:#2D5A27; background:#E8F3D6;">KÉT: <span id="money">250</span>k</div>
+        <div class="stat-badge" style="color:#2D5A27; background:#E8F3D6;">KÉT: <span id="money">500</span>k</div>
         <div class="stat-badge">⭐ <span id="stars">0.0</span></div>
     </div>
 
@@ -181,7 +181,7 @@
         <div class="item-card"><div class="item-info"><div class="item-name">🥩 Lõi Vai Bò Mỹ</div><div class="item-meta">Vốn: 60k</div></div>
             <div class="item-controls"><button class="btn-qty" onclick="adjustStock('loiVaiBo', -1)">-</button><span class="qty-num" id="qty-loiVaiBo">1</span><button class="btn-qty plus" onclick="adjustStock('loiVaiBo', 1)">+</button></div>
         </div>
-        <div class="item-card"><div class="item-info"><div class="item-name">🥩 Dẻ Sườn Bò</div><div class="item-meta">Vốn: 70k</div></div>
+        <div class="item-card"><div class="item-info"><div class="item-name">🥩 Dẻ Sườn Bò</div><div class="item-meta">Vốn: 70k (Gợi ý: 140k - 160k)</div></div>
             <div class="item-controls"><button class="btn-qty" onclick="adjustStock('deSuonBo', -1)">-</button><span class="qty-num" id="qty-deSuonBo">1</span><button class="btn-qty plus" onclick="adjustStock('deSuonBo', 1)">+</button></div>
         </div>
 
@@ -240,7 +240,7 @@
         </div>
     </div>
 
-    <!-- TAB 2: NẤU (CÓ NÚT GIAO HÀNG & HIỆN TRẠNG ĐÃ CHỌN ĐỦ Ô) -->
+    <!-- TAB 2: NẤU (ĐẦY ĐỦ 100% TỪNG MÓN, TOPPING, RAU NẤM) -->
     <div class="page-content" id="page-nau">
         <!-- ĐƠN ONLINE TÍCH HỢP NGAY TRONG BẾP (NHIỀU ĐƠN LIÊN TỤC) -->
         <div class="kitchen-box" style="background: #FFF5EE; border-color: #FF7B54;">
@@ -273,16 +273,28 @@
             </div>
         </div>
 
-        <div style="font-size: 10px; font-weight: 700;">1. Chọn Đồ Tươi & Thịt (Bấm nhiều lần để tăng số lượng):</div>
+        <div style="font-size: 10px; font-weight: 700;">1. Chọn Đồ Tươi, Thịt, Hải Sản & Topping:</div>
         <div class="grid-3">
             <div class="btn-select" id="ing-Bò Cuộn Nấm" onclick="addIng('Bò Cuộn Nấm', '🥓')">🥓 Bò Cuộn Nấm</div>
             <div class="btn-select" id="ing-Bò Kobe" onclick="addIng('Bò Kobe', '🥩')">🥩 Bò Kobe</div>
             <div class="btn-select" id="ing-Lõi Vai Bò" onclick="addIng('Lõi Vai Bò', '🥩')">🥩 Lõi Vai Bò</div>
+            <div class="btn-select" id="ing-Dẻ Sườn Bò" onclick="addIng('Dẻ Sườn Bò', '🥩')">🥩 Dẻ Sườn Bò</div>
             <div class="btn-select" id="ing-Ba Chỉ Heo" onclick="addIng('Ba Chỉ Heo', '🥓')">🥓 Ba Chỉ Heo</div>
             <div class="btn-select" id="ing-Sườn Heo" onclick="addIng('Sườn Heo', '🍖')">🍖 Sườn Heo</div>
+            <div class="btn-select" id="ing-Nạc Vai & Dăm" onclick="addIng('Nạc Vai & Dăm', '🥩')">🥩 Nạc Vai & Dăm</div>
+            <div class="btn-select" id="ing-Nạc Nọng & Giò" onclick="addIng('Nạc Nọng & Giò', '🥩')">🥩 Nạc Nọng & Giò</div>
             <div class="btn-select" id="ing-Tôm Sú" onclick="addIng('Tôm Sú', '🦐')">🦐 Tôm Sú</div>
             <div class="btn-select" id="ing-Mực Ống" onclick="addIng('Mực Ống', '🦑')">🦑 Mực Ống</div>
             <div class="btn-select" id="ing-Bạch Tuộc" onclick="addIng('Bạch Tuộc', '🐙')">🐙 Bạch Tuộc</div>
+            <div class="btn-select" id="ing-Phi Lê Cá" onclick="addIng('Phi Lê Cá', '🐟')">🐟 Phi Lê Cá</div>
+            <div class="btn-select" id="ing-Rau Cải Thảo" onclick="addIng('Rau Cải Thảo', '🥬')">🥬 Rau Cải Thảo</div>
+            <div class="btn-select" id="ing-Nấm Kim Châm" onclick="addIng('Nấm Kim Châm', '🍄')">🍄 Nấm Kim Châm</div>
+            <div class="btn-select" id="ing-Kim Chi" onclick="addIng('Kim Chi', '🇰🇷')">🇰🇷 Kim Chi</div>
+            <div class="btn-select" id="ing-Xúc Xích Đức" onclick="addIng('Xúc Xích Đức', '🌭')">🌭 Xúc Xích Đức</div>
+            <div class="btn-select" id="ing-Chả Cá" onclick="addIng('Chả Cá', '🍥')">🍥 Chả Cá</div>
+            <div class="btn-select" id="ing-Cá Viên" onclick="addIng('Cá Viên', '🍡')">🍡 Cá Viên</div>
+            <div class="btn-select" id="ing-Đậu Hũ Non" onclick="addIng('Đậu Hũ Non', '🥢')">🥢 Đậu Hũ Non</div>
+            <div class="btn-select" id="ing-Chân Gà" onclick="addIng('Chân Gà', '🍗')">🍗 Chân Gà</div>
         </div>
 
         <div style="font-size: 10px; font-weight: 700;">2. Chọn Sốt Ướp / Nước Lẩu:</div>
@@ -293,6 +305,8 @@
             <div class="btn-select" id="sauce-Nướng Muối Ớt" onclick="setSauce('Nướng Muối Ớt', '🧂')">🧂 Nướng Muối Ớt</div>
             <div class="btn-select" id="sauce-Lẩu Mala" onclick="setSauce('Lẩu Mala', '🌶️')">🌶️ Lẩu Mala</div>
             <div class="btn-select" id="sauce-Lẩu Gà Lá É" onclick="setSauce('Lẩu Gà Lá É', '🌿')">🌿 Lẩu Gà Lá É</div>
+            <div class="btn-select" id="sauce-Lẩu Kim Chi" onclick="setSauce('Lẩu Kim Chi', '🇰🇷')">🇰🇷 Lẩu Kim Chi</div>
+            <div class="btn-select" id="sauce-Lẩu Hải Sản" onclick="setSauce('Lẩu Hải Sản', '🦐')">🦐 Lẩu Hải Sản</div>
         </div>
 
         <div style="font-size: 10px; font-weight: 700;">3. Chọn Sốt Chấm Kèm:</div>
@@ -309,7 +323,7 @@
         <div class="grid-3">
             <div class="btn-select" id="method-Nướng Chảo" onclick="setMethod('Nướng Chảo', '🍳')">🍳 Nướng Chảo</div>
             <div class="btn-select" id="method-Nướng Than" onclick="setMethod('Nướng Than', '🪵')">🪵 Nướng Than</div>
-            <div class="btn-select" onclick="setMethod('Nấu Lẩu', '🥘')">🥘 Nấu Lẩu</div>
+            <div class="btn-select" id="method-Nấu Lẩu" onclick="setMethod('Nấu Lẩu', '🥘')">🥘 Nấu Lẩu</div>
         </div>
     </div>
 
@@ -319,87 +333,162 @@
         
         <div class="section-title">🍲 Nhóm Nước Lẩu Đa Dạng</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Mala Tứ Xuyên</div><div class="item-meta">Vốn: 60k</div></div>
-            <input type="number" class="price-input" id="price-lauMala" value="159" onchange="checkPrice('lauMala', 159)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-lauMala" value="159" onchange="checkPrice('lauMala', 60)">
+                <span id="warn-lauMala" style="font-size:8px; color:#777;">Lời: 99k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Riêu Cua Đồng</div><div class="item-meta">Vốn: 55k</div></div>
-            <input type="number" class="price-input" id="price-lauCua" value="149" onchange="checkPrice('lauCua', 149)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-lauCua" value="149" onchange="checkPrice('lauCua', 55)">
+                <span id="warn-lauCua" style="font-size:8px; color:#777;">Lời: 94k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Gà Lá É</div><div class="item-meta">Vốn: 50k</div></div>
-            <input type="number" class="price-input" id="price-lauGaLaE" value="139" onchange="checkPrice('lauGaLaE', 139)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-lauGaLaE" value="139" onchange="checkPrice('lauGaLaE', 50)">
+                <span id="warn-lauGaLaE" style="font-size:8px; color:#777;">Lời: 89k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Kim Chi Chua Cay</div><div class="item-meta">Vốn: 45k</div></div>
-            <input type="number" class="price-input" id="price-lauKimChi" value="129" onchange="checkPrice('lauKimChi', 129)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-lauKimChi" value="129" onchange="checkPrice('lauKimChi', 45)">
+                <span id="warn-lauKimChi" style="font-size:8px; color:#777;">Lời: 84k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lẩu Hải Sản Đặc Biệt</div><div class="item-meta">Vốn: 70k</div></div>
-            <input type="number" class="price-input" id="price-lauHaiSan" value="179" onchange="checkPrice('lauHaiSan', 179)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-lauHaiSan" value="179" onchange="checkPrice('lauHaiSan', 70)">
+                <span id="warn-lauHaiSan" style="font-size:8px; color:#777;">Lời: 109k</span>
+            </div>
         </div>
 
         <div class="section-title">🥩 Nhóm Thịt Bò Đa Dạng</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Bò Cuộn Nấm Kim Châm</div><div class="item-meta">Vốn: 45k</div></div>
-            <input type="number" class="price-input" id="price-boCuonNam" value="99" onchange="checkPrice('boCuonNam', 99)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-boCuonNam" value="99" onchange="checkPrice('boCuonNam', 45)">
+                <span id="warn-boCuonNam" style="font-size:8px; color:#777;">Lời: 54k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Bò Kobe Thượng Hạng</div><div class="item-meta">Vốn: 90k</div></div>
-            <input type="number" class="price-input" id="price-boKobe" value="189" onchange="checkPrice('boKobe', 189)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-boKobe" value="189" onchange="checkPrice('boKobe', 90)">
+                <span id="warn-boKobe" style="font-size:8px; color:#777;">Lời: 99k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Lõi Vai Bò Mỹ</div><div class="item-meta">Vốn: 60k</div></div>
-            <input type="number" class="price-input" id="price-loiVaiBo" value="129" onchange="checkPrice('loiVaiBo', 129)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-loiVaiBo" value="129" onchange="checkPrice('loiVaiBo', 60)">
+                <span id="warn-loiVaiBo" style="font-size:8px; color:#777;">Lời: 69k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Dẻ Sườn Bò</div><div class="item-meta">Vốn: 70k</div></div>
-            <input type="number" class="price-input" id="price-deSuonBo" value="149" onchange="checkPrice('deSuonBo', 149)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-deSuonBo" value="149" onchange="checkPrice('deSuonBo', 70)">
+                <span id="warn-deSuonBo" style="font-size:8px; color:#777;">Lời: 79k</span>
+            </div>
         </div>
 
         <div class="section-title">🥓 Nhóm Thịt Heo Đa Dạng</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Ba Chỉ Heo Sốt Cay</div><div class="item-meta">Vốn: 35k</div></div>
-            <input type="number" class="price-input" id="price-baChiHeo" value="89" onchange="checkPrice('baChiHeo', 89)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-baChiHeo" value="89" onchange="checkPrice('baChiHeo', 35)">
+                <span id="warn-baChiHeo" style="font-size:8px; color:#777;">Lời: 54k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Sườn Heo Nướng Mật Ong</div><div class="item-meta">Vốn: 50k</div></div>
-            <input type="number" class="price-input" id="price-suonHeo" value="119" onchange="checkPrice('suonHeo', 119)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-suonHeo" value="119" onchange="checkPrice('suonHeo', 50)">
+                <span id="warn-suonHeo" style="font-size:8px; color:#777;">Lời: 69k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Nạc Vai & Nạc Dăm Heo</div><div class="item-meta">Vốn: 40k</div></div>
-            <input type="number" class="price-input" id="price-nacHeo" value="99" onchange="checkPrice('nacHeo', 99)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-nacHeo" value="99" onchange="checkPrice('nacHeo', 40)">
+                <span id="warn-nacHeo" style="font-size:8px; color:#777;">Lời: 59k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Nạc Nọng & Chân Giò Heo</div><div class="item-meta">Vốn: 45k</div></div>
-            <input type="number" class="price-input" id="price-nongGioHeo" value="109" onchange="checkPrice('nongGioHeo', 109)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-nongGioHeo" value="109" onchange="checkPrice('nongGioHeo', 45)">
+                <span id="warn-nongGioHeo" style="font-size:8px; color:#777;">Lời: 64k</span>
+            </div>
         </div>
 
         <div class="section-title">🦐 Nhóm Đồ Tươi & Hải Sản</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Tôm Sú Tươi</div><div class="item-meta">Vốn: 50k</div></div>
-            <input type="number" class="price-input" id="price-tomSu" value="129" onchange="checkPrice('tomSu', 129)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-tomSu" value="129" onchange="checkPrice('tomSu', 50)">
+                <span id="warn-tomSu" style="font-size:8px; color:#777;">Lời: 79k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Mực Ống Tươi</div><div class="item-meta">Vốn: 55k</div></div>
-            <input type="number" class="price-input" id="price-mucOng" value="139" onchange="checkPrice('mucOng', 139)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-mucOng" value="139" onchange="checkPrice('mucOng', 55)">
+                <span id="warn-mucOng" style="font-size:8px; color:#777;">Lời: 84k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Bạch Tuộc Tươi Sống</div><div class="item-meta">Vốn: 58k</div></div>
-            <input type="number" class="price-input" id="price-bachTuoc" value="149" onchange="checkPrice('bachTuoc', 149)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-bachTuoc" value="149" onchange="checkPrice('bachTuoc', 58)">
+                <span id="warn-bachTuoc" style="font-size:8px; color:#777;">Lời: 91k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Phi Lê Cá Tươi</div><div class="item-meta">Vốn: 45k</div></div>
-            <input type="number" class="price-input" id="price-caTuoi" value="119" onchange="checkPrice('caTuoi', 119)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-caTuoi" value="119" onchange="checkPrice('caTuoi', 45)">
+                <span id="warn-caTuoi" style="font-size:8px; color:#777;">Lời: 74k</span>
+            </div>
         </div>
 
         <div class="section-title">🍢 Nhóm Topping & Rau Nấm</div>
         <div class="item-card"><div class="item-info"><div class="item-name">Rau Cải Thảo Tươi</div><div class="item-meta">Vốn: 10k</div></div>
-            <input type="number" class="price-input" id="price-rauCai" value="35" onchange="checkPrice('rauCai', 35)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-rauCai" value="35" onchange="checkPrice('rauCai', 10)">
+                <span id="warn-rauCai" style="font-size:8px; color:#777;">Lời: 25k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Nấm Kim Châm</div><div class="item-meta">Vốn: 15k</div></div>
-            <input type="number" class="price-input" id="price-namKimCham" value="39" onchange="checkPrice('namKimCham', 39)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-namKimCham" value="39" onchange="checkPrice('namKimCham', 15)">
+                <span id="warn-namKimCham" style="font-size:8px; color:#777;">Lời: 24k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Kim Chi Chua Cay</div><div class="item-meta">Vốn: 12k</div></div>
-            <input type="number" class="price-input" id="price-kimChi" value="30" onchange="checkPrice('kimChi', 30)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-kimChi" value="30" onchange="checkPrice('kimChi', 12)">
+                <span id="warn-kimChi" style="font-size:8px; color:#777;">Lời: 18k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Xúc Xích Đức</div><div class="item-meta">Vốn: 15k</div></div>
-            <input type="number" class="price-input" id="price-xucXich" value="45" onchange="checkPrice('xucXich', 45)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-xucXich" value="45" onchange="checkPrice('xucXich', 15)">
+                <span id="warn-xucXich" style="font-size:8px; color:#777;">Lời: 30k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Chả Cá Hàn Quốc</div><div class="item-meta">Vốn: 18k</div></div>
-            <input type="number" class="price-input" id="price-chaCa" value="40" onchange="checkPrice('chaCa', 40)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-chaCa" value="40" onchange="checkPrice('chaCa', 18)">
+                <span id="warn-chaCa" style="font-size:8px; color:#777;">Lời: 22k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Cá Viên Chiên</div><div class="item-meta">Vốn: 15k</div></div>
-            <input type="number" class="price-input" id="price-caVien" value="35" onchange="checkPrice('caVien', 35)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-caVien" value="35" onchange="checkPrice('caVien', 15)">
+                <span id="warn-caVien" style="font-size:8px; color:#777;">Lời: 20k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Đậu Hũ Non Thả Lẩu</div><div class="item-meta">Vốn: 12k</div></div>
-            <input type="number" class="price-input" id="price-dauHu" value="30" onchange="checkPrice('dauHu', 30)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-dauHu" value="30" onchange="checkPrice('dauHu', 12)">
+                <span id="warn-dauHu" style="font-size:8px; color:#777;">Lời: 18k</span>
+            </div>
         </div>
         <div class="item-card"><div class="item-info"><div class="item-name">Chân Gà Rút Xương</div><div class="item-meta">Vốn: 25k</div></div>
-            <input type="number" class="price-input" id="price-chanGa" value="69" onchange="checkPrice('chanGa', 69)">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                <input type="number" class="price-input" id="price-chanGa" value="69" onchange="checkPrice('chanGa', 25)">
+                <span id="warn-chanGa" style="font-size:8px; color:#777;">Lời: 44k</span>
+            </div>
         </div>
     </div>
 
@@ -461,13 +550,13 @@
         </div>
     </div>
 
-    <!-- TAB 5: ĐÁNH GIÁ (CHUẨN MẪU YÊU CẦU, HIỆN ĐỦ SỐ LIỆU SAO) -->
+    <!-- TAB 5: ĐÁNH GIÁ (CHƯA BÁN THÌ 0.0 ĐÚNG CHUẨN) -->
     <div class="page-content" id="page-danhgia">
         <div class="kitchen-box" style="align-items: stretch; gap: 8px;">
             <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="font-size: 28px; font-weight: 700; color: #D35400;" id="avg-rating-num">4.8</div>
+                <div style="font-size: 28px; font-weight: 700; color: #D35400;" id="avg-rating-num">0.0</div>
                 <div style="text-align: right;">
-                    <div style="color: #F1C40F; font-size: 14px;" id="avg-stars-display">★★★★★</div>
+                    <div style="color: #F1C40F; font-size: 14px;" id="avg-stars-display">☆☆☆☆☆</div>
                     <div style="font-size: 9px; color: #666;" id="total-reviews-sub">Tính trên <span id="review-count-badge">0</span> đánh giá gần nhất.</div>
                 </div>
             </div>
@@ -503,7 +592,8 @@
                 • Lẩu Gà Lá É - 139k<br>
                 • Bò Cuộn Nấm Kim Châm - 99k<br>
                 • Bò Kobe Thượng Hạng - 189k<br>
-                • Lõi Vai Bò Mỹ - 129k
+                • Lõi Vai Bò Mỹ - 129k<br>
+                • Dẻ Sườn Bò - 149k
             </div>
             <div style="display: flex; gap: 10px; margin-top: 6px; width: 100%;">
                 <button class="subtab-btn active" style="flex:1;" onclick="changeMenuPage(-1)">◀ Trang trước</button>
@@ -524,7 +614,7 @@
             <div style="text-align: center; font-size: 14px; font-weight: 700;">⚙️ Cài đặt hệ thống</div>
             <div class="setting-row" onclick="openThemeModal()"><span>✏️ Đổi màu giao diện</span><span id="current-theme-title">Kem sữa ▶</span></div>
             <div class="setting-row" onclick="toggleBGM()"><span id="bgm-status-text">🌙 Nhạc nền: Đang tắt</span></div>
-            <div class="setting-row" onclick="nextBgmTrack()"><span>🎵 Đổi bài nhạc nền khác</span><span>▶</span></div>
+            <div class="setting-row" onclick="nextBgmTrack()"><span>🎵 Đổi bài nhạc nền chill</span><span>▶</span></div>
             <div class="setting-row" onclick="openGuideModal()"><span>📖 Hướng dẫn cách chơi</span><span>▶</span></div>
             <div class="setting-row" style="background:#FF6B6B; color:#FFF;" onclick="closeSettingsModal()"><span>❌ Đóng cài đặt</span></div>
         </div>
@@ -535,9 +625,9 @@
         <div class="settings-card">
             <div style="text-align: center; font-size: 14px; font-weight: 700;">📖 HƯỚNG DẪN CÁCH CHƠI</div>
             <div style="font-size: 11px; line-height: 1.5;">
-                1. <b>Chuẩn bị Kho:</b> Đầu mỗi ngày, bạn chọn số lượng nhập các món nguyên liệu lẩu, thịt bò, heo, đồ tươi và topping.<br><br>
-                2. <b>Mở cửa & Phục vụ:</b> Bấm mở cửa để bắt đầu thời gian từ 10:00 đến 22:00. Giao diện nấu sẽ hiện ra để bạn phục vụ khách tại quầy và đơn online.<br><br>
-                3. <b>Sổ sách & Nâng cấp:</b> Kiểm tra lợi nhuận ròng cuối ngày, tuyển nhân viên và mua sắm trang thiết bị để phát triển tiệm!
+                1. <b>Chuẩn bị Kho:</b> Đầu mỗi ngày, chọn số lượng nhập các món lẩu, thịt bò, heo, hải sản và topping.<br><br>
+                2. <b>Mở cửa & Phục vụ:</b> Bấm mở cửa để bắt đầu từ 10:00 đến 22:00. Bạn có thể bấm <b>Đóng cửa sớm</b> bất cứ lúc nào.<br><br>
+                3. <b>Sổ sách & Nâng cấp:</b> Kiểm tra lời lỗ cuối ngày, tuyển nhân viên và mua trang bị để phát triển tiệm!
             </div>
             <button class="btn-big" style="margin-top: 10px;" onclick="closeGuideModal()">Đã Hiểu</button>
         </div>
@@ -559,7 +649,7 @@
 
 <script>
     let day = 1;
-    let money = 250;
+    let money = 500;
     let stars = 0.0;
     let reviewsList = [];
     let starCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
@@ -568,12 +658,12 @@
     let totalStaffSalary = 0;
     let hiredStaff = {};
     let customerQueueCount = 3;
+    let timerInterval = null;
     let stock = { lauMala: 1, lauCua: 1, lauGaLaE: 1, lauKimChi: 1, lauHaiSan: 1, boCuonNam: 2, boKobe: 1, loiVaiBo: 1, deSuonBo: 1, baChiHeo: 2, suonHeo: 1, nacHeo: 1, nongGioHeo: 1, tomSu: 1, mucOng: 1, bachTuoc: 1, caTuoi: 1, rauCai: 3, namKimCham: 2, kimChi: 2, xucXich: 2, chaCa: 2, caVien: 2, dauHu: 2, chanGa: 1 };
     let player = { ingredientsCount: {}, sauce: null, dip: null, method: null };
     let isRunning = false;
     let bgmPlaying = false;
 
-    // Danh sách đơn hàng online luân phiên liên tục
     let onlineOrders = [
         { text: "📦 Đơn Ship #101 • 2x Lõi Vai Bò Sốt Sat Tế (280k)", amount: 280 },
         { text: "📦 Đơn Ship #102 • Lẩu Mala Tứ Xuyên Đặc Biệt (220k)", amount: 220 },
@@ -582,7 +672,8 @@
     ];
     let currentOnlineIdx = 0;
 
-    const bgmTracks = [
+    // Danh sách nhạc chill lofi nhẹ nhàng hoạt động ổn định
+    let bgmTracks = [
         "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cozy-lofi-song-114485.mp3",
         "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=lofi-study-112191.mp3",
         "https://cdn.pixabay.com/download/audio/2022/05/16/audio_db32c8c4a5.mp3?filename=gentle-lofi-108992.mp3"
@@ -636,7 +727,6 @@
         
         let summaryText = Object.keys(player.ingredientsCount).map(k => `${k} (x${player.ingredientsCount[k]})`).join(', ');
         document.getElementById('tag-1').innerText = `🛒 Đồ Tươi: ${summaryText}`;
-        document.querySelectorAll('[id^="ing-"]').forEach(el => el.classList.remove('selected'));
         document.getElementById(`ing-${name}`).classList.add('selected');
     }
 
@@ -687,7 +777,6 @@
                 customerQueueCount = Math.max(1, customerQueueCount - 1 + Math.floor(Math.random() * 2));
                 document.getElementById('customer-queue-info').innerText = `👥 Khách đang chờ tại bàn: ${customerQueueCount} nhóm`;
 
-                // Thêm đánh giá ngẫu nhiên 5 sao
                 starCounts[5]++;
                 reviewsList.unshift({
                     name: ["Cua", "Quang Minh", "Bảo Long", "Thảo Vy", "Gia Hân"][Math.floor(Math.random()*5)],
@@ -698,7 +787,6 @@
                 });
                 updateReviewsUI();
 
-                // Đổi khách mới và icon ngẫu nhiên
                 let avatars = ["👦", "👧", "🧑", "👨", "👩", "🧓"];
                 document.getElementById('customer-avatar').innerText = avatars[Math.floor(Math.random() * avatars.length)];
                 let randomDishes = ["2x Lõi Vai Bò Mỹ ướp Sat Tế chấm Phô Mai Kéo Sợi nướng than!", "1x Bò Kobe ướp Phô Mai chấm Muối Ớt Xanh nướng chảo!", "3x Tôm Sú ướp Nướng Mọi chấm Mắm Tắc lẩu đặc biệt!"];
@@ -722,7 +810,6 @@
             let dailyCost = 115 + totalStaffSalary;
             document.getElementById('sum-net-profit').innerText = `${totalRevenue - dailyCost}k`;
             
-            // Xoay vòng đơn online tiếp theo
             currentOnlineIdx = (currentOnlineIdx + 1) % onlineOrders.length;
             let nextOrder = onlineOrders[currentOnlineIdx];
             document.getElementById('online-order-text').innerText = nextOrder.text;
@@ -742,6 +829,7 @@
             document.getElementById('avg-rating-num').innerText = "0.0";
             document.getElementById('avg-stars-display').innerText = "☆☆☆☆☆";
             document.getElementById('total-reviews-sub').innerHTML = `Tính trên <span id="review-count-badge">0</span> đánh giá gần nhất.`;
+            document.getElementById('stars').innerText = "0.0";
             for(let i=1; i<=5; i++) {
                 document.getElementById(`bar-${i}`).style.width = "0%";
                 document.getElementById(`cnt-${i}`).innerText = "0";
@@ -752,6 +840,7 @@
 
         document.getElementById('avg-rating-num').innerText = "5.0";
         document.getElementById('avg-stars-display').innerText = "★★★★★";
+        document.getElementById('stars').innerText = "5.0";
 
         for(let i=1; i<=5; i++) {
             let cnt = starCounts[i];
@@ -784,12 +873,19 @@
         alert("💌 Đã gửi phản hồi đến thực khách thành công!");
     }
 
-    function checkPrice(type, basePrice) {
+    function checkPrice(type, baseCost) {
         let val = parseInt(document.getElementById(`price-${type}`).value);
         let warnEl = document.getElementById(`warn-${type}`);
-        if(warnEl && val > basePrice * 1.5) {
-            warnEl.innerText = "⚠️ Giá quá đắt!";
+        let profit = val - baseCost;
+        if (val > baseCost * 1.5) {
+            warnEl.innerText = "⚠️ Giá quá đắt, khách chê!";
             warnEl.style.color = "red";
+        } else if (val < baseCost) {
+            warnEl.innerText = "⚠️ Bán lỗ vốn!";
+            warnEl.style.color = "red";
+        } else {
+            warnEl.innerText = `Lời: ${profit}k (Hợp lý)`;
+            warnEl.style.color = "green";
         }
     }
 
@@ -834,12 +930,13 @@
         let minute = 0;
         let btn = document.getElementById('action-btn');
         btn.style.background = "#E67E22";
-        btn.innerText = "🍳 Đang mở cửa! Bấm vào đây để vào bếp phục vụ khách";
+        btn.innerHTML = "🌙 Đóng cửa sớm / Tổng kết ngày";
+        btn.setAttribute('onclick', 'closeDayEarly()');
         
         document.getElementById('nav-btn-nau').style.display = 'block';
         switchTab('nau');
 
-        let timer = setInterval(() => {
+        timerInterval = setInterval(() => {
             minute += 1;
             if(minute >= 60) { minute = 0; hour++; }
             let minStr = minute < 10 ? '0' + minute : minute;
@@ -847,21 +944,35 @@
             document.getElementById('game-time').innerText = `${hourStr}:${minStr}`;
 
             if(hour >= 22) {
-                clearInterval(timer);
-                isRunning = false;
-                let dailyCost = 115 + totalStaffSalary; 
-                let netProfit = totalRevenue - dailyCost;
-                money += netProfit;
-
-                document.getElementById('money').innerText = money;
-                btn.style.background = "var(--primary-orange)";
-                btn.innerText = "🔔 Mở cửa ngày " + (++day) + " (10:00 - 22:00)";
-                document.getElementById('day-label').innerText = "Ngày " + day;
-                document.getElementById('nav-btn-nau').style.display = 'none';
-                switchTab('kho');
-                alert(`🌙 Đã đến 22:00! Đóng cửa tổng kết ngày ${day-1}.\nLợi nhuận ròng: ${netProfit >= 0 ? '+'+netProfit : netProfit}k đã được hạch toán vào KÉT.`);
+                finishDay(timerInterval);
             }
         }, 300);
+    }
+
+    function closeDayEarly() {
+        if(confirm("Bạn có chắc chắn muốn đóng cửa sớm và tổng kết ngày hôm nay không?")) {
+            clearInterval(timerInterval);
+            finishDay(timerInterval);
+        }
+    }
+
+    function finishDay(timer) {
+        isRunning = false;
+        if(timer) clearInterval(timer);
+        let dailyCost = 115 + totalStaffSalary; 
+        let netProfit = totalRevenue - dailyCost;
+        money += netProfit;
+
+        document.getElementById('money').innerText = money;
+        let btn = document.getElementById('action-btn');
+        btn.style.background = "var(--primary-orange)";
+        btn.innerHTML = "🔔 Mở cửa ngày " + (++day) + " (10:00 - 22:00)";
+        btn.setAttribute('onclick', 'startDayTimer()');
+        
+        document.getElementById('day-label').innerText = "Ngày " + day;
+        document.getElementById('nav-btn-nau').style.display = 'none';
+        switchTab('kho');
+        alert(`🌙 Đã đóng cửa tiệm và tổng kết ngày ${day-1}.\nLợi nhuận ròng: ${netProfit >= 0 ? '+'+netProfit : netProfit}k đã được hạch toán vào KÉT.`);
     }
 
     function toggleBGM() {
@@ -875,7 +986,7 @@
         let audio = document.getElementById('bgm');
         audio.src = bgmTracks[currentTrackIdx];
         if (bgmPlaying) audio.play();
-        alert(`🎵 Đã chuyển sang bài nhạc nền số ${currentTrackIdx + 1}`);
+        alert(`🎵 Đã chuyển sang bài nhạc chill lofi số ${currentTrackIdx + 1}`);
     }
 
     function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
